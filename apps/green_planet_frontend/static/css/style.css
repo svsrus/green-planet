@@ -107,7 +107,7 @@ header .main-header{position: relative;height: 100vh;width: 100%;background: url
 .main-header .hero-content-wrapper{display: table;position: absolute;top: 0;left: 0;width: 100%;height: 100%;padding-left: 10%;transition: opacity 1s ease 0s, transform 1s ease 0s;opacity: 1;}
 .main-header .hero-content-wrapper .hero-content{display: table-cell;width: 100%;height: 100%;vertical-align: middle;}
 .main-header .hero-lead{font-size: 6em;font-weight: 700;letter-spacing: 2px;color: #ececec;margin-bottom: 50px;}
-.main-header .h-alt{margin-bottom: 20px;color: #A3C145;font-weight: 400;font-size: 1.3em;letter-spacing: 3px;text-transform: uppercase}
+.main-header .h-alt{margin-bottom: 20px;color: #c1ff00;font-weight: 400;font-size: 2em;letter-spacing: 3px;text-transform: uppercase}
 .main-header .button-skin{background: #A3C145;border:2px solid #A3C145;}
 .main-header .button-skin:hover{background: transparent;color: #fff;border:2px solid #fff;}
 .main-header .hero-content-wrapper.remove {-moz-transform: translateY(3rem);-webkit-transform: translateY(3rem);-ms-transform: translateY(3rem);transform: translateY(3rem);-moz-transition: all 0.5s ease-in-out;-webkit-transition: all 0.5s ease-in-out;-ms-transition: all 0.5s ease-in-out;transition: all 0.5s ease-in-out;opacity: 0;visibility: hidden;}
