@@ -53,6 +53,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%d %H:%M:%S - %fZ'],
+}
+
 ROOT_URLCONF = 'green_planet.urls'
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'green_planet/static')
