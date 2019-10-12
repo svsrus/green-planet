@@ -72,7 +72,7 @@
 							<div class="hero-content">
 								<h4 class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay=".7s">Зелёная Планета Земля</h4>
 								<h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">Сохраним<br> достояние Человека</h1>
-								<a id="about-project" class="button button-skin wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">О проекте</a>
+								<a href="javascript:showAbout()" class="button button-skin wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">О проекте</a>
 							</div>
 						</div>
 						<!---Scroller--->
@@ -131,13 +131,13 @@
 									<div class="sm-1-2">
 										<div class="wrap-col">
 											<div class="about-sum">
-												<h3>Who We Are?</h3>
-												<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-													dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
-												<p>Morbi eros habitant wisi nibh, donec congue quam aenean. Nulla nam quis egestas urna id, hendrerit
-													phasellus ac quis lacus nunc, venenatis vitae sapien diam, justoer los. Nisl vivamus morbi nulla potenti
-													amet ultrices.</p>
-												<a class="button button-skin">Get Started</a>
+												<h3>Кто мы?</h3>
+												<p>Мы - человечество, которое живёт в ресурсном долгу у планеты Земля.</p>
+												<p>Мы выявляем проблемы расходов ресурсов земли.</p>
+												<p>Мы ищем различные способы решения проблем.</p>
+												<p>Мы применяем эти методы в повседневной жизни.</p>
+												<p>Напиши статью и помоги информационно нашей планете!</p>
+												<a class="button button-skin">Написать статью</a>
 											</div>
 										</div>
 									</div>
@@ -395,66 +395,11 @@
 					<div class="zerogrid">
 						<div class="wrap-box">
 							<div class="header wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">
-								<h2>Latest News</h2>
-								<span class="intro">Lorem ipsum dolor sit amet consectetur adipisicing</span>
+								<h2>Новые статьи</h2>
+								<span class="intro">Всё о том как сделать нашу планету <font style="color:#27c100"><strong>Зелёной</strong>.</span>
 							</div>
 							<div class="content wow fadeInRight" data-wow-delay=".1s" data-wow-duration="1s">
-								<div class="row">
-									<div class="sm-1-3">
-										<div class="wrap-col">
-											<div class="box-entry">
-												<div class="box-entry-inner">
-													<img src='{% static "images/1.jpg" %}' class="img-responsive" />
-													<div class="entry-details">
-														<div class="entry-des">
-															<span><a href="#">08th Apr 2017</a></span>
-															<h3><a href="#">Make Ahead Super Green Vegan Quinoa Sandwich.</a></h3>
-															<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim
-																placerat facer possim assum.</p>
-															<a class="button button-skin" href="single.html">Read More</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="sm-1-3">
-										<div class="wrap-col">
-											<div class="box-entry">
-												<div class="box-entry-inner">
-													<img src='{% static "images/3.jpg" %}' class="img-responsive" />
-													<div class="entry-details">
-														<div class="entry-des">
-															<span><a href="#">08th Apr 2017</a></span>
-															<h3><a href="#">Make Ahead Super Green Vegan Quinoa Sandwich.</a></h3>
-															<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim
-																placerat facer possim assum.</p>
-															<a class="button button-skin" href="single.html">Read More</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="sm-1-3">
-										<div class="wrap-col">
-											<div class="box-entry">
-												<div class="box-entry-inner">
-													<img src='{% static "images/4.jpg" %}' class="img-responsive" />
-													<div class="entry-details">
-														<div class="entry-des">
-															<span><a href="#">08th Apr 2017</a></span>
-															<h3><a href="#">Make Ahead Super Green Vegan Quinoa Sandwich.</a></h3>
-															<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim
-																placerat facer possim assum.</p>
-															<a class="button button-skin" href="single.html">Read More</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								<div id="latestArticles" class="row"></div>
 							</div>
 						</div>
 					</div>
@@ -508,36 +453,28 @@
 					<div class="row">
 						<div class="sm-2-4 col-footer-1">
 							<div class="wrap-col">
-								<h3 class="widget-title">About</h3>
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-									dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-									commodo consequat.</p>
-								<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+								<h3 class="widget-title">О нас</h3>
+								<p>Мы создали эту страницу для вовлечения в проблемы экологии как можно большего числа людей.</p>
+								<p>Это требуется для того что бы все вместе мы смогли изменить наше будущее к лучшему.</p>
 								<ul class="quicklinks">
-									<li><a href="#">Privacy Policy</a></li>
-									<li><a href="#">Terms of Use</a></li>
+									<li><a href="#">Мы вас не отслеживаем</a></li>
+									<li><a href="#">Этот сайт является достоянием всех людей</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="sm-1-4 col-footer-2">
 							<div class="wrap-col">
-								<h3 class="widget-title">Contact Us</h3>
-								<p>Call us:</p>
-								<strong style="font-size: 25px;">0123-456-789</strong>
-								<p>Address:</p>
-								<strong>123, New Lenox Chicago, IL 60606</strong>
-								<p>Email:</p>
-								<strong>info@yoursite.com</strong>
+								<h3 class="widget-title">Свяжитесь с нами</h3>
+								<p>Почта:</p>
+								<strong>sergei.shurpenkov@yandex.ru</strong>
 							</div>
 						</div>
 						<div class="sm-1-4 col-footer-3">
 							<div class="wrap-col">
-								<h3 class="widget-title">Socials</h3>
+								<h3 class="widget-title">в соц-сетях</h3>
 								<ul class="social-buttons">
-									<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-									<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+									<li><a href="https://vk.com/id64724233"><i class="fa fa-vk"></i></a></li>
+									<li><a href="https://www.linkedin.com/in/sergei-shurpenkov/"><i class="fa fa-linkedin"></i></a></li>
 								</ul>
 							</div>
 						</div>
@@ -549,8 +486,8 @@
 					<div class="zerogrid">
 						<div class="row">
 							<div class="sm-1-2">
-								Copyright @ - <a href="https://www.zerotheme.com/free-website-templates" rel='nofollow'>Website Templates</a>
-								by <a href='https://www.zerotheme.com'>Zerotheme</a>
+								Копирайт @ - <a href="https://www.zerotheme.com/free-website-templates" rel='nofollow'>веб шаблон</a>
+								от <a href='https://www.zerotheme.com'>Zerotheme</a>
 							</div>
 							<div class="sm-1-2">
 								<div id="page-top"><a href="#page-top" class="button button-toTop f-right"><i class="fa fa-angle-double-up"></i></a></div>
@@ -577,14 +514,84 @@
 		<script src='{% static "js/main.js" %}'></script>
 
 		<script>
-			$("#about-project").click(function () {
-				$.get("{% url 'about_view' %}", function (data) {
-					$("#page-content").html(data);
-					$([document.documentElement, document.body]).animate({
-						scrollTop: $("#page-content").offset().top
-					}, 2000);
+			initializePage();
+			function initializePage() {
+
+				$.get("{% url 'latest_articles' %}", function (latestArticles) {
+					var latestArticlesHTML = "";
+					$.each(latestArticles, function(index, latestArticle) {
+						latestArticlesHTML += '<div id="latestArticles" class="sm-1-3">';
+						latestArticlesHTML += '<div class="wrap-col">';
+						latestArticlesHTML += '<div class="box-entry">';
+						latestArticlesHTML += '<div class="box-entry-inner">';
+						latestArticlesHTML += '<img src=\'{% static "images/1.jpg" %}\' class="img-responsive" />';
+						latestArticlesHTML += '<div class="entry-details">';
+						latestArticlesHTML += '<div class="entry-des">';
+						latestArticlesHTML += '<span>'+latestArticle.creation_date+'</span>';
+						latestArticlesHTML += '<h3><a href="javascript:showArticle('+latestArticle.article_id+')">'+latestArticle.title+'</a></h3>';
+						latestArticlesHTML += '<p>'+latestArticle.header_text+'</p>';
+						latestArticlesHTML += '<a class="button button-skin" href="javascript:showArticle('+latestArticle.article_id+')">Читать</a>';
+						latestArticlesHTML += '</div>';
+						latestArticlesHTML += '</div>';
+						latestArticlesHTML += '</div>';
+						latestArticlesHTML += '</div>';
+						latestArticlesHTML += '</div>';
+						latestArticlesHTML += '</div>';
+					});
+					$("#latestArticles").html(latestArticlesHTML);
 				});
-			});
+			}
+
+			function showArticle(articleId) {
+				$("#page-content").hide(1000, function() {
+					$.get("{% url 'articles' %}"+articleId, function (articleData) {
+						var articleHTML = "";
+						articleHTML += "<div class='wrap-container zerogrid'>";
+						articleHTML += "	<div class='crumbs'>";
+						articleHTML += "		<ul>";
+						articleHTML += "			<li><a href=\"{% url 'index_view' %}\">Главная</a></li>"
+						articleHTML += "			<li><a href=\"javascript:showAbout()\">О проекте</a></li>"
+						articleHTML += "		</ul>";
+						articleHTML += "</div>";
+						articleHTML += "<div id='about-us'>";
+						articleHTML += "	<article class='post-entry single-post'>";
+						articleHTML += "		<div class='wrap-post'>";
+						articleHTML += "			<div class='entry-header'>";
+						articleHTML += "				<h1 id='articleTitle' class='entry-title'>" + articleData.title + "</h1>";
+						articleHTML += "					<div class='entry-meta'>";
+						articleHTML += "						<a id='articleCreationDate'><i class='fa fa-calendar'> " + articleData.creation_date + " </i></a>";
+						articleHTML += "						<!--<a><i class='fa fa-comments'></i> 0 Comments</a>-->";
+						articleHTML += "						<!--<a><i class='fa fa-tag'></i> Event, New</a>-->";
+						articleHTML += "					</div>";
+						articleHTML += "				</div>";
+						articleHTML += "				<div class='post-thumbnail-wrap'>";
+						articleHTML += "					<img src='images/single.jpg' />";
+						articleHTML += "				</div>";
+						articleHTML += "				<div id='articleMainText' class='entry-content'>" + articleData.main_text + "</div>";
+						articleHTML += "			</div>";
+						articleHTML += "		</article>";
+						articleHTML += "	</div>";
+						articleHTML += "</div>";
+						$("#page-content").html(articleHTML).show(1000);
+						$([document.documentElement, document.body]).animate({
+							scrollTop: $("#page-content").offset().top
+						}, 2000);
+					});
+
+				});
+			}
+
+			function showAbout() {
+				$("#page-content").hide(1000, function() {
+					$.get("{% url 'about_view' %}", function (data) {
+						$("#page-content").html(data);
+						$("#page-content").show(1000);
+						$([document.documentElement, document.body]).animate({
+							scrollTop: $("#page-content").offset().top
+						}, 2000);
+					});
+				});
+			}
 		</script>
 	</div>
 </body>
