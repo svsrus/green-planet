@@ -30,17 +30,17 @@ class ArticleTest(TestCase):
                                          creation_date='2019-09-30 16:28:11')
 
         image1 = ImageRepresentation.objects.create(
-            representation_type_code=Representation.REPRESENTATION_TYPE_IMAGE_CODE,
+            representation_type_code=Representation.TYPE_IMAGE_CODE,
             image_file="D://SVS//Programming//Python//green-planet-workspace//green_planet//" +
             "apps//green_planet_frontend//static//images//1.jpg"
         )
         image2 = ImageRepresentation.objects.create(
-            representation_type_code=Representation.REPRESENTATION_TYPE_IMAGE_CODE,
+            representation_type_code=Representation.TYPE_IMAGE_CODE,
             image_file="D://SVS//Programming//Python//green-planet-workspace//green_planet//" +
             "apps//green_planet_frontend//static//images//2.jpg"
         )
         video1 = VideoRepresentation.objects.create(
-            representation_type_code=Representation.REPRESENTATION_TYPE_VIDEO_CODE,
+            representation_type_code=Representation.TYPE_VIDEO_CODE,
             video_url="https://www.youtube.com/watch?v=j800SVeiS5I"
         )
 
@@ -50,9 +50,9 @@ class ArticleTest(TestCase):
 
         article_db = Article.objects.get(pk=1)
         article_representations_db = article_db.article_representations.all()
-        
+
         self.assertEqual(len(article_representations_db), len(article_representations_list))
-        
+
         for article_representation in article_representations_db:
             representation = article_representation.representation
             self.assertIsNotNone(representation.representation_type_code)
