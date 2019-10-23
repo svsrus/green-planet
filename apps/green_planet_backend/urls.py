@@ -1,4 +1,4 @@
-""" Module green_planet_backend REST URL Configuration """
+""" Module green_planet_backend Article REST URL Configuration with MEDIA_ROOT for debugging """
 from django.urls import path
 from .views import ArticleView
 from .views import LatestArticlesView

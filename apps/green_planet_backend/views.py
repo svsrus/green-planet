@@ -1,7 +1,10 @@
 """ GREEN PLANET BACKEND - views module """
-from rest_framework.response import Response
+import json
 from rest_framework.views import APIView
-
+from rest_framework.parsers import JSONParser
+from rest_framework.parsers import MultiPartParser
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Article
 from .models_serializers import ArticleSerializer
 
@@ -24,3 +27,23 @@ class ArticleView(APIView):
         article_serializer = ArticleSerializer(article, many=False)
         articles_json = article_serializer.data
         return Response(articles_json)
+
+    def post(self, request):
+        """ Method gets all article data, validates, and saves it in database """
+        article_serializer = ArticleSerializer(data=request.data)
+        if article_serializer.is_valid():
+            article_serializer.save()
+            return Response(article_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        """ Method updates Article with article representations and saves it in database """
+        data = json.loads(request.data["json_data"])
+        #Setting an image to the json request, to pass though image validations
+        data["article_representations"][0]["representation"]["image_file"] = request.FILES["image"]
+        article = Article.objects.get(pk=data["article_id"])
+        article_serializer = ArticleSerializer(article, data=data, partial=True)
+        if article_serializer.is_valid():
+            article_serializer.save()
+            return Response(article_serializer.data, status=status.HTTP_200_OK)
+        return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
