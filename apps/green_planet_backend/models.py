@@ -16,15 +16,15 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 class Representation(Model):
     """ Representation entity which can be image, video, etc. """
-    REPRESENTATION_TYPE_IMAGE_CODE = 1
-    REPRESENTATION_TYPE_VIDEO_CODE = 2
-    REPRESENTATION_TYPES = [
-        (REPRESENTATION_TYPE_IMAGE_CODE, 'Image'),
-        (REPRESENTATION_TYPE_VIDEO_CODE, 'Video')
+    TYPE_IMAGE_CODE = 1
+    TYPE_VIDEO_CODE = 2
+    TYPES = [
+        (TYPE_IMAGE_CODE, 'Image'),
+        (TYPE_VIDEO_CODE, 'Video')
     ]
     representation_id = AutoField(primary_key=True)
     representation_type_code = IntegerField(null=True, blank=False,
-                                            choices=REPRESENTATION_TYPES)
+                                            choices=TYPES)
     articles = GenericRelation('ArticleRepresentation') #Bi-directional mapping
 
     class Meta:
@@ -32,11 +32,11 @@ class Representation(Model):
 
     def is_image(self):
         """ Method returns True, if this instance is an image type """
-        return self.REPRESENTATION_TYPE_IMAGE_CODE == self.representation_type_code
+        return self.TYPE_IMAGE_CODE == self.representation_type_code
 
     def is_video(self):
         """ Method returns True, if this instance is an video type """
-        return self.REPRESENTATION_TYPE_VIDEO_CODE == self.representation_type_code
+        return self.TYPE_VIDEO_CODE == self.representation_type_code
 
 class ImageRepresentation(Representation):
     """ Image Representation entity which saves path to image """
@@ -71,13 +71,13 @@ class Article(Model):
     article_id = AutoField(primary_key=True)
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)
-    creation_date = DateTimeField(auto_now_add=True)
+    creation_date = DateTimeField(auto_now_add=True, blank=True, null=True)
     main_text = TextField(max_length=255)
 
     class Meta:
         db_table = "green_planet_article"
 
-    def add_article_representations(self, article_representation_list) -> 'ArticleRepresentation':
+    def add_article_representations(self, article_representation_list):
         """ Method creates ArticleRepresentation entities and adds it to the representation list """
         for article_representation in article_representation_list:
             article_repr_content_type = ContentType.objects.get_for_model(article_representation)
