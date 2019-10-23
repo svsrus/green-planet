@@ -1,0 +1,42 @@
+{
+    "article_id": 5,
+    "title": "First article.",
+    "header_text": "We will talk about...",
+    "creation_date": "2019-10-20 22:46:42",
+    "main_text": "Our planet is in critical state, we must act now.",
+    "article_representations": [
+        {
+            "article_representation_id": 1,
+            "representation": {
+                "representation_id": 1,
+                "representation_type_code": 1
+            }
+        },
+        {
+            "article_representation_id": 2,
+            "representation": {
+                "representation_id": 2,
+                "representation_type_code": 2,
+                "video_url": "https://www.youtube.com/watch?v=j800SVeiS5I"
+            }
+        }
+    ]
+}
+
+
+{
+    'article_id': 1, 
+    'title': 'Статья первая', 
+    'header_text': 'О глобальных вызовах человечества.', 
+    'creation_date': '2019-10-23 19: 01: 36', 
+    'main_text': 'Главный текст первой статьи.', 
+    'article_representations': 
+        [
+            OrderedDict(
+            [('article_representation_id', 1), ('representation',
+            {'representation_id': 1, 'representation_type_code': 1, 'image_file': '/uploaded/images/1_xU91j2x.jpg'
+            
+            })
+        ])
+    ]
+}
