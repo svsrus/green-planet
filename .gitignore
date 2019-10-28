@@ -1,3 +1,6 @@
+#USER IMAGES EXCLUDE
+uploaded/
+
 #REACT MODULES EXCLUDE
 node_modules/
 
