@@ -9,7 +9,7 @@ from .models import Article
 from .models_serializers import ArticleSerializer
 
 class LatestArticlesView(APIView):
-    """ View Class is responsible for delivering latest articles """
+    """ API View Class is responsible for delivering latest articles """
 
     def get(self, request):
         """ Method searches lastest published articles and returns this list as JSON """
@@ -19,7 +19,7 @@ class LatestArticlesView(APIView):
         return Response(articles_json)
 
 class ArticleView(APIView):
-    """ View Class is responsible for managing article entity """
+    """ API View Class is responsible for managing article entity """
 
     def get(self, request, article_id=None):
         """ Method searches article by a given id in request, and returns it as JSON """
@@ -37,10 +37,25 @@ class ArticleView(APIView):
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
+        """ Method gets all article data, validates, and saves it in database """
+        article_serializer = ArticleSerializer(data=request.data)
+        if article_serializer.is_valid():
+            article_serializer.save()
+            return Response(article_serializer.data, status=status.HTTP_200_OK)
+        return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ArticleRepresentationView(APIView):
+    """ API View Class is responsible for managing article representations """
+
+    def put(self, request):
         """ Method updates Article with article representations and saves it in database """
         data = json.loads(request.data["json_data"])
-        #Setting an image to the json request, to pass though image validations
-        data["article_representations"][0]["representation"]["image_file"] = request.FILES["image"]
+
+        #Setting a list of images to the json, to pass images though validations
+        files = request.FILES.getlist('image[]')
+        for i in range(len(files)):
+            data["article_representations"][i]["representation"]["image_file"] = files[i]
+
         article = Article.objects.get(pk=data["article_id"])
         article_serializer = ArticleSerializer(article, data=data, partial=True)
         if article_serializer.is_valid():
