@@ -9,7 +9,7 @@ from django.db.models import ImageField
 from django.db.models import URLField
 from django.db.models import ForeignKey
 from django.db.models import PositiveIntegerField
-from django.db.models import PROTECT
+from django.db.models import CASCADE
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -25,7 +25,9 @@ class Representation(Model):
     representation_id = AutoField(primary_key=True)
     representation_type_code = IntegerField(null=True, blank=False,
                                             choices=TYPES)
-    articles = GenericRelation('ArticleRepresentation') #Bi-directional mapping
+    articles = GenericRelation('ArticleRepresentation',
+                               object_id_field='representation_id',
+                               content_type_field='representation_content_type') #Bi-directional mapping
 
     class Meta:
         db_table = 'green_planet_representation'
@@ -57,9 +59,10 @@ class ArticleRepresentation(Model):
     article_representation_id = AutoField(primary_key=True)
     article = ForeignKey('Article',
                          null=True,
-                         on_delete=PROTECT,
+                         blank=True,
+                         on_delete=CASCADE,
                          related_name='article_representations')
-    representation_content_type = ForeignKey(ContentType, null=True, on_delete=PROTECT)
+    representation_content_type = ForeignKey(ContentType, null=True, on_delete=CASCADE)
     representation_id = PositiveIntegerField(null=True)
     representation = GenericForeignKey('representation_content_type', 'representation_id')
 
@@ -72,7 +75,7 @@ class Article(Model):
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)
     creation_date = DateTimeField(auto_now_add=True, blank=True, null=True)
-    main_text = TextField(max_length=255)
+    main_text = TextField(max_length=65535)
 
     class Meta:
         db_table = "green_planet_article"
