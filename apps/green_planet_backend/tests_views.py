@@ -88,18 +88,33 @@ class ArticleTest(APITestCase):
                     "representation": {
                         "representation_type_code": 1
                     }
+                },
+                {
+                    "representation": {
+                        "representation_type_code": 1
+                    }
                 }
             ]
         }
-        image_file = open("D://SVS//Programming//Python//green-planet-workspace//" +
-                          "green_planet//apps//green_planet_frontend//static//" +
-                          "images//1.jpg", "rb")
-        response = self.client.put(SERVER_URL + "api/articles/",
-                                   data={"json_data":json.dumps(request_json), "image":image_file},
+        
+        image_file1 = open("D://SVS//Programming//Python//green-planet-workspace//" +
+                           "green_planet//apps//green_planet_frontend//static//" +
+                           "images//1.jpg", "rb")
+        image_file2 = open("D://SVS//Programming//Python//green-planet-workspace//" +
+                           "green_planet//apps//green_planet_frontend//static//" +
+                           "images//2.jpg", "rb")
+        image_files = [image_file1, image_file2]
+
+        response = self.client.put(SERVER_URL + "api/articleRepresentations/",
+                                   data={"json_data":json.dumps(request_json), "image[]":image_files},
                                    format="multipart")
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIsNotNone(response.data["article_representations"])
-        self.assertIsNotNone(len(response.data["article_representations"]), 1)
+        self.assertIsNotNone(len(response.data["article_representations"]), 2)
         self.assertIsNotNone(response.data["article_representations"][0]["representation"])
         self.assertIsNotNone(response.data["article_representations"][0]["representation"]
+                             ["image_file"])
+        self.assertIsNotNone(response.data["article_representations"][1]["representation"])
+        self.assertIsNotNone(response.data["article_representations"][1]["representation"]
                              ["image_file"])
