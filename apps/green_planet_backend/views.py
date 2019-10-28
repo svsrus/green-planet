@@ -1,18 +1,20 @@
 """ GREEN PLANET BACKEND - views module """
 import json
 from rest_framework.views import APIView
-from rest_framework.parsers import JSONParser
-from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework import status
+from .logger import logging
 from .models import Article
 from .models_serializers import ArticleSerializer
+
+LOGGER = logging.getLogger(__name__)
 
 class LatestArticlesView(APIView):
     """ API View Class is responsible for delivering latest articles """
 
     def get(self, request):
         """ Method searches lastest published articles and returns this list as JSON """
+        LOGGER.info("Executing LatestArticlesView.get()")
         articles = Article.objects.filter().order_by('-article_id')[:3]
         article_serializer = ArticleSerializer(articles, many=True)
         articles_json = article_serializer.data
@@ -23,6 +25,7 @@ class ArticleView(APIView):
 
     def get(self, request, article_id=None):
         """ Method searches article by a given id in request, and returns it as JSON """
+        LOGGER.info("Executing ArticleView.get()")
         article = Article.objects.get(pk=article_id)
         article_serializer = ArticleSerializer(article, many=False)
         articles_json = article_serializer.data
@@ -30,6 +33,7 @@ class ArticleView(APIView):
 
     def post(self, request):
         """ Method gets all article data, validates, and saves it in database """
+        LOGGER.info("Executing ArticleView.post()")
         article_serializer = ArticleSerializer(data=request.data)
         if article_serializer.is_valid():
             article_serializer.save()
@@ -38,6 +42,7 @@ class ArticleView(APIView):
 
     def put(self, request):
         """ Method gets all article data, validates, and saves it in database """
+        LOGGER.info("Executing ArticleView.put()")
         article_serializer = ArticleSerializer(data=request.data)
         if article_serializer.is_valid():
             article_serializer.save()
@@ -49,6 +54,7 @@ class ArticleRepresentationView(APIView):
 
     def put(self, request):
         """ Method updates Article with article representations and saves it in database """
+        LOGGER.info("Executing ArticleRepresentationView.put()")
         data = json.loads(request.data["json_data"])
 
         #Setting a list of images to the json, to pass images though validations
