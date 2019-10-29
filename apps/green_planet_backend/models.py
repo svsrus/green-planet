@@ -75,7 +75,7 @@ class Article(Model):
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)
     creation_date = DateTimeField(auto_now_add=True, blank=True, null=True)
-    main_text = TextField(max_length=65535)
+    main_text = TextField(max_length=65535, blank=True, null=True)
 
     class Meta:
         db_table = "green_planet_article"
