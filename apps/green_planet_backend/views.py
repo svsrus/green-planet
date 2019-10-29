@@ -43,7 +43,8 @@ class ArticleView(APIView):
     def put(self, request):
         """ Method gets all article data, validates, and saves it in database """
         LOGGER.info("Executing ArticleView.put()")
-        article_serializer = ArticleSerializer(data=request.data)
+        article = Article.objects.get(pk=request.data["article_id"])
+        article_serializer = ArticleSerializer(article, data=request.data, partial=True)
         if article_serializer.is_valid():
             article_serializer.save()
             return Response(article_serializer.data, status=status.HTTP_200_OK)
