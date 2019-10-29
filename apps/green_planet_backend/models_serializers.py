@@ -93,4 +93,8 @@ class ArticleSerializer(ModelSerializer):
         representations = [article_representation["representation"]
                            for article_representation in article_representations]
         instance.add_article_representations(representations)
+        instance.title = validated_data.get('title', instance.title)
+        instance.header_text = validated_data.get('header_text', instance.header_text)
+        instance.main_text = validated_data.get('main_text', instance.main_text)
+        instance.save()
         return instance
