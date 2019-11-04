@@ -22,26 +22,28 @@
 
 	<!-- CSS ================================================== -->
 	<!-- Definity CSS -->
-	<link href='{% static "css/zerogrid.css" %}' %}' rel="stylesheet" media="all" type="text/css">
-	<link href='{% static "css/style.css" %}' rel="stylesheet" media="all" type="text/css">
-	<link href='{% static "css/menu.css" %}' rel="stylesheet" media="all" type="text/css">
+	<link rel="stylesheet" type="text/css" href='{% static "css/zerogrid.css" %}' %}' media="all"/>
+	<link rel="stylesheet" type="text/css" href='{% static "css/style.css" %}' media="all"/>
+	<link rel="stylesheet" type="text/css" href='{% static "css/menu.css" %}' media="all"/>
 	<!-- Lightbox -->
 	<!-- link href='{% static "css/lightbox.css" %}' rel="stylesheet" media="all" type="text/css"-->
 	<!-- Video Background -->
-	<link href='{% static "css/jquery.mb.ytplayer.min.css" %}' rel="stylesheet" media="all" type="text/css">
+	<link rel="stylesheet" type="text/css" href='{% static "css/jquery.mb.ytplayer.min.css" %}' media="all">
+	
 	<!-- Animate.css -->
-	<link href='{% static "css/animate.css" %}' rel="stylesheet" media="all" type="text/css">
+	<link rel="stylesheet" type="text/css" href='{% static "css/animate.css" %}' media="all"/>
 
 	<!-- Custom Fonts -->
-	<link href='{% static "font-awesome/css/font-awesome.min.css" %}' rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" href='{% static "font-awesome/css/font-awesome.min.css" %}'/>
 
 	<!-- Owl Carousel Assets -->
-	<link href='{% static "owl-carousel/owl.carousel.css" %}' rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href='{% static "owl-carousel/owl.carousel.css" %}'/>
 	<!-- <link href="'{% static "owl-carousel/owl.theme.css" %}' rel="stylesheet"> -->
 
-	<!-- JS -->
+	<!-- Imperavi Redactor -->
+	<link rel="stylesheet" type="text/css" href='{% static "css/redactor/redactor.min.css" %}'/>
 
-
+	<!-- JavaScript Styles -->
 	<!--[if lt IE 8]>
        <div style=' clear: both; text-align:center; position: relative;'>
          <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
@@ -53,6 +55,19 @@
 		<script src='{% static "js/html5.js" %}'></script>
 		<script src='{% static "js/css3-mediaqueries.js" %}'></script>
 	<![endif]-->
+	
+	<script>
+		const URL_INDEX = "{% url 'index_view' %}";
+		const URL_ABOUT = "{% url 'about_view' %}"
+		const URL_LATEST_ARTICLES = "{% url 'latest_articles' %}";
+		const URL_ARTICLES = "{% url 'articles' %}";
+		const URL_ARTICLE_REPRESENTATIONS = "{% url 'article_representations' %}";
+		const DEFAULT_ARTICLE_IMAGE = "{% static 'images/1.jpg' %}";
+	</script>
+
+	<!-- JavaScript Imperavi Redactor -->
+	<script src='{% static "js/redactor/redactor.min.js" %}'></script>
+	<script src='{% static "js/redactor/lang/ru.js" %}'></script>
 
 </head>
 
@@ -78,7 +93,7 @@
 						<!---Scroller--->
 						<div id="scroll-page-content">
 							<a href="#page-content" class="scroller">
-								<span class="scroller-text">scroll down</span>
+								<span class="scroller-text">вниз</span>
 								<div class="scroller-button">
 									<i class="fa fa-angle-double-down"></i>
 								</div>
@@ -90,26 +105,14 @@
 				<!---Top Menu--->
 				<div id="cssmenu">
 					<ul>
-						<li class="active"><a href="index.html"><span>zSeeds</span></a></li>
-						<li class="has-sub"><a href="#"><span>Category</span></a>
+						<li class="active"><a href=""><span>Зелёная Планета</span></a></li>
+						<li class="has-sub"><a href=""><span>Навигация</span></a>
 							<ul>
-								<li class="has-sub"><a href="#"><span>Item 1</span></a>
-									<ul>
-										<li><a href="#"><span>Sub Item</span></a></li>
-										<li class="last"><a href="#"><span>Sub Item</span></a></li>
-									</ul>
-								</li>
-								<li class="has-sub"><a href="#"><span>Item 2</span></a>
-									<ul>
-										<li><a href="#"><span>Sub Item</span></a></li>
-										<li class="last"><a href="#"><span>Sub Item</span></a></li>
-									</ul>
-								</li>
+								<li><a href="javascript:showAbout()"><span>О проекте</span></a></li>
+								<li><a href="javascript:showLatestArticles()"><span>Статьи</span></a></li>
 							</ul>
 						</li>
-						<li><a href="archive.html"><span>Archive</span></a></li>
-						<li><a href="single.html"><span>About</span></a></li>
-						<li class="last"><a href="contact.html"><span>Contact</span></a></li>
+						<li class="last"><a href="contact.html"><span>Контактные данные</span></a></li>
 					</ul>
 				</div>
 
@@ -137,7 +140,7 @@
 												<p>Мы ищем различные способы решения проблем.</p>
 												<p>Мы применяем эти методы в повседневной жизни.</p>
 												<p>Напиши статью и помоги информационно нашей планете!</p>
-												<a class="button button-skin">Написать статью</a>
+												<a href="javascript:showNewArticle()" class="button button-skin">Написать статью</a>
 											</div>
 										</div>
 									</div>
@@ -391,7 +394,7 @@
 			-->
 
 				<!-----------------content-box-4-------------------->
-				<section class="content-box box-4 box-style-1">
+				<section id="latestArticlesSection" class="content-box box-4 box-style-1">
 					<div class="zerogrid">
 						<div class="wrap-box">
 							<div class="header wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">
@@ -455,10 +458,10 @@
 							<div class="wrap-col">
 								<h3 class="widget-title">О нас</h3>
 								<p>Мы создали эту страницу для вовлечения в проблемы экологии как можно большего числа людей.</p>
-								<p>Это требуется для того что бы все вместе мы смогли изменить наше будущее к лучшему.</p>
+								<p>Это требуется для того что бы все вместе мы смогли изменить нас самих и наше будущее к лучшему.</p>
 								<ul class="quicklinks">
-									<li><a href="#">Мы вас не отслеживаем</a></li>
-									<li><a href="#">Этот сайт является достоянием всех людей</a></li>
+									<li><a href="">Мы вас не отслеживаем</a></li>
+									<li><a href="">Этот сайт является достоянием всех людей</a></li>
 								</ul>
 							</div>
 						</div>
@@ -513,86 +516,13 @@
 		<!-- Definity JS -->
 		<script src='{% static "js/main.js" %}'></script>
 
-		<script>
-			initializePage();
-			function initializePage() {
+		<!-- JavaScript Ajax CSRF -->
+		<script src='{% static "js/csrf/ajax-csrf.js" %}'></script>
 
-				$.get("{% url 'latest_articles' %}", function (latestArticles) {
-					var latestArticlesHTML = "";
-					$.each(latestArticles, function(index, latestArticle) {
-						latestArticlesHTML += '<div id="latestArticles" class="sm-1-3">';
-						latestArticlesHTML += '<div class="wrap-col">';
-						latestArticlesHTML += '<div class="box-entry">';
-						latestArticlesHTML += '<div class="box-entry-inner">';
-						latestArticlesHTML += '<img src=\'{% static "images/1.jpg" %}\' class="img-responsive" />';
-						latestArticlesHTML += '<div class="entry-details">';
-						latestArticlesHTML += '<div class="entry-des">';
-						latestArticlesHTML += '<span>'+latestArticle.creation_date+'</span>';
-						latestArticlesHTML += '<h3><a href="javascript:showArticle('+latestArticle.article_id+')">'+latestArticle.title+'</a></h3>';
-						latestArticlesHTML += '<p>'+latestArticle.header_text+'</p>';
-						latestArticlesHTML += '<a class="button button-skin" href="javascript:showArticle('+latestArticle.article_id+')">Читать</a>';
-						latestArticlesHTML += '</div>';
-						latestArticlesHTML += '</div>';
-						latestArticlesHTML += '</div>';
-						latestArticlesHTML += '</div>';
-						latestArticlesHTML += '</div>';
-						latestArticlesHTML += '</div>';
-					});
-					$("#latestArticles").html(latestArticlesHTML);
-				});
-			}
-
-			function showArticle(articleId) {
-				$("#page-content").hide(1000, function() {
-					$.get("{% url 'articles' %}"+articleId, function (articleData) {
-						var articleHTML = "";
-						articleHTML += "<div class='wrap-container zerogrid'>";
-						articleHTML += "	<div class='crumbs'>";
-						articleHTML += "		<ul>";
-						articleHTML += "			<li><a href=\"{% url 'index_view' %}\">Главная</a></li>"
-						articleHTML += "			<li><a href=\"javascript:showAbout()\">О проекте</a></li>"
-						articleHTML += "		</ul>";
-						articleHTML += "</div>";
-						articleHTML += "<div id='about-us'>";
-						articleHTML += "	<article class='post-entry single-post'>";
-						articleHTML += "		<div class='wrap-post'>";
-						articleHTML += "			<div class='entry-header'>";
-						articleHTML += "				<h1 id='articleTitle' class='entry-title'>" + articleData.title + "</h1>";
-						articleHTML += "					<div class='entry-meta'>";
-						articleHTML += "						<a id='articleCreationDate'><i class='fa fa-calendar'> " + articleData.creation_date + " </i></a>";
-						articleHTML += "						<!--<a><i class='fa fa-comments'></i> 0 Comments</a>-->";
-						articleHTML += "						<!--<a><i class='fa fa-tag'></i> Event, New</a>-->";
-						articleHTML += "					</div>";
-						articleHTML += "				</div>";
-						articleHTML += "				<div class='post-thumbnail-wrap'>";
-						articleHTML += "					<img src='images/single.jpg' />";
-						articleHTML += "				</div>";
-						articleHTML += "				<div id='articleMainText' class='entry-content'>" + articleData.main_text + "</div>";
-						articleHTML += "			</div>";
-						articleHTML += "		</article>";
-						articleHTML += "	</div>";
-						articleHTML += "</div>";
-						$("#page-content").html(articleHTML).show(1000);
-						$([document.documentElement, document.body]).animate({
-							scrollTop: $("#page-content").offset().top
-						}, 2000);
-					});
-
-				});
-			}
-
-			function showAbout() {
-				$("#page-content").hide(1000, function() {
-					$.get("{% url 'about_view' %}", function (data) {
-						$("#page-content").html(data);
-						$("#page-content").show(1000);
-						$([document.documentElement, document.body]).animate({
-							scrollTop: $("#page-content").offset().top
-						}, 2000);
-					});
-				});
-			}
-		</script>
+		<!-- JavaScript Green Planet -->
+		<script>var TOKEN_ELEMENT = '{% csrf_token %}';</script>
+		<script src='{% static "js/green_planet/green_planet.js" %}'></script>
+		<script>initializePage();</script>
 	</div>
 </body>
 </html>
