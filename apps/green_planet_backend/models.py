@@ -1,4 +1,5 @@
 """ Green Planet article related  """
+import os
 from django.db.models import Model
 from django.db.models import AutoField
 from django.db.models import CharField
@@ -10,6 +11,8 @@ from django.db.models import URLField
 from django.db.models import ForeignKey
 from django.db.models import PositiveIntegerField
 from django.db.models import CASCADE
+from django.db.models import signals
+from django.dispatch import receiver
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -25,7 +28,7 @@ class Representation(Model):
     representation_id = AutoField(primary_key=True)
     representation_type_code = IntegerField(null=True, blank=False,
                                             choices=TYPES)
-    articles = GenericRelation('ArticleRepresentation',
+    article_representation = GenericRelation('ArticleRepresentation',
                                object_id_field='representation_id',
                                content_type_field='representation_content_type') #Bi-directional mapping
 
@@ -46,6 +49,13 @@ class ImageRepresentation(Representation):
 
     class Meta:
         db_table = "green_planet_image_representation"
+
+@receiver(signals.post_delete, sender=ImageRepresentation)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """ Deletes image from filesystem when corresponding ImageRepresentation object is deleted """
+    if instance.image_file:
+        if os.path.isfile(instance.image_file.path):
+            os.remove(instance.image_file.path)
 
 class VideoRepresentation(Representation):
     """ Video Representation entity which saves URL to video """
