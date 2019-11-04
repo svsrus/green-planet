@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .logger import logging
 from .models import Article
+from .models import ImageRepresentation
 from .models_serializers import ArticleSerializer
 
 LOGGER = logging.getLogger(__name__)
@@ -69,3 +70,15 @@ class ArticleRepresentationView(APIView):
             article_serializer.save()
             return Response(article_serializer.data, status=status.HTTP_200_OK)
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        """ Method deletes ArticleRepresentation with corresponding Representation and its child"""
+        LOGGER.info("Executing ArticleRepresentationView.delete()")
+        if "deleted_image_representations" in request.data:
+            for deleted_image_representation in request.data["deleted_image_representations"]:
+                image_representation = ImageRepresentation.objects \
+                    .get(pk=deleted_image_representation["image_representation_id"])
+                image_representation.delete()
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_204_NO_CONTENT)
