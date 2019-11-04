@@ -118,3 +118,19 @@ class ArticleTest(APITestCase):
         self.assertIsNotNone(response.data["article_representations"][1]["representation"])
         self.assertIsNotNone(response.data["article_representations"][1]["representation"]
                              ["image_file"])
+
+    def test_delete_article_representation(self):
+        """ Method tests deleting image representations from article """
+        self.test_put_article_representations()
+
+        request_delete_json = {
+            "deleted_image_representations" : [
+                {
+                    "image_representation_id" : "1"
+                }
+            ]
+        }
+        response_delete = self.client.delete(SERVER_URL + "api/articleRepresentations/",
+                                             data=request_delete_json,
+                                             format='json')
+        self.assertEqual(response_delete.status_code, status.HTTP_204_NO_CONTENT)
