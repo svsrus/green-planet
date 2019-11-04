@@ -64,7 +64,7 @@
 $(document).ready(function(){
 
 $("#cssmenu").menumaker({
-   title: "Menu",
+   title: "Меню",
    format: "multitoggle"
 });
 
