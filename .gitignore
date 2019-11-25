@@ -1,3 +1,6 @@
+#STATIC files for deployment EXCLUDED
+deployment/static
+
 #USER IMAGES EXCLUDE
 uploaded/
 
