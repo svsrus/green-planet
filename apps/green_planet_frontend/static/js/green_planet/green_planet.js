@@ -242,6 +242,9 @@ function saveFinalArticle() {
     window.location.href = URL_INDEX;
 }
 
+/**
+ * Function searches for deleted images from TextArea, if found sends a request to delete it from backend.
+ */
 function deleteRemovedImages() {
     var changes = $R('#main_text', 'storage.getChanges');
     request_json = {
