@@ -15,18 +15,18 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-LOGS_DIR = os.path.join(BASE_DIR, 'logs')
+LOGS_DIR = os.path.join(BASE_DIR, 'logs', 'djangoapp')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'rn_%l0wj_8&*(ul^ym!ombwj%_u_+iifgkm^z*ivaxg@9o(8e+'
+SECRET_KEY = os.getenv("SECRET_KEY", default='rn_%l0wj_8&*(ul^ym!ombwj%_u_+iifgkm^z*ivaxg@9o(8e+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.getenv("DEBUG", default=1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.99.100', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -60,12 +60,25 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'green_planet.urls'
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'green_planet/static')
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.2/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, "deployment", "static")
+STATIC_URL = '/static/'
+
+#Default STATIC directory copied automatically
+#STATICFILES_DIRS = (
+#    os.path.join(BASE_DIR, "apps", "green_planet_frontend", "static"),
+#)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded", "images/")
+MEDIA_URL = '/uploaded/images/'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(os.path.dirname(BASE_DIR), 'green_planet/apps/green_planet_frontend/static')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,14 +96,16 @@ WSGI_APPLICATION = 'green_planet.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': os.getenv("SQL_ENGINE", default="django.db.backends.sqlite3"),
+        'NAME': os.getenv("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
+        'USER': os.getenv("SQL_USER"),
+        'PASSWORD': os.getenv("SQL_PASSWORD"),
+        'HOST': os.getenv("SQL_HOST"),
+        'PORT': os.getenv("SQL_PORT"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -123,13 +138,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploaded/images/')
-
-MEDIA_URL = '/uploaded/images/'
