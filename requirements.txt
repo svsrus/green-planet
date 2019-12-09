@@ -2,7 +2,7 @@ astroid==2.2.5
 autopep8==1.4.4
 cffi==1.13.2
 colorama==0.4.1
-Django==2.2.5
+Django==2.2.8
 djangorestframework==3.10.2
 gevent==1.4.0
 greenlet==0.4.15
