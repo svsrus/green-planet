@@ -9,6 +9,15 @@ volumes:
     shared-static-content:
     shared-media-content:
 
+# сети между контейнерами
+networks: 
+    # сеть между nginx сервером и gunicorn
+    network_web: 
+        driver: bridge
+    # сеть между djangoapp и postgresql
+    network_db:
+        driver: bridge
+
 # сервисы
 services:
     nginx:
@@ -31,6 +40,8 @@ services:
         # мапаем порт 80 на его 8080 (куда:откуда). Тогда сайт будет доступен по адресу localhost. Убедись, что порт не занят.
         ports:
             - 80:8080
+        networks: 
+            - network_web
         depends_on:
             - djangoapp
 
@@ -53,6 +64,9 @@ services:
             - 8000
         ports:
             - 8000:8000
+        networks: 
+            - network_web
+            - network_db
         # Запускаем gunicorn
         command: gunicorn -c /appvol/green_planet/gunicorn_config.py green_planet.wsgi
         # База данных postgre
@@ -66,6 +80,8 @@ services:
         env_file:
             - ./docker/django/.env.prd
         entrypoint: /appvol/green_planet/docker/django/entrypoint.sh
+        networks: 
+            - network_db
         links: 
             - postgres
         depends_on:
@@ -77,6 +93,8 @@ services:
         image: postgres:12.1-alpine
         ports:
             - 5432:5432
+        networks: 
+            - network_db
         env_file:
             - ./docker/postgresql/.env.prd.db
         environment:
