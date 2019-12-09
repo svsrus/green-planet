@@ -1,5 +1,5 @@
 # Docker compose for Green Planet web site
-version: '3.6'
+version: '3.3'
 
 # хранилища
 volumes:
