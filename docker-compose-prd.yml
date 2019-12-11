@@ -47,7 +47,7 @@ services:
 
     djangoapp:
         restart: always
-        image: svsrus/green_planet:1.0
+        image: green_planet:1.0
         # переменные среды
         env_file:
             - ./docker/django/.env.prd
@@ -76,7 +76,7 @@ services:
 
     # Обновление структуры базы данных с помощью python migrate
     migrate:
-        image: svsrus/green_planet:1.0
+        image: green_planet:1.0
         env_file:
             - ./docker/django/.env.prd
         entrypoint: /appvol/green_planet/docker/django/entrypoint.sh
