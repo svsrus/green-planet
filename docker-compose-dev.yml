@@ -1,0 +1,103 @@
+# Docker compose for Green Planet web site
+version: '3.3'
+
+# хранилища
+volumes:
+    # хранилище для базы данных
+    postgre-sql-data:
+    # общее хранилище между двумя контейнерами nginx и djangoapp
+    shared-static-content:
+    shared-media-content:
+
+# сети между контейнерами
+networks: 
+    # сеть между nginx сервером и gunicorn
+    network_web: 
+        driver: bridge
+    # сеть между djangoapp и postgresql
+    network_db:
+        driver: bridge
+
+# сервисы
+services:
+    nginx:
+        # при падении будет стараться подняться
+        restart: always
+        # nginx версия 1.13
+        image: nginx:1.13
+        # и nginx зависит от контейнера djangoapp. Т.е. djangoapp должен быть запущен первым
+        build:
+            context: .
+            dockerfile: docker/nginx/Dockerfile
+        # монтируем только те директории, в которых лежит статика, т.к. nginx с динамикой не будет работать. Также директорию с логами и файл настройки, который мы подготовили.
+        volumes:
+            - ./logs/nginx:/appvol/green_planet/logs/nginx
+            - shared-static-content:/appvol/green_planet/deployment/static
+            - shared-media-content:/appvol/green_planet/uploaded/images
+        # слушает порт 8080
+        expose:
+            - 8080
+        # мапаем порт 80 на его 8080 (куда:откуда). Тогда сайт будет доступен по адресу localhost. Убедись, что порт не занят.
+        ports:
+            - 80:8080
+        networks: 
+            - network_web
+        depends_on:
+            - djangoapp
+
+    djangoapp:
+        restart: always
+        image: svsrus/green_planet:1.0
+        # переменные среды
+        env_file:
+            - ./docker/django/.env.dev
+        # указываем откуда собирать образ
+        build:
+            context: .
+            dockerfile: docker/django/Dockerfile
+        # хранилища между образами и filesystem
+        volumes:
+            - ./logs/djangoapp:/appvol/green_planet/logs/djangoapp
+            - shared-static-content:/appvol/green_planet/deployment/static
+            - shared-media-content:/appvol/green_planet/uploaded/images
+        expose:
+            - 8000
+        ports:
+            - 8000:8000
+        networks: 
+            - network_web
+            - network_db
+        # Запускаем gunicorn
+        command: gunicorn -c /appvol/green_planet/gunicorn_config.py green_planet.wsgi
+        # База данных postgre
+        depends_on:
+            - postgres
+            - migrate
+
+    # Обновление структуры базы данных с помощью python migrate
+    migrate:
+        image: svsrus/green_planet:1.0
+        env_file:
+            - ./docker/django/.env.dev
+        entrypoint: /appvol/green_planet/docker/django/entrypoint.sh
+        networks: 
+            - network_db
+        links: 
+            - postgres
+        depends_on:
+            - postgres
+
+    # Ниже даже расписывать не хочу, насколько все просто: логин, пароль, БД, порты и т.д.
+    postgres:
+        restart: always
+        image: postgres:12.1-alpine
+        ports:
+            - 5432:5432
+        networks: 
+            - network_db
+        env_file:
+            - ./docker/postgresql/.env.dev.db
+        environment:
+            PGDATA: /var/lib/postgresql/data
+        volumes:
+            - postgre-sql-data:/var/lib/postgresql/data
