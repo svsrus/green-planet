@@ -2,12 +2,12 @@
 version: '3.3'
 
 # хранилища
-volumes:
+#volumes:
     # хранилище для базы данных
-    postgre-sql-data:/appvol/green_planet/database/postgresql
+    #postgre-sql-data:
     # общее хранилище между двумя контейнерами nginx и djangoapp
-    shared-static-content:/appvol/green_planet/deployment/static
-    shared-media-content:/appvol/green_planet/uploaded/images
+    #shared-static-content:
+    #shared-media-content:
 
 # сети между контейнерами
 networks: 
@@ -32,8 +32,8 @@ services:
         # монтируем только те директории, в которых лежит статика, т.к. nginx с динамикой не будет работать. Также директорию с логами и файл настройки, который мы подготовили.
         volumes:
             - /appvol/green_planet/logs/nginx:/appvol/green_planet/logs/nginx
-            - shared-static-content:/appvol/green_planet/deployment/static
-            - shared-media-content:/appvol/green_planet/uploaded/images
+            - /appvol/green_planet/uploaded/images:/appvol/green_planet/deployment/static
+            - /appvol/green_planet/uploaded/images:/appvol/green_planet/uploaded/images
         # слушает порт 8080
         expose:
             - 8080
@@ -58,8 +58,8 @@ services:
         # хранилища между образами и filesystem
         volumes:
             - /appvol/green_planet/logs/djangoapp:/appvol/green_planet/logs/djangoapp
-            - shared-static-content:/appvol/green_planet/deployment/static
-            - shared-media-content:/appvol/green_planet/uploaded/images
+            - /appvol/green_planet/deployment/static:/appvol/green_planet/deployment/static
+            - /appvol/green_planet/uploaded/images:/appvol/green_planet/uploaded/images
         expose:
             - 8000
         ports:
@@ -100,4 +100,4 @@ services:
         environment:
             PGDATA: /var/lib/postgresql/data
         volumes:
-            - postgre-sql-data:/var/lib/postgresql/data
+            - /appvol/green_planet/database/postgresql:/var/lib/postgresql/data
