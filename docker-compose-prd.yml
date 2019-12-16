@@ -15,8 +15,8 @@ networks:
     network_web: 
         driver: bridge
     # сеть между djangoapp и postgresql
-    network_db:
-        driver: bridge
+    #network_db:
+    #    driver: bridge
 
 # сервисы
 services:
@@ -66,12 +66,12 @@ services:
             - 8000:8000
         networks: 
             - network_web
-            - network_db
+            #- network_db
         # Запускаем gunicorn
         command: gunicorn -c /appvol/green_planet/gunicorn_config.py green_planet.wsgi
         # База данных postgre
         depends_on:
-            - postgres
+            #- postgres
             - migrate
 
     # Обновление структуры базы данных с помощью python migrate
@@ -80,24 +80,24 @@ services:
         env_file:
             - ./docker/django/.env.prd
         entrypoint: /appvol/green_planet/docker/django/entrypoint.sh
-        networks: 
-            - network_db
-        links: 
-            - postgres
-        depends_on:
-            - postgres
+    #    networks: 
+    #        - network_db
+    #    links: 
+    #        - postgres
+    #    depends_on:
+    #        - postgres
 
     # Ниже даже расписывать не хочу, насколько все просто: логин, пароль, БД, порты и т.д.
-    postgres:
-        restart: always
-        image: postgres:12.1-alpine
-        ports:
-            - 5432:5432
-        networks: 
-            - network_db
-        env_file:
-            - ./docker/postgresql/.env.prd.db
-        environment:
-            PGDATA: /var/lib/postgresql/data
-        volumes:
-            - /appvol/green_planet/database/postgresql:/var/lib/postgresql/data
+    #postgres:
+    #    restart: always
+    #    image: postgres:12.1-alpine
+    #    ports:
+    #        - 5432:5432
+    #    networks: 
+    #        - network_db
+    #    env_file:
+    #        - ./docker/postgresql/.env.prd.db
+    #    environment:
+    #        PGDATA: /var/lib/postgresql/data
+    #    volumes:
+    #        - /appvol/green_planet/database/postgresql:/var/lib/postgresql/data
