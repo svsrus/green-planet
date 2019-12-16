@@ -32,7 +32,7 @@ services:
         # монтируем только те директории, в которых лежит статика, т.к. nginx с динамикой не будет работать. Также директорию с логами и файл настройки, который мы подготовили.
         volumes:
             - /appvol/green_planet/logs/nginx:/appvol/green_planet/logs/nginx
-            - /appvol/green_planet/uploaded/images:/appvol/green_planet/deployment/static
+            - /appvol/green_planet/deployment/static:/appvol/green_planet/deployment/static
             - /appvol/green_planet/uploaded/images:/appvol/green_planet/uploaded/images
         # слушает порт 8080
         expose:
