@@ -1,12 +1,12 @@
 # Docker compose for Green Planet web site
 version: '3.3'
 
-# хранилища
-#volumes:
+# общие хранилища, без записи на диск
+volumes:
     # хранилище для базы данных
     #postgre-sql-data:
     # общее хранилище между двумя контейнерами nginx и djangoapp
-    #shared-static-content:
+    shared-static-content:
     #shared-media-content:
 
 # сети между контейнерами
@@ -32,7 +32,7 @@ services:
         # монтируем только те директории, в которых лежит статика, т.к. nginx с динамикой не будет работать. Также директорию с логами и файл настройки, который мы подготовили.
         volumes:
             - /appvol/green_planet/logs/nginx:/appvol/green_planet/logs/nginx
-            - /appvol/green_planet/deployment/static:/appvol/green_planet/deployment/static
+            - shared-static-content:/appvol/green_planet/deployment/static
             - /appvol/green_planet/uploaded/images:/appvol/green_planet/uploaded/images
         # слушает порт 8080
         expose:
@@ -58,7 +58,7 @@ services:
         # хранилища между образами и filesystem
         volumes:
             - /appvol/green_planet/logs/djangoapp:/appvol/green_planet/logs/djangoapp
-            - /appvol/green_planet/deployment/static:/appvol/green_planet/deployment/static
+            - shared-static-content:/appvol/green_planet/deployment/static
             - /appvol/green_planet/uploaded/images:/appvol/green_planet/uploaded/images
         expose:
             - 8000
