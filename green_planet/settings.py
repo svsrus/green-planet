@@ -120,6 +120,7 @@ else:
     }
 
 print(f"settings.py - DEBUG: '{DEBUG}'")
+print(f"settings.py - DATABASES.RDS: '{'RDS_DB_NAME' in os.environ}'")
 print(f"settings.py - DATABASES.NAME: '{DATABASES['default']['NAME']}'")
 print(f"settings.py - DATABASES.USER: '{DATABASES['default']['USER']}'")
 print(f"settings.py - DATABASES.HOST: '{DATABASES['default']['HOST']}'")
