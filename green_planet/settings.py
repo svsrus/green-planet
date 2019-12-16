@@ -96,16 +96,34 @@ WSGI_APPLICATION = 'green_planet.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': os.getenv("SQL_ENGINE", default="django.db.backends.sqlite3"),
-        'NAME': os.getenv("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
-        'USER': os.getenv("SQL_USER"),
-        'PASSWORD': os.getenv("SQL_PASSWORD"),
-        'HOST': os.getenv("SQL_HOST"),
-        'PORT': os.getenv("SQL_PORT"),
+if 'RDS_DB_NAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('RDS_DB_NAME'),
+            'USER': os.getenv('RDS_USERNAME'),
+            'PASSWORD': os.getenv('RDS_PASSWORD'),
+            'HOST': os.getenv('RDS_HOSTNAME'),
+            'PORT': os.getenv('RDS_PORT'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.getenv("SQL_ENGINE", default="django.db.backends.sqlite3"),
+            'NAME': os.getenv("SQL_DATABASE", default=os.path.join(BASE_DIR, "db.sqlite3")),
+            'USER': os.getenv("SQL_USER"),
+            'PASSWORD': os.getenv("SQL_PASSWORD"),
+            'HOST': os.getenv("SQL_HOST"),
+            'PORT': os.getenv("SQL_PORT"),
+        }
+    }
+
+print(f"settings.py - DEBUG: '{DEBUG}'")
+print(f"settings.py - DATABASES.NAME: '{DATABASES['default']['NAME']}'")
+print(f"settings.py - DATABASES.USER: '{DATABASES['default']['USER']}'")
+print(f"settings.py - DATABASES.HOST: '{DATABASES['default']['HOST']}'")
+print(f"settings.py - DATABASES.PORT: '{DATABASES['default']['PORT']}'")
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
