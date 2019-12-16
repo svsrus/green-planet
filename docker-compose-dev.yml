@@ -1,7 +1,7 @@
 # Docker compose for Green Planet web site
 version: '3.3'
 
-# хранилища
+# общие хранилища, без записи на диск
 volumes:
     # хранилище для базы данных
     postgre-sql-data:
