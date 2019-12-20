@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", default='rn_%l0wj_8&*(ul^ym!ombwj%_u_+iifgk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.getenv("DEBUG", default=1))
 
-ALLOWED_HOSTS = ['зелёная-планета.рус', '192.168.99.100', '127.0.0.1', 'localhost', '3.125.59.80', 'ec2-3-125-59-80.eu-central-1.compute.amazonaws.com']
+ALLOWED_HOSTS = ['зелёная-планета.рус', 'xn----7sbbavdj7acrev7b6l1a.xn--p1acf', 'www.xn----7sbbavdj7acrev7b6l1a.xn--p1acf', '192.168.99.100', '127.0.0.1', 'localhost', '3.125.59.80', 'ec2-3-125-59-80.eu-central-1.compute.amazonaws.com']
 
 
 # Application definition
