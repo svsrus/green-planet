@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ['зелёная-планета.рус', 'xn----7sbbavdj7acrev7b
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'apps.green_planet_backend',
     'apps.green_planet_frontend',
     'apps.green_planet_frontend_react',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -71,18 +71,18 @@ STATIC_URL = '/static/'
 #STATICFILES_DIRS = (
 #    os.path.join(BASE_DIR, "apps", "green_planet_frontend", "static"),
 #)
-
-# Local bucket for uploaded images
+# Local media bucket for uploaded images
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploaded", "images/")
 MEDIA_URL = '/uploaded/images/'
 
 # AWS S3 bucket for uploaded images
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
-AWS_STORAGE_BUCKET_NAME = ''
-AWS_S3_REGION_NAME = 'eu-central-1b'
-AWS_DEFAULT_ACL = None
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
+AWS_DEFAULT_ACL = os.getenv("AWS_S3_REGION_NAME")
+AWS_QUERYSTRING_AUTH = os.getenv("AWS_QUERYSTRING_AUTH") #Public S3 bucket
+DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
 
 TEMPLATES = [
     {
