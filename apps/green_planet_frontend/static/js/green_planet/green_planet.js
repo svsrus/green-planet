@@ -3,6 +3,9 @@
  */
 const REPRESENTATION_IMAGE_TYPE_CODE = 1;
 const REPRESENTATION_VIDEO_TYPE_CODE = 2;
+const REQUEST_TYPE_POST = "POST";
+const REQUEST_TYPE_PUT = "PUT";
+const REQUEST_TYPE_DELETE = "DELETE";
 
 /**
  * Function initializes main page with latest articles list.
@@ -153,48 +156,91 @@ function showNewArticle() {
     });
 }
 
+function saveInitialArticle(xhr) {
+    
+}
+
 /**
  * Function adds article representation and uploads files to backend.
  */
-function addArticleRepresentations(formData, files, event) {
-    var response_json = {};
-    var request_json = {
-        "article_id": createArticle(),
+function addArticleRepresentations(formData, files, event, upload) {
+    return new Promise(function(resolve, reject) {
+        $("body").addClass("loading"); //Turn on waiting globe
+        var request_json = getArticleRequestJson();
+        $.ajax({
+            type: getPostPutRequestType(),
+            url: URL_ARTICLES,
+            data: JSON.stringify(request_json),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function(data) {
+            $("#article_id").val(data["article_id"]); //Sets new created article_id to hidden field for later update
+            request_json["article_id"] = data["article_id"]; //Sets new created_article_id for article image update request 
+            addArticleRepresentationImage(files, request_json); //Adds image representation to article request
+            formData.append("json_data", JSON.stringify(request_json)); //Wraps request with formData object
+            $.ajax({
+                type: REQUEST_TYPE_PUT,
+                url: URL_ARTICLE_REPRESENTATIONS,
+                data: formData,
+                contentType: false,
+                processData: false,
+            }).done(function(data) {
+                var lastRepresentationIndex = data["article_representations"].length - files.length;
+                var representation = data["article_representations"][lastRepresentationIndex]["representation"];
+                if (REPRESENTATION_IMAGE_TYPE_CODE == representation["representation_type_code"]) {
+                    response_json = {"file": {"id": representation["representation_id"], "url": representation["image_file"]}};
+                    resolve(response_json);
+                }
+            }).fail(function(error) {
+                reject(processError(error));
+            });
+        }).fail(function(error) {
+            reject(processError(error));
+        });
+    }).then(function(response_json) {
+        upload.complete(response_json);
+        $("body").removeClass("loading"); //Turn off waiting globe
+    }).catch(function(error) {
+        upload.complete(error);
+        $("body").removeClass("loading"); //Turn off waiting globe
+    });
+}
+
+/**
+ * Function returns filled Article json for post/put request.
+ */
+function getArticleRequestJson() {
+    return {
+        "article_id": $("#article_id").val(),
         "title": $("#title").val(),
         "header_text": $("#header_text").val(),
         "main_text": $("#main_text").val(),
         "article_representations": []
     };
+}
+
+/**
+ * Function detects if this is a new article, then POST request type is return,
+ * otherwise PUT request type is returned for article data update.
+ */
+function getPostPutRequestType() {
+    if ($("#article_id").val() == null || $("#article_id").val() == "") {
+        return REQUEST_TYPE_POST;
+    }
+    return REQUEST_TYPE_PUT;
+}
+
+/**
+ * Function adds one image representation element for image upload and saving process.
+ */
+function addArticleRepresentationImage(files, request_json) {
     for (var i = 0; i < files.length; i++) {
         request_json["article_representations"].push({
             "representation": {
-                "representation_type_code": 1
+                "representation_type_code": REPRESENTATION_IMAGE_TYPE_CODE
             }
         });
     }
-    formData.append("json_data", JSON.stringify(request_json));
-    $.ajax({
-        type: "PUT",
-        url: URL_ARTICLE_REPRESENTATIONS,
-        data: formData,
-        contentType: false,
-        processData: false,
-        async: false,
-        success: function (data) {
-            var lastRepresentationIndex = data["article_representations"].length - files.length;
-            var representation = data["article_representations"][lastRepresentationIndex]["representation"];
-            if (REPRESENTATION_IMAGE_TYPE_CODE == representation["representation_type_code"]) {
-                response_json["file"] = {
-                    "id": representation["representation_id"],
-                    "url": representation["image_file"]
-                };
-            }
-        },
-        error: function(error) {
-            processError(error);
-        }
-    });
-    return response_json;
 }
 
 /**
