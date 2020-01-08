@@ -244,37 +244,6 @@ function addArticleRepresentationImage(files, request_json) {
 }
 
 /**
- * Function creates new article.
- */
-function createArticle() {
-    var article_id = $("#article_id").val();
-    if (article_id == "") {
-        request_json = {
-            "title": $("#title").val(),
-            "header_text": $("#header_text").val(),
-            "main_text": $("#main_text").val(),
-            "article_representations": []
-        };
-        $.ajax({
-            type: "POST",
-            url: URL_ARTICLES,
-            data: JSON.stringify(request_json),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                article_id = data["article_id"];
-                $("#article_id").val(article_id);
-            },
-            error: function(error) {
-                processError(error);
-            }
-        });
-    }
-    return article_id;
-}
-
-/**
  * Function saves final article if not already saved, or updates it with latest modifications,
  * then user is redirected to the main page.
  */
@@ -282,16 +251,57 @@ function saveFinalArticle() {
     if ($("#article_id").val() == "") {
         createArticle(); //In case of article has no images
     } else {
-        deleteRemovedImages();
         updateArticle();
     }
-    window.location.href = URL_INDEX;
 }
 
 /**
- * Function searches for deleted images from TextArea, if found sends a request to delete it from backend.
+ * Function creates new article.
  */
-function deleteRemovedImages() {
+function createArticle() {
+    $.ajax({
+        type: "POST",
+        url: URL_ARTICLES,
+        data: JSON.stringify(getArticleRequestJson()),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            window.location.href = URL_INDEX;
+        },
+        error: function(error) {
+            processError(error);
+        }
+    });
+}
+
+/**
+ * Function updates article with latest modifications.
+ */
+function updateArticle() {
+    $("body").addClass("loading"); //Turn on waiting globe
+    return updateArticleConditionalPromise().then(function(data) {
+        $("body").removeClass("loading"); //Turn off waiting globe
+        window.location.href = URL_INDEX;
+    }).catch(function(error) {
+        $("body").removeClass("loading"); //Turn off waiting globe
+    });
+}
+
+/**
+ * Function deletes removed images and updates article or just updates article.
+ */
+function updateArticleConditionalPromise() {
+    request_json = getRemovedImages();
+    if (request_json.deleted_image_representations.length > 0) {
+        return deleteRemovedImages(request_json).then(updateArticleData);
+    }
+    return updateArticleData();
+}
+
+/**
+ * Function searches for deleted images from TextArea and returns filled json list if found any.
+ */
+function getRemovedImages() {
     var changes = $R('#main_text', 'storage.getChanges');
     request_json = {
         "deleted_image_representations": [],
@@ -302,49 +312,45 @@ function deleteRemovedImages() {
             request_json.deleted_image_representations.push({"image_representation_id" : changes[key].id});
         }
     }
-    if (request_json.deleted_image_representations.length > 0) {
-        $.ajax({
-            type: "DELETE",
-            url: URL_ARTICLE_REPRESENTATIONS,
-            data: JSON.stringify(request_json),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            success: function (data) {
-                console.log("deleted images = " + request_json.deleted_image_representations.length)
-            },
-            error: function(error) {
-                processError(error);
-            }
-        });
-    }
+    return request_json;
 }
 
 /**
- * Function updates article with latest modifications.
+ * Function sends a request to delete in backend, removed images from TextArea.
  */
-function updateArticle() {
-    request_json = {
-        "article_id": $("#article_id").val(),
-        "title": $("#title").val(),
-        "header_text": $("#header_text").val(),
-        "main_text": $("#main_text").val(),
-        "article_representations": []
-    };
-    $.ajax({
-        type: "PUT",
-        url: URL_ARTICLES,
-        data: JSON.stringify(request_json),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: false,
-        success: function (data) {
-            article_id = data["article_id"];
-            $("#article_id").val(article_id);
-        },
-        error: function(error) {
-            processError(error);
-        }
+function deleteRemovedImages(request_json) {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: REQUEST_TYPE_DELETE,
+            url: URL_ARTICLE_REPRESENTATIONS,
+            data: JSON.stringify(request_json),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function(data) {
+            console.log("deleted images = " + request_json.deleted_image_representations.length)
+            resolve(data);
+        }).fail(function(error) {
+            reject(processError(error));
+        });
+    });
+}
+
+/**
+ * Function updates Article with data from input form.
+ */
+function updateArticleData() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: REQUEST_TYPE_PUT,
+            url: URL_ARTICLES,
+            data: JSON.stringify(getArticleRequestJson()),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        }).done(function(data) {
+            resolve(data);
+        }).fail(function(error) {
+            reject(processError(error));
+        });
     });
 }
 
