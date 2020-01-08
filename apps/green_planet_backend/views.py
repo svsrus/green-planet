@@ -1,8 +1,11 @@
 """ GREEN PLANET BACKEND - views module """
+import os
 import json
+import boto3
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.conf import settings
 from .logger import logging
 from .models import Article
 from .models import ImageRepresentation
@@ -62,6 +65,9 @@ class ArticleRepresentationView(APIView):
         #Setting a list of images to the json, to pass images though validations
         files = request.FILES.getlist('image[]')
         for i in range(len(files)):
+            filename, file_extension = os.path.splitext(files[i].name)
+            #Changing filename relating it to article id
+            files[i].name = filename + "_" + str(data["article_id"]) + file_extension
             data["article_representations"][i]["representation"]["image_file"] = files[i]
 
         article = Article.objects.get(pk=data["article_id"])
@@ -75,9 +81,16 @@ class ArticleRepresentationView(APIView):
         """ Method deletes ArticleRepresentation with corresponding Representation and its child"""
         LOGGER.info("Executing ArticleRepresentationView.delete()")
         if "deleted_image_representations" in request.data:
+            aws_s3_client = boto3.client('s3')
+
             for deleted_image_representation in request.data["deleted_image_representations"]:
                 image_representation = ImageRepresentation.objects \
                     .get(pk=deleted_image_representation["image_representation_id"])
+
+                aws_s3_client.delete_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, 
+                                            Key=image_representation.image_file.name)
+
+                image_representation.image_file.delete(save=False)
                 image_representation.delete()
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
