@@ -47,7 +47,7 @@ services:
 
     djangoapp:
         restart: always
-        image: green_planet:1.0
+        image: green_planet:latest
         # переменные среды
         env_file:
             - ./docker/django/.env.prd
@@ -73,13 +73,20 @@ services:
         depends_on:
             #- postgres
             - migrate
+            - collect_satic
 
     # Обновление структуры базы данных с помощью python migrate
     migrate:
-        image: green_planet:1.0
+        image: green_planet:latest
         env_file:
             - ./docker/django/.env.prd
         entrypoint: /appvol/green_planet/docker/django/entrypoint.sh
+
+    # Обновление статических фйлов python collectstatic
+    collect_satic:
+        image: green_planet:latest
+        command: python manage.py collectstatic --noinput
+
     #    networks: 
     #        - network_db
     #    links: 
