@@ -2,6 +2,7 @@
 import os
 import json
 import boto3
+import bleach
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,6 +13,11 @@ from .models import ImageRepresentation
 from .models_serializers import ArticleSerializer
 
 LOGGER = logging.getLogger(__name__)
+ALLOWED_HTML_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'span', 'div', 'label', 'a',
+                     'br', 'p', 'b', 'i', 'del', 'strike', 'u', 'img', 'video', 'embed', 'param',
+                     'blockquote', 'mark', 'cite', 'small', 'ul', 'ol', 'li', 'hr', 'dl', 'dt',
+                     'dd', 'sup', 'sub', 'big', 'pre', 'code', 'figure', 'figcaption', 'strong',
+                     'em', 'table', 'tr', 'td', 'th', 'tbody', 'thead', 'tfoot']
 
 class LatestArticlesView(APIView):
     """ API View Class is responsible for delivering latest articles """
@@ -19,7 +25,8 @@ class LatestArticlesView(APIView):
     def get(self, request):
         """ Method searches lastest published articles and returns this list as JSON """
         LOGGER.info("Executing LatestArticlesView.get()")
-        articles = Article.objects.filter().order_by('-article_id')[:3]
+        articles = Article.objects.filter(state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE) \
+                                  .order_by('-article_id')[:3]
         article_serializer = ArticleSerializer(articles, many=True)
         articles_json = article_serializer.data
         return Response(articles_json)
@@ -38,6 +45,7 @@ class ArticleView(APIView):
     def post(self, request):
         """ Method gets all article data, validates, and saves it in database """
         LOGGER.info("Executing ArticleView.post()")
+        request.data["main_text"] = bleach.clean(request.data["main_text"], tags=ALLOWED_HTML_TAGS)
         article_serializer = ArticleSerializer(data=request.data)
         if article_serializer.is_valid():
             article_serializer.save()
@@ -47,6 +55,7 @@ class ArticleView(APIView):
     def put(self, request):
         """ Method gets all article data, validates, and saves it in database """
         LOGGER.info("Executing ArticleView.put()")
+        request.data["main_text"] = bleach.clean(request.data["main_text"], tags=ALLOWED_HTML_TAGS)
         article = Article.objects.get(pk=request.data["article_id"])
         article_serializer = ArticleSerializer(article, data=request.data, partial=True)
         if article_serializer.is_valid():
