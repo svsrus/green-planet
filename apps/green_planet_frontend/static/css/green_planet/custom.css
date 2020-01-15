@@ -57,3 +57,8 @@ body.loading .loadingPage {
 body.loading .loadingPage {
     display: block;
 }
+
+.errorMessage {
+    display:none;
+    color:red;
+}

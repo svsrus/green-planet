@@ -81,11 +81,20 @@ class ArticleRepresentation(Model):
 
 class Article(Model):
     """ Article entity """
+    ARTICLE_STATE_PARTIAL_CODE = 1
+    ARTICLE_STATE_VERIFIED_BY_USER_CODE = 2
+    ARTICLE_STATES = [
+        (ARTICLE_STATE_PARTIAL_CODE, 'Partial'),
+        (ARTICLE_STATE_VERIFIED_BY_USER_CODE, 'Verified by user')
+    ]
     article_id = AutoField(primary_key=True)
+    author_nickname = CharField(max_length=255) 
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)
     creation_date = DateTimeField(auto_now_add=True, blank=True, null=True)
     main_text = TextField(max_length=65535, blank=True, null=True)
+    original_source_url = URLField(null=True, blank=True, max_length=65535)
+    state_code = IntegerField(null=True, blank=False, choices=ARTICLE_STATES)
 
     class Meta:
         db_table = "green_planet_article"
