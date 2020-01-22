@@ -10,13 +10,20 @@ const REQUEST_TYPE_PUT = "PUT";
 const REQUEST_TYPE_DELETE = "DELETE";
 
 /**
- * Function initializes main page with latest articles list.
+ * Global Variables.
  */
-function initializePage() {
-    $.get(URL_LATEST_ARTICLES, function (latestArticles) {
+var shownArticlesCount = 0;
+
+/**
+ * Function shows on main page list of articles.
+ */
+function showArticles() {
+    $.get(URL_LATEST_ARTICLES, {"shownArticlesCount": shownArticlesCount}, function (latestArticles) {
         var latestArticlesHTML = "";
+        var currentColumnIndex = 0;
         $.each(latestArticles, function (index, latestArticle) {
-            latestArticlesHTML += '<div id="latestArticles" class="sm-1-3">';
+            latestArticlesHTML += getEach3ColumnsOpeningHtmlTag('<div class="row">', index, currentColumnIndex);
+            latestArticlesHTML += '<div class="sm-1-3">';
             latestArticlesHTML += '	<div class="wrap-col">';
             latestArticlesHTML += '		<div class="box-entry">';
             latestArticlesHTML += '			<div class="box-entry-inner">';
@@ -34,16 +41,53 @@ function initializePage() {
             latestArticlesHTML += '		</div>';
             latestArticlesHTML += '	</div>';
             latestArticlesHTML += '</div>';
+            latestArticlesHTML += getEach3ColumnsClosingHtmlTag('</div>', index, currentColumnIndex, false);
+            currentColumnIndex = (currentColumnIndex < 2 ? ++currentColumnIndex : 0);
+            shownArticlesCount++;
         });
-        $("#latestArticles").html(latestArticlesHTML);
+        if (!(shownArticlesCount % 3 === 0) && currentColumnIndex != 2) { //Closing row div in case it has 1 or 2 articles
+            latestArticlesHTML += '</div>';
+        }
+        if (latestArticles.length == 0) { //Hide show next articles button if no more articles are found
+            $("#showNextArticlesButton").hide();
+        }
+        $("#latestArticles").append(latestArticlesHTML);
     });
+}
+
+/**
+ * Function returns given opening HTML tag, every 3 elements.
+ */
+function getEach3ColumnsOpeningHtmlTag(htmlTag, index, currentColumnIndex) {
+    if (index % 3 === 0 && currentColumnIndex == 0) {
+        return htmlTag;
+    }
+    return "";
+}
+
+/**
+ * Function returns given closing HTML tag, every 3 elements.
+ */
+function getEach3ColumnsClosingHtmlTag(htmlTag, index, currentColumnIndex) {
+    if ((index+1) % 3 === 0 && currentColumnIndex == 2) {
+        return htmlTag;
+    }
+    return "";
+}
+
+/**
+ * Function shows next N articles.
+ */
+function showNextArticles() {
+    shownArticlesCount += 3;
+    showArticles();
 }
 
 /**
  * Function is used as a direct link to latest articles.
  */
 function showLatestArticles() {
-    initializePage();
+    showArticles();
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#latestArticlesSection").offset().top
     }, 1000);
@@ -79,16 +123,19 @@ function showArticle(articleId) {
             articleHTML += "		    <div class='wrap-post'>";
             articleHTML += "			    <div class='entry-header'>";
             articleHTML += "				    <h1 id='articleTitle' class='entry-title'>" + articleData.title + "</h1>";
-            articleHTML += "				    <h2 id='articleAuthorNickname' class='entry-title'>" + articleData.author_nickname + "</h2>";
+            articleHTML += "				    <h3 id='articleAuthorNickname' class='entry-title'><p>" + articleData.author_nickname + "</p></h2>";
             articleHTML += "					<div class='entry-meta'>";
-            articleHTML += "						<a id='articleCreationDate'><i class='fa fa-calendar'> " + articleData.creation_date + " </i></a>";
+            articleHTML += "						<i class='fa fa-calendar' alt='Число публикации статьи' title='Число публикации статьи'> " + articleData.creation_date + " </i>";
+            articleHTML += "						<i class='fa fa-eye' alt='Количество просмотров статьи' title='Количество просмотров статьи'> " + articleData.total_views + " </i>";
             articleHTML += "						<!--<a><i class='fa fa-comments'></i> 0 Comments</a>-->";
             articleHTML += "						<!--<a><i class='fa fa-tag'></i> Event, New</a>-->";
             articleHTML += "					</div>";
-            articleHTML += "				    <div id='articleMainText' class='entry-content'>" + articleData.main_text + "</div>";
-            articleHTML += "					<div class='entry-meta'>";
-            articleHTML += "						" + getArticleOriginalSourceOptionalURL(articleData);
-            articleHTML += "					</div>";
+            articleHTML += "				</div>";
+            articleHTML += "				<div id='articleMainText' class='entry-content'>" + articleData.main_text + "</div>";
+            articleHTML += "			    <div class='entry-header' style='margin:0;padding:0;'>";
+            articleHTML += "				    <div class='entry-meta'>";
+            articleHTML += "				    	" + getArticleOriginalSourceOptionalURL(articleData);
+            articleHTML += "				    </div>";
             articleHTML += "				</div>";
             articleHTML += "			</div>";
             articleHTML += "	    </article>";
@@ -107,7 +154,6 @@ function showArticle(articleId) {
  * Function returns optional Original Source URL of Article.
  */
 function getArticleOriginalSourceOptionalURL(articleData) {
-    alert("articleData.original_source_url = " + articleData.original_source_url);
     if (articleData.original_source_url != null && articleData.original_source_url != "") {
         return "<a id='articleOriginalSourceURL' href='"+articleData.original_source_url+"'><i class='fa fa-external-link'> Источник статьи. </i></a>";
     }

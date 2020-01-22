@@ -113,7 +113,7 @@
 								<li><a href="javascript:showLatestArticles()"><span>Статьи</span></a></li>
 							</ul>
 						</li>
-						<li class="last"><a href="contact.html"><span>Контактные данные</span></a></li>
+						<li class="last"><a href="#"><span>Контактные данные</span></a></li>
 					</ul>
 				</div>
 
@@ -399,12 +399,12 @@
 					<div class="zerogrid">
 						<div class="wrap-box">
 							<div class="header wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">
-								<h2>Новые статьи</h2>
+								<h2>Статьи</h2>
 								<span class="intro">Всё о том как сделать нашу планету <font style="color:#27c100"><strong>Зелёной</strong>.</span>
 							</div>
-							<div class="content wow fadeInRight" data-wow-delay=".1s" data-wow-duration="1s">
-								<div id="latestArticles" class="row"></div>
+							<div id="latestArticles" class="content wow fadeInRight" data-wow-delay=".1s" data-wow-duration="1s">
 							</div>
+							<a id="showNextArticlesButton" href="javascript:showNextArticles()" class="button button-skin">Показать следующие статьи</a>
 						</div>
 					</div>
 				</section>
@@ -473,7 +473,7 @@
 							<div class="wrap-col">
 								<h3 class="widget-title">Свяжитесь с нами</h3>
 								<p>Почта:</p>
-								<strong>sergei.shurpenkov@yandex.ru</strong>
+								<a href="mailto:sergei.shurpenkov@yandex.ru" target="_top"><strong>sergei.shurpenkov@yandex.ru</strong></a>
 							</div>
 						</div>
 						<div class="sm-1-4 col-footer-3">
@@ -481,7 +481,7 @@
 								<h3 class="widget-title">в соц-сетях</h3>
 								<ul class="social-buttons">
 									<li><a href="https://vk.com/id64724233"><i class="fa fa-vk"></i></a></li>
-									<li><a href="https://www.linkedin.com/in/sergei-shurpenkov/"><i class="fa fa-linkedin"></i></a></li>
+									<!-- <li><a href="https://www.linkedin.com/in/sergei-shurpenkov/"><i class="fa fa-linkedin"></i></a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -526,7 +526,7 @@
 		<!-- JavaScript Green Planet -->
 		<script>var TOKEN_ELEMENT = '{% csrf_token %}';</script>
 		<script src='{% static "js/green_planet/green_planet.js" %}'></script>
-		<script>initializePage();</script>
+		<script>showArticles();</script>
 	</div>
 </body>
 </html>
