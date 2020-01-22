@@ -13,9 +13,12 @@ class ArticleTest(TestCase):
         """ Method tests creation of article entity """
 
         article = Article.objects.create(title="Статья первая",
+                               author_nickname="Сергей",
                                header_text="О глобальных вызовах человечества.",
                                main_text="Главный текст первой статьи.",
-                               creation_date='2019-09-30 16:28:11')
+                               original_source_url="http://www.greenplanet.com/",
+                               creation_date='2019-09-30 16:28:11',
+                               state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE)
         article.save()
 
         count = len(Article.objects.all())
@@ -25,9 +28,12 @@ class ArticleTest(TestCase):
         """ Method tests creation of article entity with different types of representations """
 
         article = Article.objects.create(title="Статья первая",
+                                         author_nickname="Сергей",
                                          header_text="О глобальных вызовах человечества.",
                                          main_text="Главный текст первой статьи.",
-                                         creation_date='2019-09-30 16:28:11')
+                                         original_source_url="http://www.greenplanet.com/",
+                                         creation_date='2019-09-30 16:28:11',
+                                         state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE)
 
         image1 = ImageRepresentation.objects.create(
             representation_type_code=Representation.TYPE_IMAGE_CODE,

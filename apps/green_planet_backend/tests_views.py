@@ -15,28 +15,40 @@ class ArticleTest(APITestCase):
     def setUp(self):
         """ Method sets up Articles data """
         Article.objects.create(title="Статья первая",
+                               author_nickname="Сергей",
                                header_text="О глобальных вызовах человечества.",
                                main_text="Главный текст первой статьи.",
-                               creation_date='2019-09-30 16:28:11').save()
+                               original_source_url="http://www.greenplanet.com/",
+                               creation_date='2019-09-30 16:28:11',
+                               state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE).save()
         Article.objects.create(title="Статья вторая",
+                               author_nickname="Сергей",
                                header_text="О проблемах культуры по отношению к планете Земля.",
                                main_text="Главный текст второй статьи.",
-                               creation_date='2019-09-30 16:28:22').save()
+                               original_source_url="http://www.greenplanet.com/",
+                               creation_date='2019-09-30 16:28:22',
+                               state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE).save()
         Article.objects.create(title="Статья третья",
+                               author_nickname="Сергей",
                                header_text="О возможных способов выхода из экологического кризиса.",
                                main_text="Главный текст третьей статьи.",
-                               creation_date='2019-09-30 16:28:33').save()
+                               original_source_url="http://www.greenplanet.com/",
+                               creation_date='2019-09-30 16:28:33',
+                               state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE).save()
         Article.objects.create(title="Статья четвертая",
+                               author_nickname="Артём",
                                header_text="О работоспособных способов преодоления " +
                                "экологического кризиса.",
                                main_text="Главный текст четвёртой статьи.",
-                               creation_date='2019-09-30 16:28:44').save()
+                               original_source_url="http://зелёная-планета.рус/",
+                               creation_date='2019-09-30 16:28:44',
+                               state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE).save()
 
     def test_get_latest_articles(self):
         """ Method tests latest articles service """
         response = self.client.get(SERVER_URL + "api/latestArticles/")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 3)
+        self.assertEqual(len(response.json()), 4)
 
     def test_get_first_article(self):
         """ Method tests a get article method of a first article """
@@ -52,8 +64,11 @@ class ArticleTest(APITestCase):
 
         request_json = {
             "title": "Статья пятая.",
+            "author_nickname": "Сергей",
             "header_text": "В ней я Вам расскажу о...",
             "main_text": "Планета нуждается в нашей общей помощи...",
+            "original_source_url": "http://зелёная-планета.рус/",
+            "state_code": Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE,
             "article_representations": [
                 {
                     "representation": {
