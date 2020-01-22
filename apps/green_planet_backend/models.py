@@ -95,9 +95,14 @@ class Article(Model):
     main_text = TextField(max_length=65535, blank=True, null=True)
     original_source_url = URLField(null=True, blank=True, max_length=65535)
     state_code = IntegerField(null=True, blank=False, choices=ARTICLE_STATES)
-
+    total_views = IntegerField(null=True, blank=True, default=0)
+    
     class Meta:
         db_table = "green_planet_article"
+
+    def increase_total_views(self):
+        """ Method increases by 1, the total number of views of this article """
+        self.total_views = self.total_views + 1
 
     def add_article_representations(self, article_representation_list):
         """ Method creates ArticleRepresentation entities and adds it to the representation list """

@@ -73,8 +73,9 @@ class ArticleSerializer(ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ["article_id", "author_nickname", "title", "header_text", "creation_date", 
-                  "main_text", "original_source_url", "state_code", "article_representations"]
+        fields = ["article_id", "author_nickname", "title", "header_text", "creation_date",
+                  "main_text", "original_source_url", "state_code", "total_views",
+                  "article_representations"]
 
     def create(self, validated_data):
         """ Method creates articles and related objects from json request """
@@ -97,7 +98,7 @@ class ArticleSerializer(ModelSerializer):
         instance.header_text = validated_data.get('header_text', instance.header_text)
         instance.main_text = validated_data.get('main_text', instance.main_text)
         instance.state_code = validated_data.get('state_code', instance.state_code)
-        instance.original_source_url = validated_data.get('original_source_url', 
+        instance.original_source_url = validated_data.get('original_source_url',
                                                           instance.original_source_url)
         instance.save()
         return instance

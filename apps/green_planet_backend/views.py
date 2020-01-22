@@ -18,6 +18,10 @@ ALLOWED_HTML_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'span', 'div', 
                      'blockquote', 'mark', 'cite', 'small', 'ul', 'ol', 'li', 'hr', 'dl', 'dt',
                      'dd', 'sup', 'sub', 'big', 'pre', 'code', 'figure', 'figcaption', 'strong',
                      'em', 'table', 'tr', 'td', 'th', 'tbody', 'thead', 'tfoot']
+ALLOWED_HTML_TAG_ATTRIBUTES = ['alt', 'title', 'target', 'href', 'src', 'data-image', 'style',
+                               'width', 'height']
+ALLOWED_HTML_TAG_STYLES = ['text-align', 'width', 'height']
+PAGE_SIZE = 3
 
 class LatestArticlesView(APIView):
     """ API View Class is responsible for delivering latest articles """
@@ -25,8 +29,10 @@ class LatestArticlesView(APIView):
     def get(self, request):
         """ Method searches lastest published articles and returns this list as JSON """
         LOGGER.info("Executing LatestArticlesView.get()")
-        articles = Article.objects.filter(state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE) \
-                                  .order_by('-article_id')[:3]
+        last_row = int(request.GET.get('shownArticlesCount')) \
+                        if "shownArticlesCount" in request.GET else 0
+        articles = Article.objects.filter() \
+                                  .order_by('-article_id')[last_row:last_row + PAGE_SIZE]
         article_serializer = ArticleSerializer(articles, many=True)
         articles_json = article_serializer.data
         return Response(articles_json)
@@ -38,6 +44,8 @@ class ArticleView(APIView):
         """ Method searches article by a given id in request, and returns it as JSON """
         LOGGER.info("Executing ArticleView.get()")
         article = Article.objects.get(pk=article_id)
+        article.increase_total_views()
+        article.save()
         article_serializer = ArticleSerializer(article, many=False)
         articles_json = article_serializer.data
         return Response(articles_json)
@@ -45,7 +53,7 @@ class ArticleView(APIView):
     def post(self, request):
         """ Method gets all article data, validates, and saves it in database """
         LOGGER.info("Executing ArticleView.post()")
-        request.data["main_text"] = bleach.clean(request.data["main_text"], tags=ALLOWED_HTML_TAGS)
+        self._clean_main_text(request)
         article_serializer = ArticleSerializer(data=request.data)
         if article_serializer.is_valid():
             article_serializer.save()
@@ -55,13 +63,20 @@ class ArticleView(APIView):
     def put(self, request):
         """ Method gets all article data, validates, and saves it in database """
         LOGGER.info("Executing ArticleView.put()")
-        request.data["main_text"] = bleach.clean(request.data["main_text"], tags=ALLOWED_HTML_TAGS)
+        self._clean_main_text(request)
         article = Article.objects.get(pk=request.data["article_id"])
         article_serializer = ArticleSerializer(article, data=request.data, partial=True)
         if article_serializer.is_valid():
             article_serializer.save()
             return Response(article_serializer.data, status=status.HTTP_200_OK)
         return Response(article_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def _clean_main_text(self, request):
+        """ Method cleans all not supported and evil tags/attributes/styles from WYSIWYG editor """
+        request.data["main_text"] = bleach.clean(request.data["main_text"],
+                                                 tags=ALLOWED_HTML_TAGS,
+                                                 attributes=ALLOWED_HTML_TAG_ATTRIBUTES,
+                                                 styles=ALLOWED_HTML_TAG_STYLES)
 
 class ArticleRepresentationView(APIView):
     """ API View Class is responsible for managing article representations """
