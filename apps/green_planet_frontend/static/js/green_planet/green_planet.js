@@ -79,7 +79,7 @@ function getEach3ColumnsClosingHtmlTag(htmlTag, index, currentColumnIndex) {
  * Function shows next N articles.
  */
 function showNextArticles() {
-    shownArticlesCount += 3;
+    shownArticlesCount += 9;
     showArticles();
 }
 
@@ -217,7 +217,8 @@ function showNewArticle() {
         articleHTML += "</div>";
         $("#page-content").html(articleHTML).show(1000, function() {
             $R('#main_text', {
-                buttons: ['html', 'bold', 'italic', 'underline', 'deleted', 'sup', 'sub', 'ol', 'ul', 'indent', 'outdent', 'image', 'link', 'redo', 'undo'],
+                buttons: ['format', 'bold', 'italic', 'underline', 'deleted', 'sup', 'sub', 'ol', 'ul', 'indent', 'outdent', 'image', 'link', 'redo', 'undo'],
+                formatting: ['h4', 'h5', 'h6', 'p', 'blockquote'],
                 lang: 'ru',
                 minHeight: '300px',
                 imageLink: true,
