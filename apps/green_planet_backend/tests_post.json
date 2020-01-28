@@ -1,22 +1,38 @@
 {
-    "article_id": 5,
-    "title": "First article.",
-    "header_text": "We will talk about...",
-    "creation_date": "2019-10-20 22:46:42",
-    "main_text": "Our planet is in critical state, we must act now.",
+    "article_id": 5, 
+    "author_nickname": "Сергей", 
+    "title": "Статья пятая.", 
+    "header_text": "В ней я Вам расскажу о...", 
+    "creation_date": "2020-01-28 21:39:08", 
+    "main_text": "Планета нуждается в нашей общей помощи...", 
+    "original_source_url": "http://зелёная-планета.рус/", 
+    "state_code": 2, 
+    "total_views": 0, 
+    "article_tags": [
+        {
+            "article_tag_id": 1, 
+            "text": "что я могу сделать сам"
+        }, {
+            "article_tag_id": 2, 
+            "text": "что мы можем сделать вместе"
+        }, {
+            "article_tag_id": 3, 
+            "text": "что может сделать человечество"
+        }
+    ], 
     "article_representations": [
         {
-            "article_representation_id": 1,
+            "article_representation_id": 1, 
             "representation": {
-                "representation_id": 1,
-                "representation_type_code": 1
+                "representation_id": 1, 
+                "representation_type_code": 1, 
+                "image_file": "c:/test.jpg"
             }
-        },
-        {
-            "article_representation_id": 2,
+        }, {
+            "article_representation_id": 2, 
             "representation": {
-                "representation_id": 2,
-                "representation_type_code": 2,
+                "representation_id": 2, 
+                "representation_type_code": 2, 
                 "video_url": "https://www.youtube.com/watch?v=j800SVeiS5I"
             }
         }

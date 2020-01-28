@@ -10,6 +10,7 @@ from django.db.models import ImageField
 from django.db.models import URLField
 from django.db.models import ForeignKey
 from django.db.models import PositiveIntegerField
+from django.db.models import ManyToManyField
 from django.db.models import CASCADE
 from django.db.models import signals
 from django.dispatch import receiver
@@ -79,6 +80,14 @@ class ArticleRepresentation(Model):
     class Meta:
         db_table = "green_planet_article_representation"
 
+class ArticleTag(Model):
+    """ Article Tag entity """
+    article_tag_id = AutoField(primary_key=True)
+    text = CharField(max_length=255, blank=False, null=False)
+
+    class Meta:
+        db_table = "green_planet_article_tag"
+
 class Article(Model):
     """ Article entity """
     ARTICLE_STATE_PARTIAL_CODE = 1
@@ -88,7 +97,7 @@ class Article(Model):
         (ARTICLE_STATE_VERIFIED_BY_USER_CODE, 'Verified by user')
     ]
     article_id = AutoField(primary_key=True)
-    author_nickname = CharField(max_length=255) 
+    author_nickname = CharField(max_length=255)
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)
     creation_date = DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -96,7 +105,8 @@ class Article(Model):
     original_source_url = URLField(null=True, blank=True, max_length=65535)
     state_code = IntegerField(null=True, blank=False, choices=ARTICLE_STATES)
     total_views = IntegerField(null=True, blank=True, default=0)
-    
+    article_tags = ManyToManyField(ArticleTag)
+
     class Meta:
         db_table = "green_planet_article"
 

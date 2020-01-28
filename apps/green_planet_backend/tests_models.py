@@ -1,6 +1,7 @@
 """ Green Planet backend test cases for entities """
 from django.test import TestCase
 from apps.green_planet_backend.models import Article
+from apps.green_planet_backend.models import ArticleTag
 from apps.green_planet_backend.models import Representation
 from apps.green_planet_backend.models import ImageRepresentation
 from apps.green_planet_backend.models import VideoRepresentation
@@ -54,10 +55,21 @@ class ArticleTest(TestCase):
         article.add_article_representations(article_representations_list)
         article.save()
 
+        article_tag1 = ArticleTag.objects.create(text="что я могу сделать сам")
+        article_tag1.save()
+        article_tag2 = ArticleTag.objects.create(text="что мы можем сделать вместе")
+        article_tag2.save()
+        article_tag3 = ArticleTag.objects.create(text="что может сделать человечество")
+        article_tag3.save()
+        article_tags_list = [article_tag1, article_tag2, article_tag3]
+        article.article_tags.add(*article_tags_list)
+
         article_db = Article.objects.get(pk=1)
         article_representations_db = article_db.article_representations.all()
+        article_tags_db = article_db.article_tags.all()
 
         self.assertEqual(len(article_representations_db), len(article_representations_list))
+        self.assertEqual(len(article_tags_db), len(article_tags_list))
 
         for article_representation in article_representations_db:
             representation = article_representation.representation
@@ -66,3 +78,6 @@ class ArticleTest(TestCase):
                 self.assertIsNotNone(representation.image_file)
             elif (representation.is_video()):
                 self.assertIsNotNone(representation.video_url)
+
+        for article_tag in article_tags_db:
+            self.assertIsNotNone(article_tag.text)

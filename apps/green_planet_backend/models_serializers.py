@@ -4,6 +4,7 @@ from rest_framework.serializers import RelatedField
 from rest_framework.serializers import DateTimeField
 from rest_framework.serializers import ValidationError
 from .models import Article
+from .models import ArticleTag
 from .models import ArticleRepresentation
 from .models import Representation
 from .models import ImageRepresentation
@@ -66,29 +67,50 @@ class ArticleRepresentationSerializer(ModelSerializer):
         model = ArticleRepresentation
         fields = ["article_representation_id", "representation"]
 
+class ArticleTagSerializer(ModelSerializer):
+    """ Article Tag relation Serializer """
+
+    class Meta:
+        """ Article Tag specific field mappings """
+        model = ArticleTag
+        fields = ["article_tag_id", "text"]
+
 class ArticleSerializer(ModelSerializer):
     """ Article entity Serializer """
     creation_date = DateTimeField(required=False, format="%Y-%m-%d %H:%M:%S")
     article_representations = ArticleRepresentationSerializer(required=False, many=True)
+    article_tags = ArticleTagSerializer(required=False, many=True)
 
     class Meta:
         model = Article
         fields = ["article_id", "author_nickname", "title", "header_text", "creation_date",
-                  "main_text", "original_source_url", "state_code", "total_views",
+                  "main_text", "original_source_url", "state_code", "total_views", "article_tags",
                   "article_representations"]
 
     def create(self, validated_data):
         """ Method creates articles and related objects from json request """
+        article_tags = validated_data.pop("article_tags") \
+                         if "article_tags" in validated_data else []
+
         article_representations = validated_data.pop("article_representations")
         representations = [article_representation["representation"]
                            for article_representation in article_representations]
+
         article = Article.objects.create(**validated_data)
         article.add_article_representations(representations)
         article.save()
+
+        for article_tag in article_tags:
+            article_tag_entity = ArticleTag.objects.create(**article_tag)
+            article_tag_entity.save()
+            article.article_tags.add(article_tag_entity)
+
         return article
 
     def update(self, instance, validated_data):
         """ Method updates articles and related objects from json/multipart request """
+        article_tags = validated_data.pop("article_tags") \
+                         if "article_tags" in validated_data else []
         article_representations = validated_data.pop("article_representations")
         representations = [article_representation["representation"]
                            for article_representation in article_representations]
@@ -100,5 +122,20 @@ class ArticleSerializer(ModelSerializer):
         instance.state_code = validated_data.get('state_code', instance.state_code)
         instance.original_source_url = validated_data.get('original_source_url',
                                                           instance.original_source_url)
+        article_tags_saved = instance.article_tags.all()
+        for article_tag in article_tags:
+            article_tag_entity = ArticleTag.objects.create(**article_tag)
+            if not self._is_article_tag_text_equals_tag_text(article_tag_entity, article_tags_saved):
+                article_tag_entity.save()
+                instance.article_tags.add(article_tag_entity)
+
         instance.save()
         return instance
+
+    def _is_article_tag_text_equals_tag_text(self, article_tag, article_tags_saved):
+        """ Method searches equals tag text, if matched True is returned, otherwise False """
+        if article_tags_saved:
+            for tag_saved in article_tags_saved:
+                if tag_saved.text.strip() == article_tag.text.strip():
+                    return True
+        return False
