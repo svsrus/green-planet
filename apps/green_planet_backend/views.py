@@ -21,7 +21,7 @@ ALLOWED_HTML_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'span', 'div', 
 ALLOWED_HTML_TAG_ATTRIBUTES = ['alt', 'title', 'target', 'href', 'src', 'data-image', 'style',
                                'width', 'height']
 ALLOWED_HTML_TAG_STYLES = ['text-align', 'width', 'height']
-PAGE_SIZE = 3
+PAGE_SIZE = 9
 
 class LatestArticlesView(APIView):
     """ API View Class is responsible for delivering latest articles """
