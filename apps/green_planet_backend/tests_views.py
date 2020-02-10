@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework import status
 from apps.green_planet_backend.models import Article
-from apps.green_planet_backend.models import ArticleTag
+from apps.green_planet_backend.models import ArticleKeyword
 from apps.green_planet_backend.models import Representation
 
 SERVER_URL = "http://127.0.0.1:8000/"
@@ -23,9 +23,9 @@ class ArticleTest(APITestCase):
                                creation_date='2019-09-30 16:28:11',
                                state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE)
         article.save()
-        article_tag1 = ArticleTag.objects.create(text="что я могу сделать сам")
-        article_tag1.save()
-        article.article_tags.add(article_tag1)
+        article_keyword1 = ArticleKeyword.objects.create(text="что я могу сделать сам")
+        article_keyword1.save()
+        article.article_keywords.add(article_keyword1)
         Article.objects.create(title="Статья вторая",
                                author_nickname="Сергей",
                                header_text="О проблемах культуры по отношению к планете Земля.",
@@ -74,15 +74,18 @@ class ArticleTest(APITestCase):
             "main_text": "Планета нуждается в нашей общей помощи...",
             "original_source_url": "http://зелёная-планета.рус/",
             "state_code": Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE,
-            "article_tags": [
+            "article_keywords": [
                 {
-                    "text" : "что я могу сделать сам"
+                    "article_keyword_id" : 1,
+                    "text" : "Что я могу сделать сам"
                 },
                 {
-                    "text" : "что мы можем сделать вместе"
+                    "article_keyword_id" : 0,
+                    "text" : "природа и искусство"
                 },
                 {
-                    "text" : "что может сделать человечество"
+                    "article_keyword_id" : 0,
+                    "text" : "пути выхода"
                 }
             ],
             "article_representations": [
@@ -114,7 +117,7 @@ class ArticleTest(APITestCase):
         """ Method adds representations to an existing article """
         request_json = {
             "article_id": 1,
-            "article_tags": [
+            "article_keywords": [
                 {
                     "text" : "    что я могу сделать сам    "
                 },
@@ -149,7 +152,7 @@ class ArticleTest(APITestCase):
                                    format="multipart")
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data["article_tags"]), 2)
+        self.assertEqual(len(response.data["article_keywords"]), 2)
         self.assertIsNotNone(response.data["article_representations"])
         self.assertEqual(len(response.data["article_representations"]), 2)
         self.assertIsNotNone(response.data["article_representations"][0]["representation"])

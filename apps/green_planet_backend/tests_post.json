@@ -8,15 +8,15 @@
     "original_source_url": "http://зелёная-планета.рус/", 
     "state_code": 2, 
     "total_views": 0, 
-    "article_tags": [
+    "article_keywords": [
         {
-            "article_tag_id": 1, 
+            "article_keyword_id": 1, 
             "text": "что я могу сделать сам"
         }, {
-            "article_tag_id": 2, 
+            "article_keyword_id": 2, 
             "text": "что мы можем сделать вместе"
         }, {
-            "article_tag_id": 3, 
+            "article_keyword_id": 3, 
             "text": "что может сделать человечество"
         }
     ], 
