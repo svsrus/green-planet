@@ -1,10 +1,11 @@
 """ Module for Model Serializers to JSON/XML format """
 from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelField
 from rest_framework.serializers import RelatedField
 from rest_framework.serializers import DateTimeField
 from rest_framework.serializers import ValidationError
 from .models import Article
-from .models import ArticleTag
+from .models import ArticleKeyword
 from .models import ArticleRepresentation
 from .models import Representation
 from .models import ImageRepresentation
@@ -67,30 +68,31 @@ class ArticleRepresentationSerializer(ModelSerializer):
         model = ArticleRepresentation
         fields = ["article_representation_id", "representation"]
 
-class ArticleTagSerializer(ModelSerializer):
+class ArticleKeywordSerializer(ModelSerializer):
     """ Article Tag relation Serializer """
+    article_keyword_id = ModelField(model_field=ArticleKeyword()._meta.get_field('article_keyword_id'))
 
     class Meta:
         """ Article Tag specific field mappings """
-        model = ArticleTag
-        fields = ["article_tag_id", "text"]
+        model = ArticleKeyword
+        fields = ["article_keyword_id", "text"]
 
 class ArticleSerializer(ModelSerializer):
     """ Article entity Serializer """
     creation_date = DateTimeField(required=False, format="%Y-%m-%d %H:%M:%S")
     article_representations = ArticleRepresentationSerializer(required=False, many=True)
-    article_tags = ArticleTagSerializer(required=False, many=True)
+    article_keywords = ArticleKeywordSerializer(required=False, many=True)
 
     class Meta:
         model = Article
         fields = ["article_id", "author_nickname", "title", "header_text", "creation_date",
-                  "main_text", "original_source_url", "state_code", "total_views", "article_tags",
-                  "article_representations"]
+                  "main_text", "original_source_url", "state_code", "total_views", 
+                  "article_keywords", "article_representations"]
 
     def create(self, validated_data):
         """ Method creates articles and related objects from json request """
-        article_tags = validated_data.pop("article_tags") \
-                         if "article_tags" in validated_data else []
+        article_keywords = validated_data.pop("article_keywords") \
+                         if "article_keywords" in validated_data else []
 
         article_representations = validated_data.pop("article_representations")
         representations = [article_representation["representation"]
@@ -100,17 +102,15 @@ class ArticleSerializer(ModelSerializer):
         article.add_article_representations(representations)
         article.save()
 
-        for article_tag in article_tags:
-            article_tag_entity = ArticleTag.objects.create(**article_tag)
-            article_tag_entity.save()
-            article.article_tags.add(article_tag_entity)
+        for article_keyword in article_keywords:
+            article.article_keywords.add(self._get_article_keyword_entity(article_keyword))
 
         return article
 
     def update(self, instance, validated_data):
         """ Method updates articles and related objects from json/multipart request """
-        article_tags = validated_data.pop("article_tags") \
-                         if "article_tags" in validated_data else []
+        article_keywords = validated_data.pop("article_keywords") \
+                         if "article_keywords" in validated_data else []
         article_representations = validated_data.pop("article_representations")
         representations = [article_representation["representation"]
                            for article_representation in article_representations]
@@ -122,20 +122,39 @@ class ArticleSerializer(ModelSerializer):
         instance.state_code = validated_data.get('state_code', instance.state_code)
         instance.original_source_url = validated_data.get('original_source_url',
                                                           instance.original_source_url)
-        article_tags_saved = instance.article_tags.all()
-        for article_tag in article_tags:
-            article_tag_entity = ArticleTag.objects.create(**article_tag)
-            if not self._is_article_tag_text_equals_tag_text(article_tag_entity, article_tags_saved):
-                article_tag_entity.save()
-                instance.article_tags.add(article_tag_entity)
+        article_keywords_saved = instance.article_keywords.all()
+        for article_keyword in article_keywords:
+            article_keyword_entity = self._get_article_keyword_entity(article_keyword)
+            if not self._is_article_keyword_text_equals_keyword_text(article_keyword_entity, 
+                                                                     article_keywords_saved):
+                instance.article_keywords.add(article_keyword_entity)
 
         instance.save()
         return instance
 
-    def _is_article_tag_text_equals_tag_text(self, article_tag, article_tags_saved):
+    def _is_article_keyword_text_equals_keyword_text(self, article_keyword, article_keywords_saved):
         """ Method searches equals tag text, if matched True is returned, otherwise False """
-        if article_tags_saved:
-            for tag_saved in article_tags_saved:
-                if tag_saved.text.strip() == article_tag.text.strip():
+        if article_keywords_saved:
+            for tag_saved in article_keywords_saved:
+                if tag_saved.text.strip() == article_keyword.text.strip():
                     return True
         return False
+
+    def _get_article_keyword_entity(self, article_keyword):
+        """ Method searches existing ArticleKeyword by ID or Text, otherwise new is returned """
+        article_keyword_entity = None
+
+        if "article_keyword_id" in article_keyword and article_keyword["article_keyword_id"] != 0:
+            article_keyword_entity = ArticleKeyword.objects.get(
+                pk=article_keyword["article_keyword_id"])
+
+        article_keyword_entities = ArticleKeyword.objects.filter(text=article_keyword["text"])
+        article_keyword_entities_len = len(article_keyword_entities)
+
+        if article_keyword_entities_len > 0:
+            article_keyword_entity = article_keyword_entities[0]
+        else:
+            article_keyword_entity = ArticleKeyword.objects.create(text=article_keyword["text"])
+            article_keyword_entity.save()
+
+        return article_keyword_entity

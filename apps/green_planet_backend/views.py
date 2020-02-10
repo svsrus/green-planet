@@ -31,11 +31,19 @@ class LatestArticlesView(APIView):
         LOGGER.info("Executing LatestArticlesView.get()")
         last_row = int(request.GET.get('shownArticlesCount')) \
                         if "shownArticlesCount" in request.GET else 0
-        articles = Article.objects.filter() \
-                                  .order_by('-article_id')[last_row:last_row + PAGE_SIZE]
+        print("ROW FROM = " + str(last_row) + "    ROW TO = " + str(last_row + PAGE_SIZE))
+        articles = self._filter_articles(request.GET.get('articleKeywordCategoryId'), last_row)
         article_serializer = ArticleSerializer(articles, many=True)
         articles_json = article_serializer.data
         return Response(articles_json)
+
+    def _filter_articles(self, article_keyword_id, last_row):
+        """ Method searches lastest published articles filtered by category """
+        if article_keyword_id:
+            return Article.objects.filter(article_keywords__in=[int(article_keyword_id)]) \
+                                  .order_by('-article_id')[last_row:last_row + PAGE_SIZE]
+        return Article.objects.filter() \
+                                  .order_by('-article_id')[last_row:last_row + PAGE_SIZE]
 
 class ArticleView(APIView):
     """ API View Class is responsible for managing article entity """

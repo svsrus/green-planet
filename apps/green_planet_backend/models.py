@@ -80,13 +80,13 @@ class ArticleRepresentation(Model):
     class Meta:
         db_table = "green_planet_article_representation"
 
-class ArticleTag(Model):
-    """ Article Tag entity """
-    article_tag_id = AutoField(primary_key=True)
+class ArticleKeyword(Model):
+    """ Article Keyword entity """
+    article_keyword_id = AutoField(primary_key=True)
     text = CharField(max_length=255, blank=False, null=False)
 
     class Meta:
-        db_table = "green_planet_article_tag"
+        db_table = "green_planet_article_keyword"
 
 class Article(Model):
     """ Article entity """
@@ -105,7 +105,7 @@ class Article(Model):
     original_source_url = URLField(null=True, blank=True, max_length=65535)
     state_code = IntegerField(null=True, blank=False, choices=ARTICLE_STATES)
     total_views = IntegerField(null=True, blank=True, default=0)
-    article_tags = ManyToManyField(ArticleTag)
+    article_keywords = ManyToManyField(ArticleKeyword, blank=True)
 
     class Meta:
         db_table = "green_planet_article"
