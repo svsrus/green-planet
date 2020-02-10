@@ -110,7 +110,7 @@
 						<li class="has-sub"><a href=""><span>Навигация</span></a>
 							<ul>
 								<li><a href="javascript:showAbout()"><span>О проекте</span></a></li>
-								<li><a href="javascript:showLatestArticles()"><span>Статьи</span></a></li>
+								<li><a href="javascript:showAndScrollToLatestArticles()"><span>Статьи</span></a></li>
 							</ul>
 						</li>
 						<li class="last"><a href="#"><span>Контактные данные</span></a></li>
@@ -125,192 +125,68 @@
 		<!--////////////////////////////////////Container-->
 		<section id="page-content" class="index-page">
 			<div class="wrap-container">
-				<!-----------------content-box-1-------------------->
-				<section class="content-box box-1">
-					<div class="zerogrid">
-						<div class="wrap-box">
-							<!--Start Box-->
-							<div class="content wow fadeInDown" data-wow-delay=".1s" data-wow-duration="1s">
-								<div class="row">
-									<div class="sm-1-2">
-										<div class="wrap-col">
-											<div class="about-sum">
-												<h3>Кто мы?</h3>
-												<p>Мы - человечество, которое живёт в ресурсном долгу у планеты Земля.</p>
-												<p>Мы выявляем проблемы расходов ресурсов земли.</p>
-												<p>Мы ищем различные способы решения проблем.</p>
-												<p>Мы применяем эти методы в повседневной жизни.</p>
-												<p>Напиши статью и помоги информационно нашей планете!</p>
-												<a href="javascript:showNewArticle()" class="button button-skin">Написать статью</a>
-											</div>
-										</div>
-									</div>
-									<div class="sm-1-2">
-										<div class="wrap-col">
-											<div class="portfolio-box zoom-effect">
-												<img src='{% static "images/10.jpg" %}' class="img-responsive" alt="">
-												<div class="portfolio-box-caption">
-													<div class="portfolio-box-caption-content">
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</section>
+				
 
-				<!-----------------content-box-2------------------
+			<!-----------------content-box-2------------------>
 			<section class="content-box box-2 box-style-1">
 				<div class="zerogrid-fluid">
 					<div class="wrap-box">
 						<div class="header wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">
-							<h2>Projects Gallery</h2>
-							<span class="intro">Lorem ipsum dolor sit amet consectetur adipisicing</span>
+							<h2>Категории статей о Природе</h2>
+							<span class="intro">Вы можете выбрать наиболее интересную для вас тематику о Природе</span>
+							<input type="hidden" id="articleKeywordCategoryId" name="articleKeywordCategoryId" value=""/>
 						</div>
-						<div class="content wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s">
+						<div class="content wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s" style="width:67%;margin:0 auto;">
 							<div class="row">
-								<div class="lg-1-4 md-1-3 sm-1-2">
+								<div class="lg-1-3 md-1-3 sm-1-2" style="margin:0 auto;float:left;width:33%;">
 									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/1.jpg" %}' class="img-responsive" alt="">
+										<img src='{% static "images/PrirodaChelovek.jpg" %}' class="img-responsive" alt="Что могу сделать я сам">
 										<div class="portfolio-box-caption">
 											<div class="portfolio-box-caption-content">
 												<div class="project-name">
-													Project Name
+													Что могу сделать я сам
 												</div>
 												<div class="project-category">
-													Category
+													Список статей
 												</div>
 												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
+													<a href="javascript:showArticlesByCategory(1)" class="button button-skin">Просмотр</a>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
+								<div class="lg-1-3 md-1-3 sm-1-2" style="margin:0 auto;float:left;width:33%;">
 									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/2.jpg" %}' class="img-responsive" alt="">
+										<img src='{% static "images/PrirodaSemia.jpg" %}' class="img-responsive" alt="">
 										<div class="portfolio-box-caption">
 											<div class="portfolio-box-caption-content">
 												<div class="project-name">
-													Project Name
+													Что может сделать семья
 												</div>
 												<div class="project-category">
-													Category
+													Список статей
 												</div>
 												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
+													<a href="javascript:showArticlesByCategory(2)" class="button button-skin">Просмотр</a>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
+								<div class="lg-1-3 md-1-3 sm-1-2" style="margin:0 auto;float:left;width:33%;">
 									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/3.jpg" %}' class="img-responsive" alt="">
+										<img src='{% static "images/PrirodaChelovechestvo.jpg" %}' class="img-responsive" alt="">
 										<div class="portfolio-box-caption">
 											<div class="portfolio-box-caption-content">
 												<div class="project-name">
-													Project Name
+													Что может сделать всё человечество
 												</div>
 												<div class="project-category">
-													Category
+													Список статей
 												</div>
 												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
-									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/4.jpg" %}' class="img-responsive" alt="">
-										<div class="portfolio-box-caption">
-											<div class="portfolio-box-caption-content">
-												<div class="project-name">
-													Project Name
-												</div>
-												<div class="project-category">
-													Category
-												</div>
-												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
-									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/5.jpg" %}' class="img-responsive" alt="">
-										<div class="portfolio-box-caption">
-											<div class="portfolio-box-caption-content">
-												<div class="project-name">
-													Project Name
-												</div>
-												<div class="project-category">
-													Category
-												</div>
-												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
-									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/6.jpg" %}' class="img-responsive" alt="">
-										<div class="portfolio-box-caption">
-											<div class="portfolio-box-caption-content">
-												<div class="project-name">
-													Project Name
-												</div>
-												<div class="project-category">
-													Category
-												</div>
-												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
-									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/7.jpg" %}' class="img-responsive" alt="">
-										<div class="portfolio-box-caption">
-											<div class="portfolio-box-caption-content">
-												<div class="project-name">
-													Project Name
-												</div>
-												<div class="project-category">
-													Category
-												</div>
-												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="lg-1-4 md-1-3 sm-1-2">
-									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/8.jpg" %}' class="img-responsive" alt="">
-										<div class="portfolio-box-caption">
-											<div class="portfolio-box-caption-content">
-												<div class="project-name">
-													Project Name
-												</div>
-												<div class="project-category">
-													Category
-												</div>
-												<div class="project-button">
-													<a href="single.html" class="button button-skin">Read More</a>
+													<a href="javascript:showArticlesByCategory(3)" class="button button-skin">Просмотр</a>
 												</div>
 											</div>
 										</div>
@@ -321,9 +197,9 @@
 					</div>
 				</div>
 			</section>
-			-->
+			
 
-				<!-----------------content-box-3------------------
+			<!-----------------content-box-3------------------
 			<section class="content-box box-3">
 				<div class="zerogrid">
 					<div class="wrap-box">
@@ -447,6 +323,42 @@
 				</div>
 			</section>
 			-->
+			<!-----------------content-box-1-------------------->
+			<section class="content-box box-1">
+				<div class="zerogrid">
+					<div class="wrap-box">
+						<!--Start Box-->
+						<div class="content wow fadeInDown" data-wow-delay=".1s" data-wow-duration="1s">
+							<div class="row">
+								<div class="sm-1-2">
+									<div class="wrap-col">
+										<div class="about-sum">
+											<h3>Кто мы?</h3>
+											<p>Мы - человечество, которое живёт в ресурсном долгу у планеты Земля.</p>
+											<p>Мы выявляем проблемы расходов ресурсов земли.</p>
+											<p>Мы ищем различные способы решения проблем.</p>
+											<p>Мы применяем эти методы в повседневной жизни.</p>
+											<p>Напиши статью и помоги информационно нашей планете!</p>
+											<a href="javascript:showNewArticle()" class="button button-skin">Написать статью</a>
+										</div>
+									</div>
+								</div>
+								<div class="sm-1-2">
+									<div class="wrap-col">
+										<div class="portfolio-box zoom-effect">
+											<img src='{% static "images/10.jpg" %}' class="img-responsive" alt="">
+											<div class="portfolio-box-caption">
+												<div class="portfolio-box-caption-content">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 			</div>
 		</section>
 
@@ -526,7 +438,7 @@
 		<!-- JavaScript Green Planet -->
 		<script>var TOKEN_ELEMENT = '{% csrf_token %}';</script>
 		<script src='{% static "js/green_planet/green_planet.js" %}'></script>
-		<script>showArticles();</script>
+		<script>showLatestArticles();</script>
 	</div>
 </body>
 </html>

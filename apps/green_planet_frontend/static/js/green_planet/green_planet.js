@@ -8,6 +8,7 @@ const REPRESENTATION_VIDEO_TYPE_CODE = 2;
 const REQUEST_TYPE_POST = "POST";
 const REQUEST_TYPE_PUT = "PUT";
 const REQUEST_TYPE_DELETE = "DELETE";
+const VALID_KEYWORDS_REX = /^[A-ZÑa-zñА-ЯЁа-яё,\. ]{3,255}$/;
 
 /**
  * Global Variables.
@@ -15,44 +16,80 @@ const REQUEST_TYPE_DELETE = "DELETE";
 var shownArticlesCount = 0;
 
 /**
- * Function shows on main page list of articles.
+ * Function shows on main page list of latest articles.
  */
-function showArticles() {
-    $.get(URL_LATEST_ARTICLES, {"shownArticlesCount": shownArticlesCount}, function (latestArticles) {
-        var latestArticlesHTML = "";
-        var currentColumnIndex = 0;
-        $.each(latestArticles, function (index, latestArticle) {
-            latestArticlesHTML += getEach3ColumnsOpeningHtmlTag('<div class="row">', index, currentColumnIndex);
-            latestArticlesHTML += '<div class="sm-1-3">';
-            latestArticlesHTML += '	<div class="wrap-col">';
-            latestArticlesHTML += '		<div class="box-entry">';
-            latestArticlesHTML += '			<div class="box-entry-inner">';
-            latestArticlesHTML += '				<img src="' + getArticleFirstImageFile(latestArticle) + '" class="img-responsive" />';
-            latestArticlesHTML += '				<div class="entry-details">';
-            latestArticlesHTML += '					<div class="entry-des">';
-            latestArticlesHTML += '						<span>' + latestArticle.creation_date + '</span>';
-            latestArticlesHTML += '						<h3><a href="javascript:showArticle(' + latestArticle.article_id + ')">' + latestArticle.title + '</a></h3>';
-            latestArticlesHTML += '						<h4>' + latestArticle.author_nickname + '</a></h4>';
-            latestArticlesHTML += '						<p>' + latestArticle.header_text + '</p>';
-            latestArticlesHTML += '						<a class="button button-skin" href="javascript:showArticle(' + latestArticle.article_id + ')">Читать</a>';
-            latestArticlesHTML += '					</div>';
-            latestArticlesHTML += '				</div>';
-            latestArticlesHTML += '			</div>';
-            latestArticlesHTML += '		</div>';
-            latestArticlesHTML += '	</div>';
-            latestArticlesHTML += '</div>';
-            latestArticlesHTML += getEach3ColumnsClosingHtmlTag('</div>', index, currentColumnIndex, false);
-            currentColumnIndex = (currentColumnIndex < 2 ? ++currentColumnIndex : 0);
-            shownArticlesCount++;
-        });
-        if (!(shownArticlesCount % 3 === 0) && currentColumnIndex != 2) { //Closing row div in case it has 1 or 2 articles
-            latestArticlesHTML += '</div>';
-        }
-        if (latestArticles.length == 0) { //Hide show next articles button if no more articles are found
-            $("#showNextArticlesButton").hide();
-        }
-        $("#latestArticles").append(latestArticlesHTML);
+function showLatestArticles() {
+    $.get(URL_LATEST_ARTICLES, {"articleKeywordCategoryId": $("#articleKeywordCategoryId").val(), "shownArticlesCount": shownArticlesCount}, renderArticles);
+}
+
+/**
+ * Function shows next N articles.
+ */
+function showNextArticles() {
+    showLatestArticles();
+}
+
+/**
+ * Function is used as a direct link to latest articles.
+ */
+function showAndScrollToLatestArticles() {
+    shownArticlesCount = 0;
+    $("#latestArticles").html("");
+    showLatestArticles();
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#latestArticlesSection").offset().top
+    }, 1000);
+}
+
+/**
+ * Function shows filtered articles by main categories.
+ */
+function showArticlesByCategory(articleKeywordCategoryId) {
+    shownArticlesCount = 0;
+    $("#latestArticles").hide(1000);
+    $("#latestArticles").html("");
+    $("#articleKeywordCategoryId").val(articleKeywordCategoryId);
+    showLatestArticles();
+}
+
+/**
+ * Function renders articles list.
+ */
+function renderArticles(articlesList) {
+    var articlesListHTML = "";
+    var currentColumnIndex = 0;
+    $.each(articlesList, function (index, latestArticle) {
+        articlesListHTML += getEach3ColumnsOpeningHtmlTag('<div class="row">', index, currentColumnIndex);
+        articlesListHTML += '<div class="sm-1-3">';
+        articlesListHTML += '	<div class="wrap-col">';
+        articlesListHTML += '		<div class="box-entry">';
+        articlesListHTML += '			<div class="box-entry-inner">';
+        articlesListHTML += '				<img src="' + getArticleFirstImageFile(latestArticle) + '" class="img-responsive" />';
+        articlesListHTML += '				<div class="entry-details">';
+        articlesListHTML += '					<div class="entry-des">';
+        articlesListHTML += '						<span>' + latestArticle.creation_date + '</span>';
+        articlesListHTML += '						<h3><a href="javascript:showArticle(' + latestArticle.article_id + ')">' + latestArticle.title + '</a></h3>';
+        articlesListHTML += '						<h4>' + latestArticle.author_nickname + '</a></h4>';
+        articlesListHTML += '						<p>' + latestArticle.header_text + '</p>';
+        articlesListHTML += '						<a class="button button-skin" href="javascript:showArticle(' + latestArticle.article_id + ')">Читать</a>';
+        articlesListHTML += '					</div>';
+        articlesListHTML += '				</div>';
+        articlesListHTML += '			</div>';
+        articlesListHTML += '		</div>';
+        articlesListHTML += '	</div>';
+        articlesListHTML += '</div>';
+        articlesListHTML += getEach3ColumnsClosingHtmlTag('</div>', index, currentColumnIndex, false);
+        currentColumnIndex = (currentColumnIndex < 2 ? ++currentColumnIndex : 0);
+        shownArticlesCount++;
     });
+    if (!(shownArticlesCount % 3 === 0) && currentColumnIndex != 2) { //Closing row div in case it has 1 or 2 articles
+        articlesListHTML += '</div>';
+    }
+    if (articlesList.length == 0) { //Hide show next articles button if no more articles are found
+        $("#showNextArticlesButton").hide();
+    }
+    $("#latestArticles").append(articlesListHTML);
+    $("#latestArticles").show(1000);
 }
 
 /**
@@ -73,24 +110,6 @@ function getEach3ColumnsClosingHtmlTag(htmlTag, index, currentColumnIndex) {
         return htmlTag;
     }
     return "";
-}
-
-/**
- * Function shows next N articles.
- */
-function showNextArticles() {
-    shownArticlesCount += 9;
-    showArticles();
-}
-
-/**
- * Function is used as a direct link to latest articles.
- */
-function showLatestArticles() {
-    showArticles();
-    $([document.documentElement, document.body]).animate({
-        scrollTop: $("#latestArticlesSection").offset().top
-    }, 1000);
 }
 
 /**
@@ -170,7 +189,7 @@ function showNewArticle() {
         articleHTML += "	<div class='crumbs'>";
         articleHTML += "		<ul>";
         articleHTML += "			<li><a href=\"" + URL_INDEX + "\">Главная</a></li>";
-        articleHTML += "			<li><a href=\"javascript:showAbout()\">О проекте</a></li>";
+        articleHTML += "			<li><a href=\"javascript:showAbout()\">Новая статья</a></li>";
         articleHTML += "		</ul>";
         articleHTML += "</div>";
         articleHTML += "<div class='zerogrid'>";
@@ -180,7 +199,7 @@ function showNewArticle() {
         articleHTML += "			<p><span>Напишите и опубликуйте статью связанную с сохранением нашей общей Природы.</span></p><br/>";
         articleHTML += "			<form id='updateArticleForm' name='updateArticleForm' method='post' enctype='multipart/form-data'>" + TOKEN_ELEMENT;
         articleHTML += "				<label>";
-        articleHTML += "					<span>Автор статьи:</span>";
+        articleHTML += "					<span>Автор статьи или публикации:</span>";
         articleHTML += "					<span id='author_nickname_error' class='errorMessage'>пожалуйста напишите имя и фамилию автора статьи, либо авторский псевдоним.</span>";
         articleHTML += "					<input id='author_nickname' name='author_nickname' type='text' onblur='isValidRequiredField(\"author_nickname\")' required/>";
         articleHTML += "				</label>";
@@ -199,14 +218,27 @@ function showNewArticle() {
         articleHTML += "				<label>";
         articleHTML += "					<span>Главный текст статьи:</span>";
         articleHTML += "					<span id='main_text_error' class='errorMessage'>пожалуйста напишите статью.</span>";
-        articleHTML += "					<textarea id='main_text' name='main_text' rows='40'></textarea/>";
+        articleHTML += "					<textarea id='main_text' name='main_text' rows='40'></textarea/><br/>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "				    <P>";
-        articleHTML += "					    <span>Если статья не оригинальная, введите ссылку на источник статьи:</span>";
-        articleHTML += "					    <span id='original_source_url_error' class='errorMessage'>пожалуйста введите рабочую ссылку на оригинал статьи.</span>";
-        articleHTML += "					    <input id='original_source_url' name='original_source_url' type='url' onblur='isValidRequiredUrlField(\"original_source_url\")'/>";
-        articleHTML += "				    </p>";
+        articleHTML += "					<span>К какому разделу относится статья:</span>";
+        articleHTML += "					<span id='article_keyword_category_error' class='errorMessage'>выберите пожалуйста раздел который лучше всего описывает статью.</span>";
+        articleHTML += "					<select id='article_keyword_category' name='article_keyword_category' onchange='isValidRequiredField(\"article_keyword_category\")'>";
+        articleHTML += "					    <option value=''>Выберите...</option>";
+        articleHTML += "					    <option value='1'>Что я могу сделать сам</option>";
+        articleHTML += "					    <option value='2'>Что может сделать семья</option>";
+        articleHTML += "					    <option value='3'>Что может сделать человечество</option>";
+        articleHTML += "					</select>";
+        articleHTML += "				</label>";
+        articleHTML += "				<label>";
+        articleHTML += "					<span>Ключевые слова и словосочетания (через запятую) описывающие статью:</span>";
+        articleHTML += "					<span id='article_keywords_error' class='errorMessage'>пожалуйста напишите хотя бы одно ключевое слово или словосочетание к которым относится эта публикация. Допускаются только буквы и запятые для разделения ключевых слов или словосочетаний.</span>";
+        articleHTML += "					<input id='article_keywords' name='article_keywords' type='text' onblur='isValidRequiredKeywordsField(\"article_keywords\")' required/>";
+        articleHTML += "				</label>";
+        articleHTML += "				<label>";
+        articleHTML += "					<span>Если статья не оригинальная, введите ссылку на источник статьи:</span>";
+        articleHTML += "					<span id='original_source_url_error' class='errorMessage'>пожалуйста введите рабочую ссылку на оригинал статьи.</span>";
+        articleHTML += "					<input id='original_source_url' name='original_source_url' type='url' onblur='isValidRequiredUrlField(\"original_source_url\")'/>";
         articleHTML += "				</label>";
         articleHTML += "				<center>";
         articleHTML += "					<input type='button' onclick='saveFinalArticle()' name='postArticle' value='Отправить' class='button button-skin'>";
@@ -241,7 +273,7 @@ function showNewArticle() {
  * Function adds article representation and uploads files to backend.
  */
 function addArticleRepresentations(formData, files, event, upload) {
-    if (isValidForm()) {
+    if (isValidPartialForm()) {
         return new Promise(function(resolve, reject) {
             $("body").addClass("loading"); //Turn on waiting globe
             var request_json = getArticleRequestJson();
@@ -290,7 +322,7 @@ function addArticleRepresentations(formData, files, event, upload) {
  * Function returns filled Article json for post/put request.
  */
 function getArticleRequestJson() {
-    return {
+    var articleRequestJson = {
         "article_id": $("#article_id").val(),
         "author_nickname": $("#author_nickname").val(),
         "title": $("#title").val(),
@@ -298,8 +330,36 @@ function getArticleRequestJson() {
         "main_text": $("#main_text").val(),
         "original_source_url": $("#original_source_url").val(),
         "state_code": $("#state_code").val(),
+        "article_keywords": getArticleKeywords(),
         "article_representations": []
     };
+    return articleRequestJson;
+}
+
+/**
+ * Method adds selected key word category and separates article key words by comma and returns JSON.
+ */
+function getArticleKeywords() {
+    var articleKeywordsJson = [];
+    var articleKeywordCategoryId = $("#article_keyword_category").val();
+    var articleKeywordCategoryText = $("#article_keyword_category option:selected").text();
+    var articleKeywords = $("#article_keywords").val().split(",");
+
+    if (articleKeywordCategoryId != "") {
+        articleKeywordsJson.push({
+            "article_keyword_id": parseInt(articleKeywordCategoryId),
+            "text": articleKeywordCategoryText
+        });
+    }
+    for (var i = 0; i < articleKeywords.length; i++) {
+        if (articleKeywords[i].trim() != "") {
+            articleKeywordsJson.push({
+                "article_keyword_id": 0,
+                "text": articleKeywords[i].trim()
+            });
+        }
+    }
+    return articleKeywordsJson;
 }
 
 /**
@@ -343,15 +403,24 @@ function saveFinalArticle() {
 }
 
 /**
- * Function validates that all required or valid fields to create article.
+ * Function validates all required fields to create article.
  */
-function isValidForm() {
+function isValidPartialForm() {
     var authorNicknameValid = isValidRequiredField("author_nickname");
     var titleValid = isValidRequiredField("title");
     var headerTextValid = isValidRequiredField("header_text");
+    return authorNicknameValid && titleValid && headerTextValid;
+}
+
+/**
+ * Function validates that all required and optional fields with valid values to create article.
+ */
+function isValidForm() {
     var mainTextValid = isValidRequiredTextAreaField("main_text");
-    var originalSourceURL = isValidRequiredUrlField("original_source_url");
-    return authorNicknameValid && titleValid && headerTextValid && mainTextValid && originalSourceURL;
+    var articleKeywordCategoryValid = isValidRequiredField("article_keyword_category");
+    var articleKeywordsValid = isValidRequiredKeywordsField("article_keywords");
+    var originalSourceURLValid = isValidUrlField("original_source_url");
+    return isValidPartialForm() && mainTextValid && articleKeywordCategoryValid && articleKeywordsValid && originalSourceURLValid;
 }
 
 /**
@@ -371,8 +440,20 @@ function isValidRequiredField(fieldId) {
  */
 function isValidRequiredTextAreaField(fieldId) {
     var strippedText = $("<div/>").html($("#" + fieldId).val()).text().trim();
-    console.log("strippedText = '" + strippedText + "'");
     if (strippedText == "") {
+        showErrorMessage(fieldId);
+        return false;
+    }
+    hideErrorMessage(fieldId);
+    return true;
+}
+
+/**
+ * Function validates given keywords, using only letters and commas regular expression.
+ */
+function isValidRequiredKeywordsField(fieldId) {
+    var keywords = $("#" + fieldId).val();
+    if (keywords.trim() == "" || !VALID_KEYWORDS_REX.test(keywords)) {
         showErrorMessage(fieldId);
         return false;
     }
@@ -383,7 +464,7 @@ function isValidRequiredTextAreaField(fieldId) {
 /**
  * Function validates given URL, in case it is filled and not valid, error message is shown, otherwise hidden.
  */
-function isValidRequiredUrlField(fieldId) {
+function isValidUrlField(fieldId) {
     var url = $("#" + fieldId).val();
     if (url != "" && !isUrlValid(url)) {
         showErrorMessage(fieldId);
@@ -488,7 +569,6 @@ function deleteRemovedImages(request_json) {
             contentType: "application/json; charset=utf-8",
             dataType: "json"
         }).done(function(data) {
-            console.log("deleted images = " + request_json.deleted_image_representations.length)
             resolve(data);
         }).fail(function(error) {
             reject(processError(error));
