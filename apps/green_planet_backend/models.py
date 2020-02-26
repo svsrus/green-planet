@@ -90,6 +90,14 @@ class ArticleKeyword(Model):
 
 class Article(Model):
     """ Article entity """
+    ARTICLE_LANGUAGE_RUSSIAN_CODE = "ru"
+    ARTICLE_LANGUAGE_SPANISH_CODE = "es"
+    ARTICLE_LANGUAGE_ENGLISH_CODE = "en"
+    ARTICLE_LANGUAGES = [
+        (ARTICLE_LANGUAGE_RUSSIAN_CODE, 'Русский'),
+        (ARTICLE_LANGUAGE_SPANISH_CODE, 'Español'),
+        (ARTICLE_LANGUAGE_ENGLISH_CODE, 'English')
+    ]
     ARTICLE_STATE_PARTIAL_CODE = 1
     ARTICLE_STATE_VERIFIED_BY_USER_CODE = 2
     ARTICLE_STATES = [
@@ -97,6 +105,7 @@ class Article(Model):
         (ARTICLE_STATE_VERIFIED_BY_USER_CODE, 'Verified by user')
     ]
     article_id = AutoField(primary_key=True)
+    language_code = CharField(max_length=3, blank=False, null=False, choices=ARTICLE_LANGUAGES)
     author_nickname = CharField(max_length=255)
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)

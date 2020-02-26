@@ -85,8 +85,8 @@ class ArticleSerializer(ModelSerializer):
 
     class Meta:
         model = Article
-        fields = ["article_id", "author_nickname", "title", "header_text", "creation_date",
-                  "main_text", "original_source_url", "state_code", "total_views", 
+        fields = ["article_id", "language_code", "author_nickname", "title", "header_text",
+                  "creation_date", "main_text", "original_source_url", "state_code", "total_views",
                   "article_keywords", "article_representations"]
 
     def create(self, validated_data):
@@ -115,6 +115,7 @@ class ArticleSerializer(ModelSerializer):
         representations = [article_representation["representation"]
                            for article_representation in article_representations]
         instance.add_article_representations(representations)
+        instance.language_code = validated_data.get('language_code', instance.language_code)
         instance.author_nickname = validated_data.get('author_nickname', instance.author_nickname)
         instance.title = validated_data.get('title', instance.title)
         instance.header_text = validated_data.get('header_text', instance.header_text)
