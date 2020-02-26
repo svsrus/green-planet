@@ -105,7 +105,7 @@ class Article(Model):
         (ARTICLE_STATE_VERIFIED_BY_USER_CODE, 'Verified by user')
     ]
     article_id = AutoField(primary_key=True)
-    language_code = CharField(max_length=3, blank=False, null=False, choices=ARTICLE_LANGUAGES)
+    language_code = CharField(max_length=2, blank=False, null=False, choices=ARTICLE_LANGUAGES)
     author_nickname = CharField(max_length=255)
     title = CharField(max_length=255)
     header_text = CharField(max_length=255)
