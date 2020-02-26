@@ -14,6 +14,7 @@ class ArticleTest(TestCase):
         """ Method tests creation of article entity """
 
         article = Article.objects.create(title="Статья первая",
+                               language_code='ru',
                                author_nickname="Сергей",
                                header_text="О глобальных вызовах человечества.",
                                main_text="Главный текст первой статьи.",
@@ -29,6 +30,7 @@ class ArticleTest(TestCase):
         """ Method tests creation of article entity with different types of representations """
 
         article = Article.objects.create(title="Статья первая",
+                                         language_code='ru',
                                          author_nickname="Сергей",
                                          header_text="О глобальных вызовах человечества.",
                                          main_text="Главный текст первой статьи.",

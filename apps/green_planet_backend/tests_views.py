@@ -16,6 +16,7 @@ class ArticleTest(APITestCase):
     def setUp(self):
         """ Method sets up Articles data """
         article = Article.objects.create(title="Статья первая",
+                               language_code='ru',
                                author_nickname="Сергей",
                                header_text="О глобальных вызовах человечества.",
                                main_text="Главный текст первой статьи.",
@@ -27,6 +28,7 @@ class ArticleTest(APITestCase):
         article_keyword1.save()
         article.article_keywords.add(article_keyword1)
         Article.objects.create(title="Статья вторая",
+                               language_code='ru',
                                author_nickname="Сергей",
                                header_text="О проблемах культуры по отношению к планете Земля.",
                                main_text="Главный текст второй статьи.",
@@ -34,6 +36,7 @@ class ArticleTest(APITestCase):
                                creation_date='2019-09-30 16:28:22',
                                state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE).save()
         Article.objects.create(title="Статья третья",
+                               language_code='ru',
                                author_nickname="Сергей",
                                header_text="О возможных способов выхода из экологического кризиса.",
                                main_text="Главный текст третьей статьи.",
@@ -41,6 +44,7 @@ class ArticleTest(APITestCase):
                                creation_date='2019-09-30 16:28:33',
                                state_code=Article.ARTICLE_STATE_VERIFIED_BY_USER_CODE).save()
         Article.objects.create(title="Статья четвертая",
+                               language_code='ru',
                                author_nickname="Артём",
                                header_text="О работоспособных способов преодоления " +
                                "экологического кризиса.",
@@ -68,6 +72,7 @@ class ArticleTest(APITestCase):
         """ Method tests post a full article and gets saved response with ids of each object """
 
         request_json = {
+            "language_code": "ru",
             "title": "Статья пятая.",
             "author_nickname": "Сергей",
             "header_text": "В ней я Вам расскажу о...",
@@ -105,6 +110,7 @@ class ArticleTest(APITestCase):
 
         response = self.client.post(SERVER_URL + "api/articles/", request_json, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        print("RESPONSE content: " + str(response.content))
         data = json.loads(response.content)
 
         for article_representation in data["article_representations"]:
