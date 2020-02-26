@@ -1,10 +1,11 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!-->
-<html lang="en">
+<html lang="ru">
 <!--<![endif]-->
 
 <head>
@@ -58,12 +59,14 @@
 	<![endif]-->
 	
 	<script>
+		const CURRENT_LANGUAGE_CODE = "{{ LANGUAGE_CODE }}";
 		const URL_INDEX = "{% url 'index_view' %}";
 		const URL_ABOUT = "{% url 'about_view' %}"
 		const URL_LATEST_ARTICLES = "{% url 'latest_articles' %}";
 		const URL_ARTICLES = "{% url 'articles' %}";
 		const URL_ARTICLE_REPRESENTATIONS = "{% url 'article_representations' %}";
 		const DEFAULT_ARTICLE_IMAGE = "{% static 'images/1.jpg' %}";
+		const LABEL_ARTICLE = "{% trans 'Статья' %}";
 	</script>
 
 	<!-- JavaScript Imperavi Redactor -->
@@ -86,9 +89,37 @@
 						<!---Hero Content--->
 						<div class="hero-content-wrapper">
 							<div class="hero-content">
-								<h4 class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay=".7s">Зелёная Планета Земля</h4>
-								<h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">Сохраним<br> достояние Человека</h1>
-								<a href="javascript:showAbout()" class="button button-skin wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">О проекте</a>
+								<!---Language selection content--->
+								<form id="languageForm" action="{% url 'set_language' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" id="language" name="language" value="{{ LANGUAGE_CODE }}"/>
+									<div style="padding: 1% 0 2% 0;" class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">
+										<div style="padding: 0; display: inline-block;font-size: 0.5em;text-align: center;color: chartreuse;">
+											{% if LANGUAGE_CODE == 'ru' %}
+												<img id="language_ru" src='{% static "images/language_russian_64_on.png" %}' class="img-responsive" alt="Русский" title="Русский"/><br/>Русский
+											{% else %}
+												<img id="language_ru" src='{% static "images/language_russian_64.png" %}' onclick="changeLanguage('ru')" onmouseover="showLanguageSelection('ru')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="Русский" title="Русский"/><br/>Русский
+											{% endif %}
+										</div>
+										<div style="display: inline-block;font-size: 0.5em;text-align: center;color: chartreuse;">
+											{% if LANGUAGE_CODE == 'es' %}
+												<img id="language_es" src='{% static "images/language_spanish_64_on.png" %}' class="img-responsive" alt="Español" title="Español"/><br/>Español
+											{% else %}
+												<img id="language_es" src='{% static "images/language_spanish_64.png" %}' onclick="changeLanguage('es')" onmouseover="showLanguageSelection('es')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="Español" title="Español"/><br/>Español
+											{% endif %}
+										</div>
+										<div style="display: inline-block;font-size: 0.5em;text-align: center;color: chartreuse;">
+											{% if LANGUAGE_CODE == 'en' %}
+												<img id="language_en" src='{% static "images/language_english_64_on.png" %}' class="img-responsive" alt="English" title="English"/><br/>English
+											{% else %}
+												<img id="language_en" src='{% static "images/language_english_64.png" %}' onclick="changeLanguage('en')" onmouseover="showLanguageSelection('en')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="English" title="English"/><br/>English
+											{% endif %}
+										</div>
+									</div>
+								</form>
+								<h4 class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay=".7s">{% trans 'Зелёная Планета Земля' %}</h4>
+								<h1 class="hero-lead wow fadeInLeft" data-wow-duration="1.5s">{% trans 'Сохраним' %}<br> {% trans 'достояние Человека' %}</h1>
+								<a href="javascript:showAbout()" class="button button-skin wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">{% trans 'О проекте' %}</a>
 							</div>
 						</div>
 						<!---Scroller--->
@@ -106,11 +137,14 @@
 				<!---Top Menu--->
 				<div id="cssmenu">
 					<ul>
-						<li class="active"><a href=""><span>Зелёная Планета</span></a></li>
+						<li class="active"><a href=""><span>Главная</span></a></li>
 						<li class="has-sub"><a href=""><span>Навигация</span></a>
 							<ul>
+								<li><a href="javascript:showAndScrollToLatestArticles()"><span>Последние статьи</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(1)"><span>Что могу сделать я сам</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(2)"><span>Что может сделать семья</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(3)"><span>Что может сделать всё человечество</span></a></li>
 								<li><a href="javascript:showAbout()"><span>О проекте</span></a></li>
-								<li><a href="javascript:showAndScrollToLatestArticles()"><span>Статьи</span></a></li>
 							</ul>
 						</li>
 						<li class="last"><a href="#"><span>Контактные данные</span></a></li>

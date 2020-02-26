@@ -14,6 +14,43 @@ const VALID_KEYWORDS_REX = /^[A-ZÑa-zñА-ЯЁа-яё,\. ]{3,255}$/;
  * Global Variables.
  */
 var shownArticlesCount = 0;
+var lockedLanguageSelection = false;
+
+/**
+ * Function changes current language to a given language.
+ */
+function changeLanguage(languageCode) {
+    lockedLanguageSelection = true;
+    showLanguageSelection(languageCode);
+    $("#language").val(languageCode);
+    document.getElementById('languageForm').submit();
+}
+
+function showLanguageSelection(languageCode) {
+    if (!lockedLanguageSelection) {
+        hideAllLanguages();
+        document.getElementById("language_" + languageCode).src = document.getElementById("language_" + languageCode).src.replace(".png", "_on.png");
+    }
+}
+
+/**
+ * Function hides languages except currently selected.
+ */
+function hideLanguageSelection() {
+    if (!lockedLanguageSelection) {
+        hideAllLanguages();
+        document.getElementById("language_" + CURRENT_LANGUAGE_CODE).src = document.getElementById("language_" + CURRENT_LANGUAGE_CODE).src.replace(".png", "_on.png");
+    }
+}
+
+/**
+ * Function hides all languages.
+ */
+function hideAllLanguages() {
+    document.getElementById("language_ru").src = document.getElementById("language_ru").src.replace("_on.png", ".png");
+    document.getElementById("language_es").src = document.getElementById("language_es").src.replace("_on.png", ".png");
+    document.getElementById("language_en").src = document.getElementById("language_en").src.replace("_on.png", ".png");
+}
 
 /**
  * Function shows on main page list of latest articles.
@@ -34,8 +71,21 @@ function showNextArticles() {
  */
 function showAndScrollToLatestArticles() {
     shownArticlesCount = 0;
+    $("#articleKeywordCategoryId").val(""); //get all articles of all categories
+    $("#latestArticles").hide(1000);
     $("#latestArticles").html("");
     showLatestArticles();
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#latestArticlesSection").offset().top
+    }, 1000);
+}
+
+/**
+ * Function is used as a direct link to filtered articles by category.
+ */
+function showAndScrollToArticlesByCategory(articleKeywordCategoryId) {
+    shownArticlesCount = 0;
+    showArticlesByCategory(articleKeywordCategoryId);
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#latestArticlesSection").offset().top
     }, 1000);
@@ -134,7 +184,7 @@ function showArticle(articleId) {
             articleHTML += "	<div class='crumbs'>";
             articleHTML += "		<ul>";
             articleHTML += "			<li><a href=\""+URL_INDEX+"\">Главная</a></li>"
-            articleHTML += "			<li><a href=\"javascript:showAbout()\">О проекте</a></li>"
+            articleHTML += "			<li><a href=\"javascript:showAbout()\">" + LABEL_ARTICLE + "</a></li>"
             articleHTML += "		</ul>";
             articleHTML += "    </div>";
             articleHTML += "    <div id='about-us'>";
@@ -324,6 +374,7 @@ function addArticleRepresentations(formData, files, event, upload) {
 function getArticleRequestJson() {
     var articleRequestJson = {
         "article_id": $("#article_id").val(),
+        "language_code": CURRENT_LANGUAGE_CODE,
         "author_nickname": $("#author_nickname").val(),
         "title": $("#title").val(),
         "header_text": $("#header_text").val(),
