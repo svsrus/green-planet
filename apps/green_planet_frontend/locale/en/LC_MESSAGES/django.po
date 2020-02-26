@@ -1,0 +1,44 @@
+# Green Planet spanish version.
+msgid ""
+msgstr ""
+"Project-Id-Version: 2020.02.12.\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-26 16:34-0300\n"
+"PO-Revision-Date: 2020-02-12 16:06-0300\n"
+"Language: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:69
+msgid "Статья"
+msgstr "Article"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:120
+msgid "Зелёная Планета Земля"
+msgstr "Green Planet Earth"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:121
+msgid "Сохраним"
+msgstr "Preserve"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:121
+msgid "достояние Человека"
+msgstr "the property of Mankind"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:122
+msgid "О проекте"
+msgstr "About Project"
+
+#: .\green_planet\settings.py:153
+msgid "Russian"
+msgstr "Russian"
+
+#: .\green_planet\settings.py:154
+msgid "Spanish"
+msgstr "Spanish"
+
+#: .\green_planet\settings.py:155
+msgid "English"
+msgstr "English"
