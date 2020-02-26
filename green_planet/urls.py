@@ -18,10 +18,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.conf.urls import url
 
 urlpatterns = [
     path('', include('apps.green_planet_frontend.urls')),
     #path('', include('apps.green_planet_frontend_react.urls')),
     path('api/', include('apps.green_planet_backend.urls')),
     path('admin/', admin.site.urls),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
