@@ -31,18 +31,20 @@ class LatestArticlesView(APIView):
         LOGGER.info("Executing LatestArticlesView.get()")
         last_row = int(request.GET.get('shownArticlesCount')) \
                         if "shownArticlesCount" in request.GET else 0
-        print("ROW FROM = " + str(last_row) + "    ROW TO = " + str(last_row + PAGE_SIZE))
-        articles = self._filter_articles(request.GET.get('articleKeywordCategoryId'), last_row)
+        language_code = request.LANGUAGE_CODE
+        article_keyword_id = request.GET.get('articleKeywordCategoryId')
+        articles = self._filter_articles(language_code, article_keyword_id, last_row)
         article_serializer = ArticleSerializer(articles, many=True)
         articles_json = article_serializer.data
         return Response(articles_json)
 
-    def _filter_articles(self, article_keyword_id, last_row):
+    def _filter_articles(self, language_code, article_keyword_id, last_row):
         """ Method searches lastest published articles filtered by category """
         if article_keyword_id:
-            return Article.objects.filter(article_keywords__in=[int(article_keyword_id)]) \
+            return Article.objects.filter(language_code=language_code,
+                                          article_keywords__in=[int(article_keyword_id)]) \
                                   .order_by('-article_id')[last_row:last_row + PAGE_SIZE]
-        return Article.objects.filter() \
+        return Article.objects.filter(language_code=language_code) \
                                   .order_by('-article_id')[last_row:last_row + PAGE_SIZE]
 
 class ArticleView(APIView):
@@ -96,7 +98,8 @@ class ArticleRepresentationView(APIView):
 
         #Setting a list of images to the json, to pass images though validations
         files = request.FILES.getlist('image[]')
-        for i in range(len(files)):
+        files_size = len(files)
+        for i in range(files_size):
             filename, file_extension = os.path.splitext(files[i].name)
             #Changing filename relating it to article id
             files[i].name = filename + "_" + str(data["article_id"]) + file_extension
