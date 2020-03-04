@@ -274,10 +274,10 @@ function showNewArticle() {
         articleHTML += "					<span>К какому разделу относится статья:</span>";
         articleHTML += "					<span id='article_keyword_category_error' class='errorMessage'>выберите пожалуйста раздел который лучше всего описывает статью.</span>";
         articleHTML += "					<select id='article_keyword_category' name='article_keyword_category' onchange='isValidRequiredField(\"article_keyword_category\")'>";
-        articleHTML += "					    <option value=''>Выберите...</option>";
-        articleHTML += "					    <option value='1'>Что я могу сделать сам</option>";
-        articleHTML += "					    <option value='2'>Что может сделать семья</option>";
-        articleHTML += "					    <option value='3'>Что может сделать человечество</option>";
+        articleHTML += "					    <option value=''>" + LABEL_COMBO_EMPTY_OPTION + "</option>";
+        articleHTML += "					    <option value='1'>" + LABEL_COMBO_MAKE_CHANGES_MYSELF + "</option>";
+        articleHTML += "					    <option value='2'>" + LABEL_COMBO_MAKE_CHANGES_FAMILY + "</option>";
+        articleHTML += "					    <option value='3'>" + LABEL_COMBO_MAKE_CHANGES_MANKIND + "</option>";
         articleHTML += "					</select>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
