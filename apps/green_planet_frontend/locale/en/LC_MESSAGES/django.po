@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2020.02.12.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-26 16:34-0300\n"
+"POT-Creation-Date: 2020-03-04 17:32-0300\n"
 "PO-Revision-Date: 2020-02-12 16:06-0300\n"
 "Language: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -15,19 +15,38 @@ msgstr ""
 msgid "Статья"
 msgstr "Article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:120
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:70
+msgid "Выберите..."
+msgstr "Select..."
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:71
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:148
+msgid "Что я могу сделать сам"
+msgstr "What can I do by myself"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:72
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:149
+msgid "Что может сделать семья"
+msgstr "What a family can do"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:73
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:150
+msgid "Что может сделать человечество"
+msgstr "What a humanity can do"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:124
 msgid "Зелёная Планета Земля"
 msgstr "Green Planet Earth"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:121
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:125
 msgid "Сохраним"
 msgstr "Preserve"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:121
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:125
 msgid "достояние Человека"
 msgstr "the property of Mankind"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:122
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:126
 msgid "О проекте"
 msgstr "About Project"
 
