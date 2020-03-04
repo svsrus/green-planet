@@ -1,3 +1,10 @@
+.language {
+    padding: 0; 
+    display: inline-block;
+    font-size: 0.5em;
+    text-align: center;
+    color: chartreuse;
+}
 /* Start by setting display:none to make this hidden.
    Then we position it in relation to the viewport window
    with position:fixed. Width, height, top and left speak
