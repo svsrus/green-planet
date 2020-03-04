@@ -67,6 +67,10 @@
 		const URL_ARTICLE_REPRESENTATIONS = "{% url 'article_representations' %}";
 		const DEFAULT_ARTICLE_IMAGE = "{% static 'images/1.jpg' %}";
 		const LABEL_ARTICLE = "{% trans 'Статья' %}";
+		const LABEL_COMBO_EMPTY_OPTION = "{% trans 'Выберите...' %}";
+		const LABEL_COMBO_MAKE_CHANGES_MYSELF = "{% trans 'Что я могу сделать сам' %}";
+		const LABEL_COMBO_MAKE_CHANGES_FAMILY = "{% trans 'Что может сделать семья' %}";
+		const LABEL_COMBO_MAKE_CHANGES_MANKIND = "{% trans 'Что может сделать человечество' %}";
 	</script>
 
 	<!-- JavaScript Imperavi Redactor -->
@@ -94,21 +98,21 @@
 									{% csrf_token %}
 									<input type="hidden" id="language" name="language" value="{{ LANGUAGE_CODE }}"/>
 									<div style="padding: 1% 0 2% 0;" class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">
-										<div style="padding: 0; display: inline-block;font-size: 0.5em;text-align: center;color: chartreuse;">
+										<div class="language">
 											{% if LANGUAGE_CODE == 'ru' %}
 												<img id="language_ru" src='{% static "images/language_russian_64_on.png" %}' class="img-responsive" alt="Русский" title="Русский"/><br/>Русский
 											{% else %}
 												<img id="language_ru" src='{% static "images/language_russian_64.png" %}' onclick="changeLanguage('ru')" onmouseover="showLanguageSelection('ru')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="Русский" title="Русский"/><br/>Русский
 											{% endif %}
 										</div>
-										<div style="display: inline-block;font-size: 0.5em;text-align: center;color: chartreuse;">
+										<div class="language">
 											{% if LANGUAGE_CODE == 'es' %}
 												<img id="language_es" src='{% static "images/language_spanish_64_on.png" %}' class="img-responsive" alt="Español" title="Español"/><br/>Español
 											{% else %}
 												<img id="language_es" src='{% static "images/language_spanish_64.png" %}' onclick="changeLanguage('es')" onmouseover="showLanguageSelection('es')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="Español" title="Español"/><br/>Español
 											{% endif %}
 										</div>
-										<div style="display: inline-block;font-size: 0.5em;text-align: center;color: chartreuse;">
+										<div class="language">
 											{% if LANGUAGE_CODE == 'en' %}
 												<img id="language_en" src='{% static "images/language_english_64_on.png" %}' class="img-responsive" alt="English" title="English"/><br/>English
 											{% else %}
@@ -141,9 +145,9 @@
 						<li class="has-sub"><a href=""><span>Навигация</span></a>
 							<ul>
 								<li><a href="javascript:showAndScrollToLatestArticles()"><span>Последние статьи</span></a></li>
-								<li><a href="javascript:showAndScrollToArticlesByCategory(1)"><span>Что могу сделать я сам</span></a></li>
-								<li><a href="javascript:showAndScrollToArticlesByCategory(2)"><span>Что может сделать семья</span></a></li>
-								<li><a href="javascript:showAndScrollToArticlesByCategory(3)"><span>Что может сделать всё человечество</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(1)"><span>{% trans 'Что я могу сделать сам' %}</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(2)"><span>{% trans 'Что может сделать семья' %}</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(3)"><span>{% trans 'Что может сделать человечество' %}</span></a></li>
 								<li><a href="javascript:showAbout()"><span>О проекте</span></a></li>
 							</ul>
 						</li>
@@ -178,7 +182,7 @@
 										<div class="portfolio-box-caption">
 											<div class="portfolio-box-caption-content">
 												<div class="project-name">
-													Что могу сделать я сам
+													{% trans 'Что я могу сделать сам' %}
 												</div>
 												<div class="project-category">
 													Список статей
@@ -196,7 +200,7 @@
 										<div class="portfolio-box-caption">
 											<div class="portfolio-box-caption-content">
 												<div class="project-name">
-													Что может сделать семья
+													{% trans 'Что может сделать семья' %}
 												</div>
 												<div class="project-category">
 													Список статей
@@ -214,7 +218,7 @@
 										<div class="portfolio-box-caption">
 											<div class="portfolio-box-caption-content">
 												<div class="project-name">
-													Что может сделать всё человечество
+													{% trans 'Что может сделать человечество' %}
 												</div>
 												<div class="project-category">
 													Список статей
