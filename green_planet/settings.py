@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 REST_FRAMEWORK = {
@@ -84,6 +86,12 @@ AWS_DEFAULT_ACL = os.getenv("AWS_S3_REGION_NAME")
 AWS_QUERYSTRING_AUTH = os.getenv("AWS_QUERYSTRING_AUTH") #Public S3 bucket
 DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -93,6 +101,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -138,7 +147,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
+
+LANGUAGES = [
+    ('ru', _('Russian')),
+    ('es', _('Spanish')),
+    ('en', _('English')),
+]
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'apps',  'green_planet_frontend', 'locale'),
+)
 
 TIME_ZONE = 'UTC'
 
