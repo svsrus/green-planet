@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <!--Container-->
 <section id="page-content" class="index-page">
 	<div class="wrap-container">
@@ -11,24 +13,50 @@
 						<div class="row">
 							<div class="sm-1-2">
 								<div class="wrap-col">
-									<div class="about-sum">
-										<h3>Проект Зелёная Планета Земля.</h3>
-										<p>Этот проект.</p>
-										<p>Нужен всем.</p>
-										<a class="button button-skin">Поехали!</a>
+									<div class="about-sum" style="text-align:left;">
+										<h3>{% trans 'Зелёная Планета Земля.' %}</h3>
+										<p>
+											{% trans 'Проект является ответом на безнравственное отношение большинства людей к природе, путём создания и внедрения в общество технологий, вред которых не был выявлен и остановлен либо на стадии исследования, либо уже в процессе использования данных технологий.' %}
+										</p>
+										<p>
+											{% trans 'Цель проекта заключается в выявлении вредоносных дел и технологий, в повседневной жизни каждого человека, и переход на деятельность которая находятся в ладу с природой.' %}
+										</p>
 									</div>
 								</div>
 							</div>
 							<div class="sm-1-2">
 								<div class="wrap-col">
-									<div class="portfolio-box zoom-effect">
-										<img src='{% static "images/10.jpg" %}' class="img-responsive" alt="">
-										<div class="portfolio-box-caption">
-											<div class="portfolio-box-caption-content">
+										<br></br>
+										<div class="portfolio-box zoom-effect">
+											<img src='{% static "images/about.jpg" %}' class="img-responsive" alt="">
+											<div class="portfolio-box-caption">
+												<div class="portfolio-box-caption-content">
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="wrap-col" style="text-align:left; font-size: 1.2em;">
+								<p>
+									{% trans 'Достижения данной цели заключается в первую очередь в предоставлении каждому человеку соответствующую информационную базу для различения того что наносит вред природе, а что лежит в ладу с ней.' %}
+								</p>
+								<p>
+									{% trans 'Тем самым, после ознакомления с представленной информацией, человек может сам переосмыслить своё отношение к повседневным жизненным делам и используемых им технологиях.' %}
+								</p>
+								<p>
+									{% trans 'И для помощи в двигаться вперед, предлагаются пути выхода от ведения пагубных дел и использования вредоносных технологий, к тем что лежат в русле гармонического развития человека и природы.' %}
+								</p>
+								<p>
+									<p><i style="font-size: 1.1em;">{% trans 'Начинай делать добрые дела с себя и другие пойдут за тобой, и вместе мы изменим мир к лучшему!' %}</i></p>
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="project-button">
+								<a href="{% url 'index_view' %}" class="button button-skin">{% trans 'Главная' %}</a>
 							</div>
 						</div>
 					</div>
