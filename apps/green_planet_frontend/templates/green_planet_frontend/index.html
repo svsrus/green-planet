@@ -12,8 +12,8 @@
 
 	<!-- Basic Page Needs ================================================== -->
 	<meta charset="utf-8">
-	<title>Зелёная Планета</title>
-	<meta name="description" content="Зелёная Планета">
+	<title>{% trans 'Зелёная Планета' %}</title>
+	<meta name="description" content="{% trans 'Зелёная Планета' %}">
 	<meta name="author" content="https://www.linkedin.com/in/sergei-shurpenkov/">
 
 	<!-- Mobile Specific Metas ================================================== -->
@@ -66,16 +66,41 @@
 		const URL_ARTICLES = "{% url 'articles' %}";
 		const URL_ARTICLE_REPRESENTATIONS = "{% url 'article_representations' %}";
 		const DEFAULT_ARTICLE_IMAGE = "{% static 'images/1.jpg' %}";
-		const LABEL_ARTICLE = "{% trans 'Статья' %}";
-		const LABEL_COMBO_EMPTY_OPTION = "{% trans 'Выберите...' %}";
-		const LABEL_COMBO_MAKE_CHANGES_MYSELF = "{% trans 'Что я могу сделать сам' %}";
-		const LABEL_COMBO_MAKE_CHANGES_FAMILY = "{% trans 'Что может сделать семья' %}";
-		const LABEL_COMBO_MAKE_CHANGES_MANKIND = "{% trans 'Что может сделать человечество' %}";
+		const LABEL_PAGE_TITLE = "{% trans 'Зелёная Планета Земля' %}";
+		const LABEL_ABOUT = "{% trans 'О проекте' %}";
+		const LABEL_READ = "{% trans 'Читать' %}";
+		const LABEL_MAIN_PAGE = "{% trans 'Главная' %}";
+		const LABEL_SHOW_ARTICLE_DATE = "{% trans 'Дата публикации статьи' %}";
+		const LABEL_SHOW_ARTICLE_VIEWS = "{% trans 'Количество просмотров статьи' %}";
+		const LABEL_SHOW_ARTICLE_SOURCE = "{% trans 'Источник статьи.' %}";
+		const LABEL_NEW_ARTICLE = "{% trans 'Новая статья' %}";
+		const LABEL_NEW_ARTICLE_INTRO = "{% trans 'Напишите и опубликуйте статью связанную с сохранением нашей общей Природы.' %}";
+		const LABEL_NEW_ARTICLE_AUTHOR = "{% trans 'Автор статьи или публикации' %}";
+		const LABEL_NEW_ARTICLE_AUTHOR_ERROR = "{% trans 'пожалуйста напишите имя и фамилию автора статьи, либо авторский псевдоним.' %}";
+		const LABEL_NEW_ARTICLE_TITLE = "{% trans 'Заголовок статьи' %}";
+		const LABEL_NEW_ARTICLE_TITLE_ERROR = "{% trans 'пожалуйста озаглавьте статью.' %}";
+		const LABEL_NEW_ARTICLE_SHORT_DESCRIPTION = "{% trans 'Краткое описание статьи' %}";
+		const LABEL_NEW_ARTICLE_SHORT_DESCRIPTION_ERROR = "{% trans 'пожалуйста вкратце опишите статью.' %}";
+		const LABEL_NEW_ARTICLE_MAIN_TEXT = "{% trans 'Главный текст статьи' %}";
+		const LABEL_NEW_ARTICLE_MAIN_TEXT_ERROR = "{% trans 'пожалуйста напишите статью.' %}";
+		const LABEL_NEW_ARTICLE_CATEGORY = "{% trans 'К какому разделу относится статья' %}";
+		const LABEL_NEW_ARTICLE_CATEGORY_ERROR = "{% trans 'выберите пожалуйста раздел который лучше всего описывает статью.' %}";
+		const LABEL_NEW_ARTICLE_COMBO_EMPTY_OPTION = "{% trans 'Выберите...' %}";
+		const LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MYSELF = "{% trans 'Что я могу сделать сам' %}";
+		const LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_FAMILY = "{% trans 'Что может сделать семья' %}";
+		const LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MANKIND = "{% trans 'Что может сделать человечество' %}";
+		const LABEL_NEW_ARTICLE_KEYWORDS = "{% trans 'Ключевые слова и словосочетания (через запятую) описывающие статью' %}";
+		const LABEL_NEW_ARTICLE_KEYWORDS_ERROR = "{% trans 'пожалуйста напишите хотя бы одно ключевое слово или словосочетание к которым относится эта публикация. Допускаются только буквы и запятые для разделения ключевых слов или словосочетаний.' %}";
+		const LABEL_NEW_ARTICLE_ORIGINAL_URL = "{% trans 'Если статья не оригинальная, введите ссылку на источник статьи' %}";
+		const LABEL_NEW_ARTICLE_ORIGINAL_URL_ERROR = "{% trans 'пожалуйста введите рабочую ссылку на оригинал статьи.' %}";
+		const LABEL_NEW_ARTICLE_PUBLISH = "{% trans 'Опубликовать' %}";
 	</script>
 
 	<!-- JavaScript Imperavi Redactor -->
 	<script src='{% static "js/redactor/redactor.min.js" %}'></script>
 	<script src='{% static "js/redactor/lang/ru.js" %}'></script>
+	<script src='{% static "js/redactor/plugins/alignment/alignment.min.js" %}''></script>
+	<script src='{% static "js/redactor/plugins/video/video.min.js" %}'></script>
 
 </head>
 
@@ -138,7 +163,7 @@
 					</div>
 				</div>
 
-				<!---Top Menu--->
+				<!---Top Menu
 				<div id="cssmenu">
 					<ul>
 						<li class="active"><a href=""><span>Главная</span></a></li>
@@ -154,6 +179,7 @@
 						<li class="last"><a href="#"><span>Контактные данные</span></a></li>
 					</ul>
 				</div>
+				--->
 
 			</div>
 		</header>
@@ -170,8 +196,8 @@
 				<div class="zerogrid-fluid">
 					<div class="wrap-box">
 						<div class="header wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">
-							<h2>Категории статей о Природе</h2>
-							<span class="intro">Вы можете выбрать наиболее интересную для вас тематику о Природе</span>
+							<h2>{% trans 'Категории статей о Природе' %}</h2>
+							<span class="intro">{% trans 'Вы можете выбрать наиболее интересную для вас тематику о Природе' %}</span>
 							<input type="hidden" id="articleKeywordCategoryId" name="articleKeywordCategoryId" value=""/>
 						</div>
 						<div class="content wow fadeIn" data-wow-delay=".1s" data-wow-duration="1s" style="width:67%;margin:0 auto;">
@@ -185,10 +211,10 @@
 													{% trans 'Что я могу сделать сам' %}
 												</div>
 												<div class="project-category">
-													Список статей
+													{% trans 'Список статей' %}
 												</div>
 												<div class="project-button">
-													<a href="javascript:showArticlesByCategory(1)" class="button button-skin">Просмотр</a>
+													<a href="javascript:showArticlesByCategory(1)" class="button button-skin">{% trans 'Просмотр' %}</a>
 												</div>
 											</div>
 										</div>
@@ -203,10 +229,10 @@
 													{% trans 'Что может сделать семья' %}
 												</div>
 												<div class="project-category">
-													Список статей
+													{% trans 'Список статей' %}
 												</div>
 												<div class="project-button">
-													<a href="javascript:showArticlesByCategory(2)" class="button button-skin">Просмотр</a>
+													<a href="javascript:showArticlesByCategory(2)" class="button button-skin">{% trans 'Просмотр' %}</a>
 												</div>
 											</div>
 										</div>
@@ -221,10 +247,10 @@
 													{% trans 'Что может сделать человечество' %}
 												</div>
 												<div class="project-category">
-													Список статей
+													{% trans 'Список статей' %}
 												</div>
 												<div class="project-button">
-													<a href="javascript:showArticlesByCategory(3)" class="button button-skin">Просмотр</a>
+													<a href="javascript:showArticlesByCategory(3)" class="button button-skin">{% trans 'Просмотр' %}</a>
 												</div>
 											</div>
 										</div>
@@ -313,12 +339,12 @@
 					<div class="zerogrid">
 						<div class="wrap-box">
 							<div class="header wow fadeInUp" data-wow-delay=".1s" data-wow-duration="1s">
-								<h2>Статьи</h2>
-								<span class="intro">Всё о том как сделать нашу планету <font style="color:#27c100"><strong>Зелёной</strong>.</span>
+								<h2>{% trans 'Статьи' %}</h2>
+								<span class="intro">{% trans 'Всё о том как сделать нашу планету' %} <font style="color:#27c100"><strong>{% trans 'Зелёной' %}</strong>.</span>
 							</div>
 							<div id="latestArticles" class="content wow fadeInRight" data-wow-delay=".1s" data-wow-duration="1s">
 							</div>
-							<a id="showNextArticlesButton" href="javascript:showNextArticles()" class="button button-skin">Показать следующие статьи</a>
+							<a id="showNextArticlesButton" href="javascript:showNextArticles()" class="button button-skin">{% trans 'Показать следующие статьи' %}</a>
 						</div>
 					</div>
 				</section>
@@ -371,13 +397,13 @@
 								<div class="sm-1-2">
 									<div class="wrap-col">
 										<div class="about-sum">
-											<h3>Кто мы?</h3>
-											<p>Мы - человечество, которое живёт в ресурсном долгу у планеты Земля.</p>
-											<p>Мы выявляем проблемы расходов ресурсов земли.</p>
-											<p>Мы ищем различные способы решения проблем.</p>
-											<p>Мы применяем эти методы в повседневной жизни.</p>
-											<p>Напиши статью и помоги информационно нашей планете!</p>
-											<a href="javascript:showNewArticle()" class="button button-skin">Написать статью</a>
+											<h3>{% trans 'Кто мы?' %}</h3>
+											<p>{% trans 'Мы - человечество, которое живёт в ресурсном долгу у планеты Земля.' %}</p>
+											<p>{% trans 'Мы выявляем проблемы расходов ресурсов Земли.' %}</p>
+											<p>{% trans 'Мы ищем различные способы решения проблем.' %}</p>
+											<p>{% trans 'Мы применяем эти методы в повседневной жизни.' %}</p>
+											<p>{% trans 'Напиши статью и помоги информационно нашей планете!' %}</p>
+											<a href="javascript:showAbout()" class="button button-skin">{% trans 'О проекте' %}</a>
 										</div>
 									</div>
 								</div>
@@ -401,7 +427,7 @@
 		</section>
 
 		<!-- Element used for Please Wait, Loading page -->
-		<div class="loadingPage"><span>Пожалуйста подождите...<span></div>
+		<div class="loadingPage"><span class="loadingPage">{% trans 'Пожалуйста подождите...' %}<span></div>
 
 		<!--////////////////////////////////////Footer-->
 		<footer id="page-footer">
@@ -410,28 +436,27 @@
 					<div class="row">
 						<div class="sm-2-4 col-footer-1">
 							<div class="wrap-col">
-								<h3 class="widget-title">О нас</h3>
-								<p>Мы создали эту страницу для вовлечения в проблемы экологии как можно большего числа людей.</p>
-								<p>Это требуется для того что бы все вместе мы смогли изменить нас самих и наше будущее к лучшему.</p>
+								<h3 class="widget-title">{% trans 'О нас' %}</h3>
+								<p>{% trans 'Мы создали эту страницу для вовлечения в проблемы экологии как можно большего числа людей.' %}</p>
+								<p>{% trans 'Это требуется для того что бы все вместе мы смогли изменить нас самих и наше будущее к лучшему.' %}</p>
 								<ul class="quicklinks">
-									<li><a href="">Мы вас не отслеживаем</a></li>
-									<li><a href="">Этот сайт является достоянием всех людей</a></li>
+									<li><a href="">{% trans 'Мы вас не отслеживаем' %}</a></li>
+									<li><a href="">{% trans 'Этот сайт является достоянием всех людей' %}</a></li>
 								</ul>
 							</div>
 						</div>
 						<div class="sm-1-4 col-footer-2">
 							<div class="wrap-col">
-								<h3 class="widget-title">Свяжитесь с нами</h3>
-								<p>Почта:</p>
-								<a href="mailto:sergei.shurpenkov@yandex.ru" target="_top"><strong>sergei.shurpenkov@yandex.ru</strong></a>
+								<h3 class="widget-title">{% trans 'Свяжитесь с нами' %}</h3>
+								<p>{% trans 'Почта:' %}</p>
+								<a href="mailto:sergei.shurpenkov@yandex.com" target="_top"><strong>sergei.shurpenkov@yandex.com</strong></a>
 							</div>
 						</div>
 						<div class="sm-1-4 col-footer-3">
 							<div class="wrap-col">
-								<h3 class="widget-title">в соц-сетях</h3>
+								<h3 class="widget-title">{% trans 'в соц-сетях' %}</h3>
 								<ul class="social-buttons">
-									<li><a href="https://vk.com/id64724233"><i class="fa fa-vk"></i></a></li>
-									<!-- <li><a href="https://www.linkedin.com/in/sergei-shurpenkov/"><i class="fa fa-linkedin"></i></a></li> -->
+									<li><a href="https://vk.com/shematizaciya"><i class="fa fa-vk"></i></a></li>
 								</ul>
 							</div>
 						</div>
@@ -443,8 +468,8 @@
 					<div class="zerogrid">
 						<div class="row">
 							<div class="sm-1-2">
-								Копирайт @ - <a href="https://www.zerotheme.com/free-website-templates" rel='nofollow'>веб шаблон</a>
-								от <a href='https://www.zerotheme.com'>Zerotheme</a>
+								{% trans 'Авторские права' %} @ - <a href="https://www.zerotheme.com/free-website-templates" rel='nofollow'>{% trans 'веб шаблон' %}</a>
+								{% trans 'от' %} <a href='https://www.zerotheme.com'>Zerotheme</a>
 							</div>
 							<div class="sm-1-2">
 								<div id="page-top"><a href="#page-top" class="button button-toTop f-right"><i class="fa fa-angle-double-up"></i></a></div>
@@ -476,7 +501,17 @@
 		<!-- JavaScript Green Planet -->
 		<script>var TOKEN_ELEMENT = '{% csrf_token %}';</script>
 		<script src='{% static "js/green_planet/green_planet.js" %}'></script>
-		<script>showLatestArticles();</script>
+		<script type="text/javascript">
+			var urlParams = new URLSearchParams(window.location.search);
+			var articleId = parseInt(urlParams.get('articleId'));
+			if (!isNaN(articleId)) {
+				showArticle(articleId);
+			} else if (urlParams.get('showNewArticle') == 'true') {
+				showNewArticle();
+			} else {
+				showLatestArticles();
+			}
+		</script>
 	</div>
 </body>
 </html>
