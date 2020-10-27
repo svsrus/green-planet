@@ -68,6 +68,9 @@ ROOT_URLCONF = 'green_planet.urls'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, "deployment", "static")
 STATIC_URL = '/static/'
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "deployment", "static", "locale"),
+)
 
 #Default STATIC directory copied automatically
 #STATICFILES_DIRS = (
@@ -154,10 +157,6 @@ LANGUAGES = [
     ('es', _('Spanish')),
     ('en', _('English')),
 ]
-
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'apps', 'green_planet_frontend', 'locale'),
-)
 
 TIME_ZONE = 'UTC'
 

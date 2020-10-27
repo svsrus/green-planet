@@ -10,16 +10,19 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # PILLOW Python Library image dependencies
-RUN apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl
-RUN apk --update add libjpeg jpeg-dev zlib tiff freetype lcms libwebp tcl openjpeg
+RUN apk --update --upgrade add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl
+RUN apk --update --upgrade add libjpeg jpeg-dev zlib tiff freetype lcms libwebp tcl openjpeg
 
 # POSTGRE Python Library dependencies
-RUN apk add --no-cache postgresql-libs postgresql-dev
+RUN apk --update --upgrade add --no-cache postgresql-libs postgresql-dev
 
 # Application and its dependencies install
 RUN mkdir -p /appvol/green_planet
 WORKDIR /appvol/green_planet
 COPY requirements.txt /appvol/green_planet
+#Copy locale files for i18n
+COPY /appsrc/green_planet/apps/green_planet_frontend/locale /appvol/green_planet/deployment/static/locale
+
 RUN pip install -r requirements.txt
 
 COPY . /appvol/green_planet/
