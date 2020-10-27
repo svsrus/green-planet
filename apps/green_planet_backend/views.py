@@ -17,9 +17,9 @@ ALLOWED_HTML_TAGS = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'code', 'span', 'div', 
                      'br', 'p', 'b', 'i', 'del', 'strike', 'u', 'img', 'video', 'embed', 'param',
                      'blockquote', 'mark', 'cite', 'small', 'ul', 'ol', 'li', 'hr', 'dl', 'dt',
                      'dd', 'sup', 'sub', 'big', 'pre', 'code', 'figure', 'figcaption', 'strong',
-                     'em', 'table', 'tr', 'td', 'th', 'tbody', 'thead', 'tfoot']
+                     'em', 'table', 'tr', 'td', 'th', 'tbody', 'thead', 'tfoot', 'iframe']
 ALLOWED_HTML_TAG_ATTRIBUTES = ['alt', 'title', 'target', 'href', 'src', 'data-image', 'style',
-                               'width', 'height']
+                               'width', 'height', 'frameborder', 'allowfullscreen']
 ALLOWED_HTML_TAG_STYLES = ['text-align', 'width', 'height']
 PAGE_SIZE = 9
 
