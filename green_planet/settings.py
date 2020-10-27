@@ -25,7 +25,7 @@ LOGS_DIR = os.path.join(BASE_DIR, 'logs', 'djangoapp')
 SECRET_KEY = os.getenv("SECRET_KEY", default='rn_%l0wj_8&*(ul^ym!ombwj%_u_+iifgkm^z*ivaxg@9o(8e+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.getenv("DEBUG", default=1))
+DEBUG = int(os.getenv("DEBUG", default=0))
 
 ALLOWED_HOSTS = ['зелёная-планета.рус', 'xn----7sbbavdj7acrev7b6l1a.xn--p1acf', 'www.xn----7sbbavdj7acrev7b6l1a.xn--p1acf', '192.168.99.100', '127.0.0.1', 'localhost', '3.125.59.80', 'ec2-3-125-59-80.eu-central-1.compute.amazonaws.com']
 
@@ -84,12 +84,12 @@ AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME")
 AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False #Public S3 bucket
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder', #generated problems in production environment with S3 bucket
 )
 
 TEMPLATES = [
@@ -156,7 +156,7 @@ LANGUAGES = [
 ]
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'apps',  'green_planet_frontend', 'locale'),
+    os.path.join(BASE_DIR, 'apps', 'green_planet_frontend', 'locale'),
 )
 
 TIME_ZONE = 'UTC'
