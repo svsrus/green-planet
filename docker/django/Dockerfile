@@ -21,7 +21,7 @@ RUN mkdir -p /appvol/green_planet
 WORKDIR /appvol/green_planet
 COPY requirements.txt /appvol/green_planet
 #Copy locale files for i18n
-COPY /appsrc/green_planet/apps/green_planet_frontend/locale /appvol/green_planet/deployment/static/locale
+COPY apps/green_planet_frontend/locale /appvol/green_planet/deployment/static/locale
 
 RUN pip install -r requirements.txt
 
