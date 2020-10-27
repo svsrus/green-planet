@@ -103,6 +103,15 @@ function showArticlesByCategory(articleKeywordCategoryId) {
 }
 
 /**
+ * Function generates a URL for a given Article ID.
+ */
+function generateShowArticleURL(articleId) {
+    var articleParameter = { articleId : articleId };
+    var url = "//" + window.location.host + "/?" + $.param(articleParameter);
+    return url;
+}
+
+/**
  * Function renders articles list.
  */
 function renderArticles(articlesList) {
@@ -121,7 +130,7 @@ function renderArticles(articlesList) {
         articlesListHTML += '						<h3><a href="javascript:showArticle(' + latestArticle.article_id + ')">' + latestArticle.title + '</a></h3>';
         articlesListHTML += '						<h4>' + latestArticle.author_nickname + '</a></h4>';
         articlesListHTML += '						<p>' + latestArticle.header_text + '</p>';
-        articlesListHTML += '						<a class="button button-skin" href="javascript:showArticle(' + latestArticle.article_id + ')">Читать</a>';
+        articlesListHTML += '						<a class="button button-skin" href="javascript:showArticle(' + latestArticle.article_id + ')">' + LABEL_READ + '</a>';
         articlesListHTML += '					</div>';
         articlesListHTML += '				</div>';
         articlesListHTML += '			</div>';
@@ -177,46 +186,52 @@ function getArticleFirstImageFile(article) {
  * Function shows article details page.
  */
 function showArticle(articleId) {
-    $("#page-content").hide(1000, function () {
-        $.get(URL_ARTICLES + articleId, function (articleData) {
-            var articleHTML = "";
-            articleHTML += "<div class='wrap-container zerogrid'>";
-            articleHTML += "	<div class='crumbs'>";
-            articleHTML += "		<ul>";
-            articleHTML += "			<li><a href=\""+URL_INDEX+"\">Главная</a></li>"
-            articleHTML += "			<li><a href=\"javascript:showAbout()\">" + LABEL_ARTICLE + "</a></li>"
-            articleHTML += "		</ul>";
-            articleHTML += "    </div>";
-            articleHTML += "    <div id='about-us'>";
-            articleHTML += "	    <article class='post-entry single-post'>";
-            articleHTML += "		    <div class='wrap-post'>";
-            articleHTML += "			    <div class='entry-header'>";
-            articleHTML += "				    <h1 id='articleTitle' class='entry-title'>" + articleData.title + "</h1>";
-            articleHTML += "				    <h3 id='articleAuthorNickname' class='entry-title'><p>" + articleData.author_nickname + "</p></h2>";
-            articleHTML += "					<div class='entry-meta'>";
-            articleHTML += "						<i class='fa fa-calendar' alt='Число публикации статьи' title='Число публикации статьи'> " + articleData.creation_date + " </i>";
-            articleHTML += "						<i class='fa fa-eye' alt='Количество просмотров статьи' title='Количество просмотров статьи'> " + articleData.total_views + " </i>";
-            articleHTML += "						<!--<a><i class='fa fa-comments'></i> 0 Comments</a>-->";
-            articleHTML += "						<!--<a><i class='fa fa-tag'></i> Event, New</a>-->";
-            articleHTML += "					</div>";
-            articleHTML += "				</div>";
-            articleHTML += "				<div id='articleMainText' class='entry-content'>" + articleData.main_text + "</div>";
-            articleHTML += "			    <div class='entry-header' style='margin:0;padding:0;'>";
-            articleHTML += "				    <div class='entry-meta'>";
-            articleHTML += "				    	" + getArticleOriginalSourceOptionalURL(articleData);
-            articleHTML += "				    </div>";
-            articleHTML += "				</div>";
-            articleHTML += "			</div>";
-            articleHTML += "	    </article>";
-            articleHTML += "    </div>";
-            articleHTML += "</div>";
-            $("#page-content").html(articleHTML).show(1000);
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#page-content").offset().top
-            }, 2000);
-        });
+    if (history.pushState) {
+        var articleParameter = {articleId: articleId};
+        window.history.pushState(articleParameter, LABEL_PAGE_TITLE, "?" + $.param(articleParameter));
+        $("#page-content").hide(1000, function () {
+            $.get(URL_ARTICLES + articleId, function (articleData) {
+                var articleHTML = "";
+                articleHTML += "<div class='wrap-container zerogrid'>";
+                articleHTML += "	<div class='crumbs'>";
+                articleHTML += "		<ul>";
+                articleHTML += "			<li><a href=\""+URL_INDEX+"\">" + LABEL_MAIN_PAGE + "</a></li>"
+                articleHTML += "			<li><a href=\"javascript:showAbout()\">" + LABEL_ABOUT + "</a></li>"
+                articleHTML += "		</ul>";
+                articleHTML += "    </div>";
+                articleHTML += "    <div id='about-us'>";
+                articleHTML += "	    <article class='post-entry single-post'>";
+                articleHTML += "		    <div class='wrap-post'>";
+                articleHTML += "			    <div class='entry-header'>";
+                articleHTML += "				    <h1 id='articleTitle' class='entry-title'>" + articleData.title + "</h1>";
+                articleHTML += "				    <h3 id='articleAuthorNickname' class='entry-title'><p>" + articleData.author_nickname + "</p></h2>";
+                articleHTML += "					<div class='entry-meta'>";
+                articleHTML += "						<i class='fa fa-calendar' alt='" + LABEL_SHOW_ARTICLE_DATE + "' title='" + LABEL_SHOW_ARTICLE_DATE + "'> " + articleData.creation_date + " </i>";
+                articleHTML += "						<i class='fa fa-eye' alt='" + LABEL_SHOW_ARTICLE_VIEWS + "' title='" + LABEL_SHOW_ARTICLE_VIEWS + "'> " + articleData.total_views + " </i>";
+                articleHTML += "						<!--<a><i class='fa fa-comments'></i> 0 Comments</a>-->";
+                articleHTML += "						<!--<a><i class='fa fa-tag'></i> Event, New</a>-->";
+                articleHTML += "					</div>";
+                articleHTML += "				</div>";
+                articleHTML += "				<div id='articleMainText' class='entry-content'>" + articleData.main_text + "</div>";
+                articleHTML += "			    <div class='entry-header' style='margin:0;padding:0;'>";
+                articleHTML += "				    <div class='entry-meta'>";
+                articleHTML += "				    	" + getArticleOriginalSourceOptionalURL(articleData);
+                articleHTML += "				    </div>";
+                articleHTML += "				</div>";
+                articleHTML += "			</div>";
+                articleHTML += "	    </article>";
+                articleHTML += "    </div>";
+                articleHTML += "</div>";
+                $("#page-content").html(articleHTML).show(1000);
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $("#page-content").offset().top
+                }, 2000);
+            });
 
-    });
+        });
+    } else {
+        document.location.href = generateShowArticleURL(articleId);
+    }
 }
 
 /**
@@ -224,7 +239,7 @@ function showArticle(articleId) {
  */
 function getArticleOriginalSourceOptionalURL(articleData) {
     if (articleData.original_source_url != null && articleData.original_source_url != "") {
-        return "<a id='articleOriginalSourceURL' href='"+articleData.original_source_url+"'><i class='fa fa-external-link'> Источник статьи. </i></a>";
+        return "<a id='articleOriginalSourceURL' href='"+articleData.original_source_url+"'><i class='fa fa-external-link'> " + LABEL_SHOW_ARTICLE_SOURCE + " </i></a>";
     }
     return "";
 }
@@ -238,60 +253,60 @@ function showNewArticle() {
         articleHTML += "<div class='wrap-container zerogrid'>";
         articleHTML += "	<div class='crumbs'>";
         articleHTML += "		<ul>";
-        articleHTML += "			<li><a href=\"" + URL_INDEX + "\">Главная</a></li>";
-        articleHTML += "			<li><a href=\"javascript:showAbout()\">Новая статья</a></li>";
+        articleHTML += "			<li><a href=\"" + URL_INDEX + "\">" + LABEL_MAIN_PAGE + "</a></li>";
+        articleHTML += "			<li><a href=\"#\">" + LABEL_NEW_ARTICLE + "</a></li>";
         articleHTML += "		</ul>";
         articleHTML += "</div>";
         articleHTML += "<div class='zerogrid'>";
         articleHTML += "	<div class='comments-are'>";
         articleHTML += "		<div id='comment'>";
-        articleHTML += "			<h3>Новая статья</h3>";
-        articleHTML += "			<p><span>Напишите и опубликуйте статью связанную с сохранением нашей общей Природы.</span></p><br/>";
+        articleHTML += "			<h3>" + LABEL_NEW_ARTICLE + "</h3>";
+        articleHTML += "			<p><span>" + LABEL_NEW_ARTICLE_INTRO + "</span></p><br/>";
         articleHTML += "			<form id='updateArticleForm' name='updateArticleForm' method='post' enctype='multipart/form-data'>" + TOKEN_ELEMENT;
         articleHTML += "				<label>";
-        articleHTML += "					<span>Автор статьи или публикации:</span>";
-        articleHTML += "					<span id='author_nickname_error' class='errorMessage'>пожалуйста напишите имя и фамилию автора статьи, либо авторский псевдоним.</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_AUTHOR + ":</span>";
+        articleHTML += "					<span id='author_nickname_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_AUTHOR_ERROR + "</span>";
         articleHTML += "					<input id='author_nickname' name='author_nickname' type='text' onblur='isValidRequiredField(\"author_nickname\")' required/>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "					<span>Заголовок статьи:</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_TITLE + ":</span>";
         articleHTML += "					<input id='article_id' name='article_id' type='hidden'/>";
         articleHTML += "					<input id='state_code' name='state_code' type='hidden' value='" + ARTICLE_STATE_PARTIAL_CODE + "'/>";
-        articleHTML += "					<span id='title_error' class='errorMessage'>пожалуйста озаглавьте статью.</span>";
+        articleHTML += "					<span id='title_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_TITLE_ERROR + "</span>";
         articleHTML += "					<input id='title' name='title' type='text' onblur='isValidRequiredField(\"title\")' required/>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "					<span>Краткое описание статьи:</span>";
-        articleHTML += "					<span id='header_text_error' class='errorMessage'>пожалуйста вкратце опишите статью.</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_SHORT_DESCRIPTION + ":</span>";
+        articleHTML += "					<span id='header_text_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_SHORT_DESCRIPTION_ERROR + "</span>";
         articleHTML += "					<input id='header_text' name='header_text' type='text' onblur='isValidRequiredField(\"header_text\")' required/>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "					<span>Главный текст статьи:</span>";
-        articleHTML += "					<span id='main_text_error' class='errorMessage'>пожалуйста напишите статью.</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_MAIN_TEXT + ":</span>";
+        articleHTML += "					<span id='main_text_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_MAIN_TEXT_ERROR + "</span>";
         articleHTML += "					<textarea id='main_text' name='main_text' rows='40'></textarea/><br/>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "					<span>К какому разделу относится статья:</span>";
-        articleHTML += "					<span id='article_keyword_category_error' class='errorMessage'>выберите пожалуйста раздел который лучше всего описывает статью.</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_CATEGORY + ":</span>";
+        articleHTML += "					<span id='article_keyword_category_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_CATEGORY_ERROR + "</span>";
         articleHTML += "					<select id='article_keyword_category' name='article_keyword_category' onchange='isValidRequiredField(\"article_keyword_category\")'>";
-        articleHTML += "					    <option value=''>" + LABEL_COMBO_EMPTY_OPTION + "</option>";
-        articleHTML += "					    <option value='1'>" + LABEL_COMBO_MAKE_CHANGES_MYSELF + "</option>";
-        articleHTML += "					    <option value='2'>" + LABEL_COMBO_MAKE_CHANGES_FAMILY + "</option>";
-        articleHTML += "					    <option value='3'>" + LABEL_COMBO_MAKE_CHANGES_MANKIND + "</option>";
+        articleHTML += "					    <option value=''>" + LABEL_NEW_ARTICLE_COMBO_EMPTY_OPTION + "</option>";
+        articleHTML += "					    <option value='1'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MYSELF + "</option>";
+        articleHTML += "					    <option value='2'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_FAMILY + "</option>";
+        articleHTML += "					    <option value='3'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MANKIND + "</option>";
         articleHTML += "					</select>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "					<span>Ключевые слова и словосочетания (через запятую) описывающие статью:</span>";
-        articleHTML += "					<span id='article_keywords_error' class='errorMessage'>пожалуйста напишите хотя бы одно ключевое слово или словосочетание к которым относится эта публикация. Допускаются только буквы и запятые для разделения ключевых слов или словосочетаний.</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_KEYWORDS + ":</span>";
+        articleHTML += "					<span id='article_keywords_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_KEYWORDS_ERROR + "</span>";
         articleHTML += "					<input id='article_keywords' name='article_keywords' type='text' onblur='isValidRequiredKeywordsField(\"article_keywords\")' required/>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
-        articleHTML += "					<span>Если статья не оригинальная, введите ссылку на источник статьи:</span>";
-        articleHTML += "					<span id='original_source_url_error' class='errorMessage'>пожалуйста введите рабочую ссылку на оригинал статьи.</span>";
+        articleHTML += "					<span>" + LABEL_NEW_ARTICLE_ORIGINAL_URL + ":</span>";
+        articleHTML += "					<span id='original_source_url_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_ORIGINAL_URL_ERROR + ".</span>";
         articleHTML += "					<input id='original_source_url' name='original_source_url' type='url' onblur='isValidRequiredUrlField(\"original_source_url\")'/>";
         articleHTML += "				</label>";
         articleHTML += "				<center>";
-        articleHTML += "					<input type='button' onclick='saveFinalArticle()' name='postArticle' value='Отправить' class='button button-skin'>";
+        articleHTML += "					<input type='button' onclick='saveFinalArticle()' name='postArticle' value='" + LABEL_NEW_ARTICLE_PUBLISH + "' class='button button-skin'>";
         articleHTML += "				</center>";
         articleHTML += "			</form>";
         articleHTML += "		</div>";
@@ -301,8 +316,9 @@ function showNewArticle() {
             $R('#main_text', {
                 buttons: ['format', 'bold', 'italic', 'underline', 'deleted', 'sup', 'sub', 'ol', 'ul', 'indent', 'outdent', 'image', 'link', 'redo', 'undo'],
                 formatting: ['h4', 'h5', 'h6', 'p', 'blockquote'],
-                lang: 'ru',
+                lang: CURRENT_LANGUAGE_CODE,
                 minHeight: '300px',
+                plugins: ['alignment', 'video'],
                 imageLink: true,
                 imageCaption: true,
                 imagePosition: true,
