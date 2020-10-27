@@ -53,11 +53,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.locale.LocaleMiddleware'
 ]
 
 REST_FRAMEWORK = {
-    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%d %H:%M:%S - %fZ'],
+    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%d %H:%M:%S - %fZ']
 }
 
 ROOT_URLCONF = 'green_planet.urls'
@@ -89,7 +89,7 @@ DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder'
 )
 
 TEMPLATES = [
@@ -103,10 +103,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+                'django.contrib.messages.context_processors.messages'
+            ]
+        }
+    }
 ]
 
 WSGI_APPLICATION = 'green_planet.wsgi.application'
@@ -121,7 +121,7 @@ DATABASES = {
         'USER': os.getenv("SQL_USER"),
         'PASSWORD': os.getenv("SQL_PASSWORD"),
         'HOST': os.getenv("SQL_HOST"),
-        'PORT': os.getenv("SQL_PORT"),
+        'PORT': os.getenv("SQL_PORT")
     }
 }
 
@@ -130,17 +130,17 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'
+    }
 ]
 
 
@@ -152,11 +152,11 @@ LANGUAGE_CODE = 'ru-RU'
 LANGUAGES = [
     ('ru', _('Russian')),
     ('es', _('Spanish')),
-    ('en', _('English')),
+    ('en', _('English'))
 ]
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'apps',  'green_planet_frontend', 'locale'),
+    os.path.join(BASE_DIR, 'apps', 'green_planet_frontend', 'locale'),
 )
 
 TIME_ZONE = 'UTC'
