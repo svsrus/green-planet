@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 
 # PILLOW Python Library image dependencies
 RUN apk --update add libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl
-RUN apk add libjpeg jpeg-dev zlib tiff freetype lcms libwebp tcl openjpeg
+RUN apk --update add libjpeg jpeg-dev zlib tiff freetype lcms libwebp tcl openjpeg
 
 # POSTGRE Python Library dependencies
 RUN apk add --no-cache postgresql-libs postgresql-dev
