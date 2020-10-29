@@ -94,6 +94,9 @@
 		const LABEL_NEW_ARTICLE_ORIGINAL_URL = "{% trans 'Если статья не оригинальная, введите ссылку на источник статьи' %}";
 		const LABEL_NEW_ARTICLE_ORIGINAL_URL_ERROR = "{% trans 'пожалуйста введите рабочую ссылку на оригинал статьи.' %}";
 		const LABEL_NEW_ARTICLE_PUBLISH = "{% trans 'Опубликовать' %}";
+		var ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID = 1;
+		var ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID = 2;
+		var ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID = 3;
 	</script>
 
 	<!-- JavaScript Imperavi Redactor -->
@@ -125,6 +128,11 @@
 									<div style="padding: 1% 0 2% 0;" class="h-alt hero-subheading wow fadeIn" data-wow-duration="2s" data-wow-delay="1s">
 										<div class="language">
 											{% if LANGUAGE_CODE == 'ru' %}
+												<script>
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID = 1;
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID = 2;
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID = 3;
+												</script>
 												<img id="language_ru" src='{% static "images/language_russian_64_on.png" %}' class="img-responsive" alt="Русский" title="Русский"/><br/>Русский
 											{% else %}
 												<img id="language_ru" src='{% static "images/language_russian_64.png" %}' onclick="changeLanguage('ru')" onmouseover="showLanguageSelection('ru')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="Русский" title="Русский"/><br/>Русский
@@ -132,6 +140,11 @@
 										</div>
 										<div class="language">
 											{% if LANGUAGE_CODE == 'es' %}
+												<script>
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID = 4;
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID = 5;
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID = 6;
+												</script>
 												<img id="language_es" src='{% static "images/language_spanish_64_on.png" %}' class="img-responsive" alt="Español" title="Español"/><br/>Español
 											{% else %}
 												<img id="language_es" src='{% static "images/language_spanish_64.png" %}' onclick="changeLanguage('es')" onmouseover="showLanguageSelection('es')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="Español" title="Español"/><br/>Español
@@ -139,6 +152,11 @@
 										</div>
 										<div class="language">
 											{% if LANGUAGE_CODE == 'en' %}
+												<script>
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID = 7;
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID = 8;
+													ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID = 9;
+												</script>	
 												<img id="language_en" src='{% static "images/language_english_64_on.png" %}' class="img-responsive" alt="English" title="English"/><br/>English
 											{% else %}
 												<img id="language_en" src='{% static "images/language_english_64.png" %}' onclick="changeLanguage('en')" onmouseover="showLanguageSelection('en')" onmouseout="hideLanguageSelection()" class="img-responsive" alt="English" title="English"/><br/>English
@@ -170,9 +188,9 @@
 						<li class="has-sub"><a href=""><span>Навигация</span></a>
 							<ul>
 								<li><a href="javascript:showAndScrollToLatestArticles()"><span>Последние статьи</span></a></li>
-								<li><a href="javascript:showAndScrollToArticlesByCategory(1)"><span>{% trans 'Что я могу сделать сам' %}</span></a></li>
-								<li><a href="javascript:showAndScrollToArticlesByCategory(2)"><span>{% trans 'Что может сделать семья' %}</span></a></li>
-								<li><a href="javascript:showAndScrollToArticlesByCategory(3)"><span>{% trans 'Что может сделать человечество' %}</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID)"><span>{% trans 'Что я могу сделать сам' %}</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID)"><span>{% trans 'Что может сделать семья' %}</span></a></li>
+								<li><a href="javascript:showAndScrollToArticlesByCategory(ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID)"><span>{% trans 'Что может сделать человечество' %}</span></a></li>
 								<li><a href="javascript:showAbout()"><span>О проекте</span></a></li>
 							</ul>
 						</li>
@@ -214,7 +232,7 @@
 													{% trans 'Список статей' %}
 												</div>
 												<div class="project-button">
-													<a href="javascript:showArticlesByCategory(1)" class="button button-skin">{% trans 'Просмотр' %}</a>
+													<a href="javascript:showArticlesByCategory(ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID)" class="button button-skin">{% trans 'Просмотр' %}</a>
 												</div>
 											</div>
 										</div>
@@ -232,7 +250,7 @@
 													{% trans 'Список статей' %}
 												</div>
 												<div class="project-button">
-													<a href="javascript:showArticlesByCategory(2)" class="button button-skin">{% trans 'Просмотр' %}</a>
+													<a href="javascript:showArticlesByCategory(ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID)" class="button button-skin">{% trans 'Просмотр' %}</a>
 												</div>
 											</div>
 										</div>
@@ -250,7 +268,7 @@
 													{% trans 'Список статей' %}
 												</div>
 												<div class="project-button">
-													<a href="javascript:showArticlesByCategory(3)" class="button button-skin">{% trans 'Просмотр' %}</a>
+													<a href="javascript:showArticlesByCategory(ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID)" class="button button-skin">{% trans 'Просмотр' %}</a>
 												</div>
 											</div>
 										</div>
