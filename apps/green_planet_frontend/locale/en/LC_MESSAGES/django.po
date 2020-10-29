@@ -119,7 +119,7 @@ msgstr ""
 
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:77
 msgid "Автор статьи или публикации"
-msgstr "Author of the article or publication"
+msgstr "Author of the article"
 
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:78
 msgid ""
