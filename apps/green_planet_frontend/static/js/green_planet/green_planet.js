@@ -96,10 +96,11 @@ function showAndScrollToArticlesByCategory(articleKeywordCategoryId) {
  */
 function showArticlesByCategory(articleKeywordCategoryId) {
     shownArticlesCount = 0;
-    $("#latestArticles").hide(1000);
-    $("#latestArticles").html("");
-    $("#articleKeywordCategoryId").val(articleKeywordCategoryId);
-    showLatestArticles();
+    $("#latestArticles").hide(500, function() {
+        $("#latestArticles").html("");
+        $("#articleKeywordCategoryId").val(articleKeywordCategoryId);
+        showLatestArticles();
+    });
 }
 
 /**
@@ -290,9 +291,9 @@ function showNewArticle() {
         articleHTML += "					<span id='article_keyword_category_error' class='errorMessage'>" + LABEL_NEW_ARTICLE_CATEGORY_ERROR + "</span>";
         articleHTML += "					<select id='article_keyword_category' name='article_keyword_category' onchange='isValidRequiredField(\"article_keyword_category\")'>";
         articleHTML += "					    <option value=''>" + LABEL_NEW_ARTICLE_COMBO_EMPTY_OPTION + "</option>";
-        articleHTML += "					    <option value='1'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MYSELF + "</option>";
-        articleHTML += "					    <option value='2'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_FAMILY + "</option>";
-        articleHTML += "					    <option value='3'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MANKIND + "</option>";
+        articleHTML += "					    <option value='" + ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MYSELF_ID + "'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MYSELF + "</option>";
+        articleHTML += "					    <option value='" + ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_FAMILY_ID + "'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_FAMILY + "</option>";
+        articleHTML += "					    <option value='" + ARTICLE_KEYWORD_CATEGORY_MAKE_CHANGES_MANKIND_ID + "'>" + LABEL_NEW_ARTICLE_COMBO_MAKE_CHANGES_MANKIND + "</option>";
         articleHTML += "					</select>";
         articleHTML += "				</label>";
         articleHTML += "				<label>";
