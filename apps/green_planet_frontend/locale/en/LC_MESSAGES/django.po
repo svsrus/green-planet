@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2020.02.12.\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-26 10:01-0300\n"
+"POT-Creation-Date: 2020-11-13 16:34-0300\n"
 "PO-Revision-Date: 2020-02-12 16:06-0300\n"
 "Language: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr ""
 "together we will change the world for the better!"
 
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\about.html:59
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:71
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:72
 msgid "Главная"
 msgstr "Home"
 
@@ -86,107 +86,112 @@ msgid "Зелёная Планета"
 msgstr "Green Planet Earth"
 
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:69
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:151
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:406
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:167
+msgid "Зелёная Планета Земля"
+msgstr "Green Planet Earth"
+
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:70
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:169
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:424
 msgid "О проекте"
 msgstr "About Project"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:70
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:71
 msgid "Читать"
 msgstr "Read"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:72
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:73
 msgid "Дата публикации статьи"
 msgstr "Date of publication"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:73
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:74
 msgid "Количество просмотров статьи"
 msgstr "Number of Views"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:74
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:75
 msgid "Источник статьи."
 msgstr "Original article source."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:75
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:76
 msgid "Новая статья"
 msgstr "New article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:76
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:77
 msgid ""
 "Напишите и опубликуйте статью связанную с сохранением нашей общей Природы."
 msgstr ""
 "Write and publish an article related to the conservation of our Nature."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:77
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:78
 msgid "Автор статьи или публикации"
 msgstr "Author of the article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:78
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:79
 msgid ""
 "пожалуйста напишите имя и фамилию автора статьи, либо авторский псевдоним."
 msgstr ""
 "please write the name and surname of the author of the article, or the "
 "author's pseudonym."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:79
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:80
 msgid "Заголовок статьи"
 msgstr "Article title"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:80
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:81
 msgid "пожалуйста озаглавьте статью."
 msgstr "please write a title of the article."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:81
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:82
 msgid "Краткое описание статьи"
 msgstr "Short description of the article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:82
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:83
 msgid "пожалуйста вкратце опишите статью."
 msgstr "please write a short description of the article."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:83
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:84
 msgid "Главный текст статьи"
 msgstr "Main text of the article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:84
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:85
 msgid "пожалуйста напишите статью."
 msgstr "please write an article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:85
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:86
 msgid "К какому разделу относится статья"
 msgstr "Which category does the article belong to?"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:86
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:87
 msgid "выберите пожалуйста раздел который лучше всего описывает статью."
 msgstr "please select a category which best fits an article."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:87
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:88
 msgid "Выберите..."
 msgstr "Select..."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:88
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:173
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:211
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:89
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:191
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:229
 msgid "Что я могу сделать сам"
 msgstr "What can I do by myself"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:89
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:174
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:229
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:90
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:192
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:247
 msgid "Что может сделать семья"
 msgstr "What a family can do"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:90
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:175
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:247
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:91
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:193
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:265
 msgid "Что может сделать человечество"
 msgstr "What a humanity can do"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:91
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:92
 msgid "Ключевые слова и словосочетания (через запятую) описывающие статью"
 msgstr "Keywords and phrases (separated by commas) describing the article"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:92
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:93
 msgid ""
 "пожалуйста напишите хотя бы одно ключевое слово или словосочетание к которым "
 "относится эта публикация. Допускаются только буквы и запятые для разделения "
@@ -195,99 +200,95 @@ msgstr ""
 "please write at least one keyword or phrase which this publication refers "
 "to. Only letters and commas are allowed to separate keywords or phrases."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:93
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:94
 msgid "Если статья не оригинальная, введите ссылку на источник статьи"
 msgstr "If the article is not original, enter the link to the article's source"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:94
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:95
 msgid "пожалуйста введите рабочую ссылку на оригинал статьи."
 msgstr "please enter a working link to the original article."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:95
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:96
 msgid "Опубликовать"
 msgstr "Publish"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:149
-msgid "Зелёная Планета Земля"
-msgstr "Green Planet Earth"
-
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:150
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:168
 msgid "Сохраним"
 msgstr "Preserve"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:150
-msgid "достояние Человека"
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:168
+msgid "достояние Человечества"
 msgstr "the heritage of Mankind"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:199
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:217
 msgid "Категории статей о Природе"
 msgstr "Article categories about Nature"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:200
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:218
 msgid "Вы можете выбрать наиболее интересную для вас тематику о Природе"
 msgstr "You can choose the most interesting topic about Nature for you"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:214
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:232
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:250
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:268
 msgid "Список статей"
 msgstr "List of articles"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:217
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:235
 #: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:253
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:271
 msgid "Просмотр"
 msgstr "View"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:342
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:360
 msgid "Статьи"
 msgstr "Articles"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:343
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:361
 msgid "Всё о том как сделать нашу планету"
 msgstr "Everything about how to make our Planet"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:343
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:361
 msgid "Зелёной"
 msgstr "Green"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:347
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:365
 msgid "Показать следующие статьи"
 msgstr "Next articles"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:400
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:418
 msgid "Кто мы?"
 msgstr "Who we are?"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:401
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:419
 msgid "Мы - человечество, которое живёт в ресурсном долгу у планеты Земля."
 msgstr "We are humanity that lives in resource debt from planet Earth."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:402
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:420
 msgid "Мы выявляем проблемы расходов ресурсов Земли."
 msgstr "We identify the problems of the Earth's resource consumption."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:403
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:421
 msgid "Мы ищем различные способы решения проблем."
 msgstr "We are looking for different ways to solve problems."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:404
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:422
 msgid "Мы применяем эти методы в повседневной жизни."
 msgstr "We apply these methods in our daily life."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:405
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:423
 msgid "Напиши статью и помоги информационно нашей планете!"
 msgstr "Write an article and help with information to preserve our Planet."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:430
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:448
 msgid "Пожалуйста подождите..."
 msgstr "Please wait..."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:439
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:457
 msgid "О нас"
 msgstr "About us"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:440
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:458
 msgid ""
 "Мы создали эту страницу для вовлечения в проблемы экологии как можно "
 "большего числа людей."
@@ -295,7 +296,7 @@ msgstr ""
 "We created this site to involve as many people as possible into "
 "environmental issues."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:441
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:459
 msgid ""
 "Это требуется для того что бы все вместе мы смогли изменить нас самих и наше "
 "будущее к лучшему."
@@ -303,47 +304,50 @@ msgstr ""
 "This is required so that all together we can change ourselves and our future "
 "for the better."
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:443
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:461
 msgid "Мы вас не отслеживаем"
 msgstr "We are not tracking you"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:444
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:462
 msgid "Этот сайт является достоянием всех людей"
 msgstr "This site is the property of all people"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:450
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:468
 msgid "Свяжитесь с нами"
 msgstr "Contact us"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:451
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:469
 msgid "Почта:"
 msgstr "Email"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:457
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:475
 msgid "в соц-сетях"
 msgstr "social networks"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:472
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:489
 msgid "Авторские права"
 msgstr "Copyright"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:472
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:489
 msgid "веб шаблон"
 msgstr "web template"
 
-#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:473
+#: .\apps\green_planet_frontend\templates\green_planet_frontend\index.html:490
 msgid "от"
 msgstr "from"
 
-#: .\green_planet\settings.py:153
+#: .\green_planet\settings.py:175
+#: .\green_planet\settings_in_localhost_do_not_commit.py:175
 msgid "Russian"
 msgstr "Russian"
 
-#: .\green_planet\settings.py:154
+#: .\green_planet\settings.py:176
+#: .\green_planet\settings_in_localhost_do_not_commit.py:176
 msgid "Spanish"
 msgstr "Spanish"
 
-#: .\green_planet\settings.py:155
+#: .\green_planet\settings.py:177
+#: .\green_planet\settings_in_localhost_do_not_commit.py:177
 msgid "English"
 msgstr "English"
 
